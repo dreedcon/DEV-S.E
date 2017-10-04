@@ -1,18 +1,19 @@
-#ifndef __j1SCENE_H__
-#define __j1SCENE_H__
+#pragma once
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
 
 #include "j1Module.h"
-
+#include "p2Point.h"
 struct SDL_Texture;
 
-class j1Scene : public j1Module
+class Player : public j1Module
 {
 public:
 
-	j1Scene();
+	Player();
 
 	// Destructor
-	virtual ~j1Scene();
+	virtual ~Player();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
@@ -33,7 +34,8 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Texture* img;
+	SDL_Texture* img = nullptr;
+	iPoint position;
 };
 
-#endif // __j1SCENE_H__
+#endif // __PLAYER_H__
