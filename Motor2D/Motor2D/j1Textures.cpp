@@ -63,6 +63,7 @@ bool j1Textures::CleanUp()
 SDL_Texture* const j1Textures::Load(const char* path)
 {
 	SDL_Texture* texture = NULL;
+	//const char* temp = "22" + path;
 	SDL_Surface* surface = IMG_Load(path);
 
 	if(surface == NULL)

@@ -31,7 +31,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 
-	App->map->Load("maps/hello2.tmx");
+	App->map->Load("hello2.tmx");
 	return true;
 }
 
@@ -69,7 +69,7 @@ bool j1Scene::Update(float dt)
 	p2SString title("Map:%dx%d Tiles : %dx%d Tilesets : %d", App->map->mapdata.width, App->map->mapdata.height, App->map->mapdata.tile_width, App->map->mapdata.tile_height, App->map->mapdata.tilesets.count());
 
 
-	App->map->Draw();
+	//App->map->Draw();
 	return true;
 }
 

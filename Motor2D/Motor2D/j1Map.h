@@ -4,6 +4,7 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
 #include "p2Point.h"
+#include "p2DynArray.h"
 #include "j1Module.h"
 
 // TODO 2: Create a struct to hold information for a TileSet
@@ -34,7 +35,7 @@ struct Tile
 
 };
 
-struct TileSet
+/*struct TileSet
 {
 	p2SString name;
 	int firstgid;
@@ -47,6 +48,73 @@ struct TileSet
 	p2List<Tile*> tiles;
 	bool LoadTile(pugi::xml_node&, Tile*);
 
+};*/
+struct Properties
+{
+	struct Property
+	{
+		p2SString name;
+		int value;
+	};
+
+	~Properties()
+	{
+		//p2List_item<Property*>* item;
+		p2List_item<Property*> item = properties.start->data;
+
+		while (item.data != properties.end->data)
+		{
+			RELEASE(item.data);
+			item = item.next->data;
+		}
+
+		properties.clear();
+	}
+
+	int Get(const char* name, int default_value = 0) const;
+
+	p2List<Property*> properties;
+};
+
+struct TileSet
+{
+	SDL_Rect GetTileRect(int id) const;
+
+	p2SString name;
+	int					firstgid;
+	int					margin;
+	int					spacing;
+	int					tile_width;
+	int					tile_height;
+	SDL_Texture*		texture;
+	int					tex_width;
+	int					tex_height;
+	int					num_tiles_width;
+	int					num_tiles_height;
+	int					offset_x;
+	int					offset_y;
+};
+
+struct MapLayer
+{
+	std::string name;
+	int			width;
+	int			height;
+	uint*		data;
+	Properties	properties;
+
+	MapLayer() : data(NULL)
+	{}
+
+	~MapLayer()
+	{
+		RELEASE(data);
+	}
+
+	inline uint Get(int x, int y) const
+	{
+		return data[(y*width) + x];
+	}
 };
 
 
@@ -74,9 +142,10 @@ struct MapData
 	int height;
 	int tile_width;
 	int tile_height;
-	MapTypes map_type;
-	RenderOrder pos_type;
-	p2List<TileSet*>	tilesets;
+	MapTypes			type;
+
+	p2List<TileSet*> tilesets;
+	p2List<MapLayer*> layers;
 };
 
 
@@ -96,6 +165,10 @@ public:
 	// Called each loop iteration
 	void Draw();
 
+	TileSet * GetTilesetFromTileId(int id) const;
+
+	iPoint MapToWorld(int x, int y) const;
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -107,6 +180,12 @@ private:
 	//Load map function are private alone map can acces
 	bool LoadMap();
 	bool loadTileSet(pugi::xml_node&, TileSet*);
+
+	bool LoadTilesetImage(pugi::xml_node & tileset_node, TileSet * set);
+
+	bool LoadLayer(pugi::xml_node & node, MapLayer * layer);
+
+	bool LoadProperties(pugi::xml_node & node, Properties & properties);
 
 public:
 

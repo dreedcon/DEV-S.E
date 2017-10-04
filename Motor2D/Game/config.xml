@@ -17,5 +17,7 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+  
+  <map file="maps/"/>
 
 </config>
