@@ -4,6 +4,8 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
+#include "Animation.h"
+
 struct SDL_Texture;
 
 class Player : public j1Module
@@ -33,9 +35,23 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
+public:
 	SDL_Texture* img = nullptr;
 	iPoint position;
+
+	//Animations
+	Animation* current_animation;
+	Animation idle;
+	Animation walk_left;
+	Animation walk_right;
+	Animation run_left;
+	Animation run_right;
+	Animation jump_left;
+	Animation jump_right;
+	Animation fly_left;
+	Animation fly_right;
+
+
 };
 
 #endif // __PLAYER_H__
