@@ -152,6 +152,33 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
+iPoint j1Map::WorldToMap(int x, int y) const
+{
+	iPoint ret(0, 0);
+
+	if (mapdata.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = x / mapdata.tile_width;
+		ret.y = y / mapdata.tile_height;
+	}
+	else if (mapdata.type == MAPTYPE_ISOMETRIC)
+	{
+
+		float half_width = mapdata.tile_width * 0.5f;
+		float half_height = mapdata.tile_height * 0.5f;
+		ret.x = int((x / half_width + y / half_height) / 2) - 1;
+		ret.y = int((y / half_height - (x / half_width)) / 2);
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
+
+	return ret;
+}
+
+
 // Called before quitting
 bool j1Map::CleanUp()
 {
@@ -171,6 +198,61 @@ bool j1Map::CleanUp()
 	map_file.reset();
 
 	return true;
+}
+
+bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const
+{
+	int red_wall = mapdata.tilesets.start->data->firstgid; // RED TILE
+	bool ret = true;
+
+	iPoint up_left = WorldToMap(x, y); //left position
+	iPoint up_right = WorldToMap(x + width, y); //left position
+	iPoint down_right = WorldToMap(x + width, y + height); //left position
+	iPoint down_left = WorldToMap(x, y + height); //left position
+
+
+	const MapLayer* meta_layer = mapdata.layers.start->next->data; //TODO ELLIOT
+
+	int up = meta_layer->Get(up_left.x, up_left.y);
+	int left = meta_layer->Get(up_left.x, up_left.y);
+	int right = meta_layer->Get(down_right.x, down_right.y);
+	int down = meta_layer->Get(down_right.x, down_right.y);
+	//Special
+	int up_right_special = meta_layer->Get(up_right.x, up_right.y);
+	int down_left_special = meta_layer->Get(down_left.x, down_left.y);
+
+	if (dir == UP)
+	{
+		if (up == red_wall || up_right_special == red_wall)
+		{
+			ret = false;
+		}
+
+	}
+	if (dir == LEFT)
+	{
+		if (left == red_wall)
+		{
+			ret = false;
+		}
+	}
+	if (dir == RIGHT)
+	{
+		if (right == red_wall)
+		{
+			ret = false;
+		}
+	}
+	if (dir == DOWN)
+	{
+		if (down == red_wall || down_left_special == red_wall)
+		{
+			ret = false;
+		}
+	}
+
+
+	return ret;
 }
 
 // Load new map

@@ -3,10 +3,13 @@
 	<input />
 	<window />
 	<textures />
-	<audio volume ="30"/>
+	<audio>
+		<audio volume="0" />
+	</audio>
 	<map />
 	<scene />
+	<:anonymous />
 	<renderer>
-		<camera x="80" y="183" />
+		<camera x="0" y="0" />
 	</renderer>
 </save>

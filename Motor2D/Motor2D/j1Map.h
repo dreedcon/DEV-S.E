@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 #include "j1Module.h"
+#include "Player.h"
 
 // TODO 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
@@ -169,8 +170,12 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 
+	iPoint WorldToMap(int x, int y) const;
+
 	// Called before quitting
 	bool CleanUp();
+
+	bool MovementCost(int x, int y, int width, int height, Direction dir) const;
 
 	// Load new map
 	bool Load(const char* path);
