@@ -31,7 +31,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 
-	App->map->Load("hello2.tmx");
+	App->map->Load("LVL.tmx");
 	return true;
 }
 

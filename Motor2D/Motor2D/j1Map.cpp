@@ -31,42 +31,13 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	// TODO 6: Iterate all tilesets and draw all their 
-	// images in 0,0 (you should have only one tileset for now)
-	
-	//App->render->Blit(App->tex->Load("maps/tmw_desert_spacing.png"), 0, 0);
-	/*for (uint i = 0; i < mapdata.layers.size(); i++)
-	{
-		MapLayer* layer = mapdata.layers[i];
-
-
-		for (int y = 0; y < pos_camera.y + win_size.y + marge.y; ++y)
-		{
-			for (int x = pos_camera.x; x < pos_camera.x + win_size.x + marge.x; ++x)
-			{
-				if (x < data.width && y < data.height)
-				{
-					int tile_id = layer->Get(x, y);
-					if (tile_id > 0)
-					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
-
-						SDL_Rect r = tileset->GetTileRect(tile_id);
-						iPoint pos = MapToWorld(x, y);
-
-						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
-					}
-				}
-			}
-		}
-	}*/
 	p2List_item<MapLayer*>* item = mapdata.layers.start;
 
 	for (; item != mapdata.layers.end->next; item = item->next)
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->properties.Get("Draw") != 0)
+		if (layer->properties.Get("Draw") != 1)
 			continue;
 
 		for (int y = 0; y < mapdata.height; ++y)
@@ -91,7 +62,7 @@ void j1Map::Draw()
 int Properties::Get(const char* value, int default_value) const
 {
 	p2List_item<Property*>* item = properties.start;
-	while (item != properties.end)
+	while (item != properties.end->next)
 	{
 		if (strcmp(item->data->name.GetString(), value) == 0)
 			return item->data->value;
@@ -202,7 +173,7 @@ bool j1Map::CleanUp()
 
 bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const
 {
-	int red_wall = mapdata.tilesets.start->data->firstgid; // RED TILE
+	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
 	bool ret = true;
 
 	iPoint up_left = WorldToMap(x, y); //left position
@@ -211,7 +182,7 @@ bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) con
 	iPoint down_left = WorldToMap(x, y + height); //left position
 
 
-	const MapLayer* meta_layer = mapdata.layers.start->next->data; //TODO ELLIOT
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->data;
 
 	int up = meta_layer->Get(up_left.x, up_left.y);
 	int left = meta_layer->Get(up_left.x, up_left.y);

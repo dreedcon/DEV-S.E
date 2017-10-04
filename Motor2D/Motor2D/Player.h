@@ -61,6 +61,8 @@ public:
 
 	void processGravity();
 
+	void ReturnToZero();
+
 	void Draw();
 
 	// Called before all Updates
@@ -74,7 +76,11 @@ private:
 	fPoint position;
 	fPoint velocity;
 	bool isFly = false;
-	
+	bool returntoZero = false;
+	Direction goZero = NON;
+
+	//TODO SERGIO 1
+	//Create 3 variables (2 iPoint / 1 enum LVL)
 
 
 

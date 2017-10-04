@@ -76,8 +76,10 @@ Player::~Player()
 
 bool Player::Awake(pugi::xml_node& config)
 {
-	position.create(50, 50);
+	position.create(160, 512);
 	velocity.create(0, 0);
+	//TODO SERGIO 2: Init start position
+
 	// Sprites
 	return true;
 }
@@ -99,10 +101,14 @@ bool Player::Update(float dt)
 {
 	//Set zero
 	//Setzero();
+	//TODO SERGIO 3:
+	//Create a function to change lvls (F1, F2, etc...)
+	//Remember use Setzero();
 
 	Input();
 	processPos();
 	processGravity();
+	ReturnToZero();
 	Draw();
 	return true;
 }
@@ -115,6 +121,7 @@ void Player::Input()
 		if (App->map->MovementCost(position.x, position.y, 30, 30, direction))
 		{
 			position.x -= 0.2f;
+			//velocity.x -= 0.001f;
 		}
 		if (!isFly)
 			state = W_LEFT;
@@ -124,7 +131,8 @@ void Player::Input()
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
 		direction = NON;
-
+		//returntoZero = true;
+		//goZero = LEFT;
 		if (!isFly)state = IDLE;
 	}
 
@@ -134,6 +142,7 @@ void Player::Input()
 		if (App->map->MovementCost(position.x, position.y, 30, 30, direction))
 		{
 			position.x -= 0.5f;
+			//velocity.x -= 0.05f;
 		}
 		if (!isFly)state = RUN_LEFT;
 	}
@@ -149,6 +158,7 @@ void Player::Input()
 		if (App->map->MovementCost(position.x, position.y - 1, 30, 30, direction))
 		{
 			position.x += 0.2f;
+			//velocity.x += 0.001f;
 		}
 		if (!isFly)state = W_RIGHT;
 		else if (state == FLY_LEFT)
@@ -157,6 +167,8 @@ void Player::Input()
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 		direction = NON;
+		//returntoZero = true;
+		//goZero = RIGHT;
 		if (!isFly)state = IDLE;
 	}
 
@@ -166,6 +178,7 @@ void Player::Input()
 		if (App->map->MovementCost(position.x, position.y, 30, 30, direction))
 		{
 			position.x += 0.5f;
+			velocity.x += 0.05f;
 		}
 		if (!isFly)state = RUN_RIGHT;
 	}
@@ -220,6 +233,33 @@ void Player::Input()
 	}
 }
 
+void Player::ReturnToZero()
+{
+	if (returntoZero && goZero != NON)
+	{
+		if (goZero == LEFT)
+		{
+			velocity.x += 0.004f;
+			if (velocity.x <= 0.1f && velocity.x >= -0.1f)
+			{
+				velocity.x = 0;
+				goZero = NON;
+				returntoZero = false;
+			}
+		}
+		else
+		{
+			velocity.x -= 0.004f;
+			if (velocity.x <= 0.1f && velocity.x >= -0.1f)
+			{
+				velocity.x = 0;
+				goZero = NON;
+				returntoZero = false;
+			}
+		}
+	}
+}
+
 void Player::Setzero()
 {
 	velocity.x = 0;
@@ -228,6 +268,8 @@ void Player::Setzero()
 
 void Player::processPos()
 {
+	//TODO SERGIO 4: CAP MAX VELOCITY
+	//if(velocity.) 
 	position.x = position.x + velocity.x;   // Change position based on 
 	position.y = position.y + velocity.y;   // current velocity components.
 }
