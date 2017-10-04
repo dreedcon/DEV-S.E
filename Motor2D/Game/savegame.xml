@@ -3,7 +3,7 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<audio volume ="30"/>
 	<map />
 	<scene />
 	<renderer>

@@ -24,6 +24,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
+	volume;
 
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
@@ -157,6 +158,11 @@ unsigned int j1Audio::LoadFx(const char* path)
 	return ret;
 }
 
+int const j1Audio::Returnvolume()
+{
+	return volume;
+}
+
 // Play WAV
 bool j1Audio::PlayFx(unsigned int id, int repeat)
 {
@@ -169,6 +175,26 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
+
+	return ret;
+}
+
+bool j1Audio::Load(pugi::xml_node &node)
+{
+	bool ret = true;
+	
+	volume = node.child("audio").attribute("volume").as_int();
+	
+	return ret;
+}
+
+bool j1Audio::Save(pugi::xml_node &node)const
+{
+	bool ret = true;
+	
+	pugi::xml_node audio = node.append_child("audio");
+
+	audio.append_attribute("volume") = volume;
 
 	return ret;
 }
