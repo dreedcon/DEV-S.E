@@ -14,54 +14,56 @@
 Player::Player()
 {
 
-	idle.PushBack({ 0,  0, 30, 30 });
-	idle.PushBack({ 30, 0, 30, 30 });
-	idle.PushBack({ 60, 0, 30, 30 });
-	idle.PushBack({ 90, 0, 30, 30 });
+	idle.PushBack({ 3,  5, 24, 21 });
+	idle.PushBack({ 33, 5, 24, 21 });
+	idle.PushBack({ 62, 5, 24, 21 });
+	idle.PushBack({ 93, 5, 24, 21 });
 	idle.speed = 0.01f;
 
-	walk_right.PushBack({ 0,  30, 30, 30 });
-	walk_right.PushBack({ 30, 30, 30, 30 });
-	walk_right.PushBack({ 60, 30, 30, 30 });
-	walk_right.PushBack({ 90, 30, 30, 30 });
+	walk_right.PushBack({ 1,  35, 26, 21 });
+	walk_right.PushBack({ 35, 35, 26, 21 });
+	walk_right.PushBack({ 64, 35, 26, 21 });
+	walk_right.PushBack({ 94, 35, 26, 21 });
 	walk_right.speed = 0.01f;
 
-	jump_right.PushBack({ 0, 60, 30, 30 });
-	jump_right.PushBack({ 30, 60, 30, 30 });
-	jump_right.PushBack({ 60, 60, 30, 30 });
+	jump_right.PushBack({ 2, 66,  24, 21 });
+	jump_right.PushBack({ 32, 66, 24, 21 });
+	jump_right.PushBack({ 63, 66, 24, 21 });
 	jump_right.speed = 0.01f;
 
-	run_right.PushBack({ 0,  90, 30, 30 });
-	run_right.PushBack({ 30, 90, 30, 30 });
-	run_right.PushBack({ 60, 90, 30, 30 });
-	run_right.PushBack({ 90, 90, 30, 30 });
+	run_right.PushBack({ 3,  94, 23, 21 });
+	run_right.PushBack({ 32, 94, 23, 21 });
+	run_right.PushBack({ 62, 94, 23, 21 });
+	run_right.PushBack({ 92, 94, 23, 21 });
 	run_right.speed = 0.01f;
-	// ------------------
-	fly_right.PushBack({ 0, 120, 30, 30 });
-	fly_right.PushBack({ 30, 120, 30, 30 });
-	fly_right.PushBack({ 60, 120, 30, 30 });
+	
+	fly_right.PushBack({ 0,  121,  30, 30 });
+	fly_right.PushBack({ 30, 121, 30, 30 });
+	fly_right.PushBack({ 60, 121, 30, 30 });
 	fly_right.speed = 0.01f;
 
-	walk_left.PushBack({ 0,  150, 30, 30 });
-	walk_left.PushBack({ 30, 150, 30, 30 });
-	walk_left.PushBack({ 60, 150, 30, 30 });
-	walk_left.PushBack({ 90, 150, 30, 30 });
+	//Left---------------------------------------
+	
+	walk_left.PushBack({ 4,  155, 23, 22 });
+	walk_left.PushBack({ 31, 155, 23, 22 });
+	walk_left.PushBack({ 63, 155, 23, 22 });
+	walk_left.PushBack({ 91, 155, 23, 22 });
 	walk_left.speed = 0.01f;
 
-	jump_left.PushBack({ 0, 180, 30, 30 });
-	jump_left.PushBack({ 30, 180, 30, 30 });
-	jump_left.PushBack({ 60, 180, 30, 30 });
+	jump_left.PushBack({ 5,  185, 23, 22 });
+	jump_left.PushBack({ 30, 185, 23, 22 });
+	jump_left.PushBack({ 60, 185, 23, 22 });
 	jump_left.speed = 0.01f;
 
-	run_left.PushBack({ 0,  210, 30, 30 });
-	run_left.PushBack({ 30, 210, 30, 30 });
-	run_left.PushBack({ 60, 210, 30, 30 });
-	run_left.PushBack({ 90, 210, 30, 30 });
+	run_left.PushBack({ 6,  215, 23, 21 });
+	run_left.PushBack({ 34, 215, 23, 21 });
+	run_left.PushBack({ 65, 215, 23, 21 });
+	run_left.PushBack({ 94, 215, 23, 21 });
 	run_left.speed = 0.01f;
 
-	fly_left.PushBack({ 0, 240, 30, 30 });
-	fly_left.PushBack({ 30, 240, 30, 30 });
-	fly_left.PushBack({ 60, 240, 30, 30 });
+	fly_left.PushBack({ 0,  240,  30, 30 });
+	fly_left.PushBack({ 30, 240,  30, 30 });
+	fly_left.PushBack({ 60, 240,  30, 30 });
 	fly_left.speed = 0.01f;
 
 
