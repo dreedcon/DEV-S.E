@@ -10,6 +10,6 @@
 	<scene />
 	<:anonymous />
 	<renderer>
-		<camera x="142" y="-219" />
+		<camera x="0" y="-142" />
 	</renderer>
 </save>

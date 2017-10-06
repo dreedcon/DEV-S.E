@@ -101,7 +101,8 @@ bool j1App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
-
+	capped_ms = 1000 / 60;
+	startup_time.Start();
 	return ret;
 }
 
@@ -152,6 +153,8 @@ bool j1App::LoadConfig()
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	frame_count++;
+	frame_time.Start();
 }
 
 // ---------------------------------------------
@@ -168,6 +171,17 @@ void j1App::FinishUpdate()
 		DocSave();
 		need_save = false;
 	}
+
+	uint32 last_frame_ms = frame_time.Read();
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	static char title[256];
+	if (capped_ms > 0 && last_frame_ms < capped_ms)
+	{
+		SDL_Delay(capped_ms - last_frame_ms);
+	}
+	sprintf_s(title, 256, "Caped Av.FPS: %.2f", avg_fps);
+	App->win->SetTitle(title);
+
 }
 
 // Call modules before each loop iteration

@@ -6,7 +6,12 @@
 #include "p2Point.h"
 #include "Animation.h"
 
-#define Gravity 0.02
+#define Gravity 0.5
+#define AnimationSpeed4 0.1f
+#define AnimationSpeed3 0.13f
+
+#define Velocity_X 1.5f
+#define Velocity_Y 10.0f
 
 struct SDL_Texture;
 

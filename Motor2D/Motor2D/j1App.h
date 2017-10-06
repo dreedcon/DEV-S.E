@@ -3,6 +3,7 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include "j1TimeNormal.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -85,6 +86,11 @@ public:
 	j1Map*              map;
 	j1Scene*			scene;
 	Player*				player;
+
+	int		capped_ms = -1;
+	j1TimeNormal	frame_time;
+	j1TimeNormal		startup_time;
+	uint64				frame_count = 0;
 
 private:
 

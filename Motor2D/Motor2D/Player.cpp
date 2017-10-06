@@ -18,29 +18,29 @@ Player::Player()
 	idle.PushBack({ 33, 5, 24, 21 });
 	idle.PushBack({ 62, 5, 24, 21 });
 	idle.PushBack({ 93, 5, 24, 21 });
-	idle.speed = 0.01f;
+	idle.speed = AnimationSpeed4;
 
 	walk_right.PushBack({ 1,  35, 26, 21 });
 	walk_right.PushBack({ 35, 35, 26, 21 });
 	walk_right.PushBack({ 64, 35, 26, 21 });
 	walk_right.PushBack({ 94, 35, 26, 21 });
-	walk_right.speed = 0.01f;
+	walk_right.speed = AnimationSpeed4;
 
 	jump_right.PushBack({ 2, 66,  24, 21 });
 	jump_right.PushBack({ 32, 66, 24, 21 });
 	jump_right.PushBack({ 63, 66, 24, 21 });
-	jump_right.speed = 0.01f;
+	jump_right.speed = AnimationSpeed3;
 
 	run_right.PushBack({ 3,  94, 23, 21 });
 	run_right.PushBack({ 32, 94, 23, 21 });
 	run_right.PushBack({ 62, 94, 23, 21 });
 	run_right.PushBack({ 92, 94, 23, 21 });
-	run_right.speed = 0.01f;
+	run_right.speed = AnimationSpeed4;
 	
 	fly_right.PushBack({ 0,  121,  30, 30 });
 	fly_right.PushBack({ 30, 121, 30, 30 });
 	fly_right.PushBack({ 60, 121, 30, 30 });
-	fly_right.speed = 0.01f;
+	fly_right.speed = AnimationSpeed3;
 
 	//Left---------------------------------------
 	
@@ -48,23 +48,23 @@ Player::Player()
 	walk_left.PushBack({ 31, 155, 23, 22 });
 	walk_left.PushBack({ 63, 155, 23, 22 });
 	walk_left.PushBack({ 91, 155, 23, 22 });
-	walk_left.speed = 0.01f;
+	walk_left.speed = AnimationSpeed4;
 
 	jump_left.PushBack({ 5,  185, 23, 22 });
 	jump_left.PushBack({ 30, 185, 23, 22 });
 	jump_left.PushBack({ 60, 185, 23, 22 });
-	jump_left.speed = 0.01f;
+	jump_left.speed = AnimationSpeed3;
 
 	run_left.PushBack({ 6,  215, 23, 21 });
 	run_left.PushBack({ 34, 215, 23, 21 });
 	run_left.PushBack({ 65, 215, 23, 21 });
 	run_left.PushBack({ 94, 215, 23, 21 });
-	run_left.speed = 0.01f;
+	run_left.speed = AnimationSpeed4;
 
 	fly_left.PushBack({ 0,  240,  30, 30 });
 	fly_left.PushBack({ 30, 240,  30, 30 });
 	fly_left.PushBack({ 60, 240,  30, 30 });
-	fly_left.speed = 0.01f;
+	fly_left.speed = AnimationSpeed3;
 
 
 
@@ -120,9 +120,9 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		direction = LEFT;
-		if (App->map->MovementCost(position.x, position.y, 30, 30, direction))
+		if (App->map->MovementCost(position.x - Velocity_X, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
-			position.x -= 0.2f;
+			position.x -= Velocity_X;
 			//velocity.x -= 0.001f;
 		}
 		if (!isFly)
@@ -141,7 +141,7 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
 	{
 		direction = LEFT;
-		if (App->map->MovementCost(position.x, position.y, 30, 30, direction))
+		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x -= 0.5f;
 			//velocity.x -= 0.05f;
@@ -157,9 +157,9 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x, position.y - 1, 30, 30, direction))
+		if (App->map->MovementCost(position.x + Velocity_X, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
-			position.x += 0.2f;
+			position.x += Velocity_X;
 			//velocity.x += 0.001f;
 		}
 		if (!isFly)state = W_RIGHT;
@@ -177,7 +177,7 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x, position.y, 30, 30, direction))
+		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x += 0.5f;
 			velocity.x += 0.05f;
@@ -198,12 +198,12 @@ void Player::Input()
 			if (state == W_LEFT || state == RUN_LEFT)
 			{
 				state = JUMP_LEFT;
-				velocity.y -= 1;
+				velocity.y -= Velocity_Y;
 				isFly = true;
 			}
 			if (state == W_RIGHT || state == RUN_RIGHT || state == IDLE)
 			{
-				velocity.y -= 1;
+				velocity.y -= Velocity_Y;
 				state = JUMP_RIGHT;
 				isFly = true;
 			}
@@ -278,9 +278,9 @@ void Player::processPos()
 
 void Player::processGravity()
 {
-	if (App->map->MovementCost(position.x, position.y, 30, 30, DOWN) && state != FLY_LEFT && state != FLY_RIGHT)
+	if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) && state != FLY_LEFT && state != FLY_RIGHT)
 	{
-		velocity.y += Gravity / 4;
+		velocity.y += Gravity;
 	}
 	else if (isFly == false)
 	{
@@ -288,7 +288,7 @@ void Player::processGravity()
 	}
 	else
 	{
-		if (App->map->MovementCost(position.x, position.y, 30, 30, DOWN) == false)
+		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) == false)
 		{
 			isFly = false;
 			velocity.y = 0;

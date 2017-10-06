@@ -171,7 +171,7 @@ bool j1Map::CleanUp()
 	return true;
 }
 
-bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const
+bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const //TODO ELLIOT NEED FIX
 {
 	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
 	bool ret = true;
