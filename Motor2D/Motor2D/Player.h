@@ -7,10 +7,10 @@
 #include "Animation.h"
 
 #define Gravity 0.5
-#define AnimationSpeed4 0.1f
-#define AnimationSpeed3 0.13f
+#define AnimationSpeed4 0.15f
+#define AnimationSpeed3 0.2f
 
-#define Velocity_X 1.5f
+#define Velocity_X 2.0f
 #define Velocity_Y 10.0f
 
 struct SDL_Texture;
@@ -57,6 +57,8 @@ public:
 
 	// Called each loop iteration
 	bool Update(float dt);
+
+	void FollowPlayer(float speed);
 
 	void Input();
 

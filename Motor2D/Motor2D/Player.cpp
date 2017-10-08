@@ -78,7 +78,7 @@ Player::~Player()
 
 bool Player::Awake(pugi::xml_node& config)
 {
-	position.create(160, 512);
+	position.create(64, 354);
 	velocity.create(0, 0);
 	//TODO SERGIO 2: Init start position
 
@@ -108,11 +108,41 @@ bool Player::Update(float dt)
 	//Remember use Setzero();
 
 	Input();
+
 	processPos();
 	processGravity();
 	ReturnToZero();
-	Draw();
+
+	//Draw();
+	//App->map->Draw(1);
 	return true;
+}
+
+bool Player::PostUpdate()
+{
+	Draw();
+	App->map->Draw(1);
+	return true;
+}
+
+
+void Player::FollowPlayer(float speed)
+{
+	if (direction == LEFT)
+	{
+		if (position.x > App->win->GetWidth() / 2 && position.x + App->win->GetWidth() / 2  < App->map->mapdata.width * App->map->mapdata.tile_width)
+		{
+			App->render->camera.x += speed;
+		}
+	}
+	if (direction == RIGHT)
+	{
+		if (position.x > App->win->GetWidth() / 2 && position.x + App->win->GetWidth() / 2 < App->map->mapdata.width * App->map->mapdata.tile_width)
+		{
+			App->render->camera.x -= speed;
+		}
+	}
+
 }
 
 void Player::Input()
@@ -123,6 +153,7 @@ void Player::Input()
 		if (App->map->MovementCost(position.x - Velocity_X, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x -= Velocity_X;
+			FollowPlayer(Velocity_X);
 			//velocity.x -= 0.001f;
 		}
 		if (!isFly)
@@ -143,7 +174,8 @@ void Player::Input()
 		direction = LEFT;
 		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
-			position.x -= 0.5f;
+			position.x -= Velocity_X * 2;
+			FollowPlayer(Velocity_X * 2);
 			//velocity.x -= 0.05f;
 		}
 		if (!isFly)state = RUN_LEFT;
@@ -157,9 +189,10 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x + Velocity_X, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
+		if (App->map->MovementCost(position.x + Velocity_X, position.y - 10, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x += Velocity_X;
+			FollowPlayer(Velocity_X);
 			//velocity.x += 0.001f;
 		}
 		if (!isFly)state = W_RIGHT;
@@ -177,10 +210,11 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
+		if (App->map->MovementCost(position.x, position.y - 10, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
-			position.x += 0.5f;
-			velocity.x += 0.05f;
+			position.x += Velocity_X * 2;
+			FollowPlayer(Velocity_X * 2);
+			//velocity.x += 0.05f;
 		}
 		if (!isFly)state = RUN_RIGHT;
 	}
@@ -297,7 +331,7 @@ void Player::processGravity()
 		else
 		{
 			LOG("LOL");
-			velocity.y = 0.06;
+			velocity.y = 0.8;
 		}
 	}
 
@@ -356,13 +390,9 @@ void Player::Draw()
 	}
 	}
 	SDL_Rect r = current_animation->GetCurrentFrame();
-	App->render->Blit(graphics, position.x, position.y, &r);
+	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
 }
 
-bool Player::PostUpdate()
-{
-	return true;
-}
 
 bool Player::CleanUp()
 {

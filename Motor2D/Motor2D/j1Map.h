@@ -164,7 +164,7 @@ public:
 	bool Awake(pugi::xml_node& conf);
 
 	// Called each loop iteration
-	void Draw();
+	void Draw(int time);
 
 	TileSet * GetTilesetFromTileId(int id) const;
 

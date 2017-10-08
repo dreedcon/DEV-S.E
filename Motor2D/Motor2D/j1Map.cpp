@@ -26,7 +26,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-void j1Map::Draw()
+void j1Map::Draw(int time)
 {
 	if(map_loaded == false)
 		return;
@@ -39,6 +39,16 @@ void j1Map::Draw()
 
 		if (layer->properties.Get("Draw") != 1)
 			continue;
+		if (time == 1)
+		{
+			if (layer->properties.Get("NoDraw") != 1)
+				continue;
+		}
+		else
+		{
+			if (layer->properties.Get("NoDraw") != 0)
+				continue;
+		}
 
 		for (int y = 0; y < mapdata.height; ++y)
 		{

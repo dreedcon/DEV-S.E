@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="70" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="70" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="level_tiles" tilewidth="32" tileheight="32" tilecount="140" columns="20">
   <image source="level_tiles.png" width="640" height="241"/>
  </tileset>
@@ -5620,7 +5620,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Walkability" width="70" height="40" opacity="0.7">
+ <layer name="Walkability" width="70" height="40" visible="0" opacity="0.7">
   <properties>
    <property name="Draw" type="int" value="0"/>
   </properties>
