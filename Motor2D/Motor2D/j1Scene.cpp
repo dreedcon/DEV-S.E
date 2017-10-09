@@ -31,6 +31,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music/Music_LVL1.ogg");
+	App->audio->LoadFx("audio/fx/jump.wav"); //Fx---->1
+	App->audio->LoadFx("audio/fx/float.wav"); //Fx----->2
 	App->map->Load("LVL3.tmx");
 	return true;
 }

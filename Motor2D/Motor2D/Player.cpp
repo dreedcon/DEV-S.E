@@ -293,12 +293,14 @@ void Player::Input()
 			//JUMP!!!!
 			if (state == W_LEFT || state == RUN_LEFT)
 			{
+				App->audio->PlayFx(1);
 				state = JUMP_LEFT;
 				velocity.y -= Velocity_Y;
 				isFly = true;
 			}
 			if (state == W_RIGHT || state == RUN_RIGHT || state == IDLE)
 			{
+				App->audio->PlayFx(1);
 				velocity.y -= Velocity_Y;
 				state = JUMP_RIGHT;
 				isFly = true;
@@ -306,6 +308,7 @@ void Player::Input()
 		}
 		else
 		{
+			App->audio->PlayFx(2);
 			if (state == FLY_LEFT || state == FLY_RIGHT)
 			{
 				isFly = false;
