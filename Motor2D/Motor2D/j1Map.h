@@ -175,6 +175,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool NextLvl(int x, int y, int width, int height) const;
+
 	bool MovementCost(int x, int y, int width, int height, Direction dir) const;
 
 	// Load new map
@@ -198,7 +200,7 @@ public:
 	MapData mapdata;
 	TileSet tileset;
 private:
-
+	fPoint posBackground;
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

@@ -85,12 +85,16 @@ public:
 	bool Load(pugi::xml_node &);
 	bool Save(pugi::xml_node&)const;
 
+	int GetDirection();
+
+	bool CanFollowPlayer();
+
 	// Called before quitting
 	bool CleanUp();
 
 private:
 	SDL_Texture* graphics = nullptr;
-	fPoint position;
+	//fPoint position;
 	fPoint velocity;
 	bool isFly = false;
 	bool returntoZero = false;
@@ -102,6 +106,7 @@ private:
 
 
 public:
+	fPoint position;
 	State state;
 	Direction direction;
 

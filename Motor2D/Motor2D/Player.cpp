@@ -77,7 +77,7 @@ Player::~Player()
 
 bool Player::Awake(pugi::xml_node& config)
 {
-	position.create(64, 354);
+	position.create(85, 354);
 	velocity.create(0, 0);
 	//TODO SERGIO 2: Init start position
 
@@ -119,6 +119,7 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+
 	Draw();
 	App->map->Draw(1);
 	return true;
@@ -146,6 +147,29 @@ bool Player::Save(pugi::xml_node &node)const
 	return ret;
 }
 
+int Player::GetDirection()
+{
+	return direction;
+}
+
+bool Player::CanFollowPlayer()
+{
+	if (direction == LEFT)
+	{
+		if (position.x > App->win->GetWidth() / 2 && position.x + App->win->GetWidth() / 2  < App->map->mapdata.width * App->map->mapdata.tile_width)
+		{
+			return true;
+		}
+	}
+	if (direction == RIGHT)
+	{
+		if (position.x > App->win->GetWidth() / 2 && position.x + App->win->GetWidth() / 2 < App->map->mapdata.width * App->map->mapdata.tile_width)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 
 void Player::FollowPlayer(float speed)
 {
@@ -163,7 +187,6 @@ void Player::FollowPlayer(float speed)
 			App->render->camera.x -= speed;
 		}
 	}
-
 }
 
 void Player::Input()

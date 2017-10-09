@@ -1,6 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "Player.h"
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
@@ -37,32 +38,74 @@ void j1Map::Draw(int time)
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->properties.Get("Draw") != 1)
-			continue;
-		if (time == 1)
+		if (time == -1)
 		{
-			if (layer->properties.Get("NoDraw") != 1)
-				continue;
+			for (int y = 0; y < mapdata.height; ++y)
+			{
+				for (int x = 0; x < mapdata.width; ++x)
+				{
+					int tile_id = layer->Get(x, y);
+					if (tile_id > 0)
+					{
+						TileSet* tileset = GetTilesetFromTileId(tile_id);
+
+						SDL_Rect r = tileset->GetTileRect(tile_id);
+						iPoint pos = MapToWorld(x, y);
+
+						if (App->player->CanFollowPlayer())
+						{
+							if (App->player->GetDirection() == LEFT)
+							{
+								posBackground.x += 0.0001;
+								App->render->Blit(tileset->texture, pos.x + posBackground.x, pos.y, &r);
+							}
+							else if (App->player->GetDirection() == RIGHT)
+							{
+								posBackground.x -= 0.0001;
+								App->render->Blit(tileset->texture, pos.x + posBackground.x, pos.y, &r);
+							}
+						}
+						else
+						{
+							App->render->Blit(tileset->texture, pos.x + posBackground.x, pos.y, &r);
+						}
+					}
+				}
+			}
+			return;
 		}
 		else
 		{
-			if (layer->properties.Get("NoDraw") != 0)
+			if (layer->properties.Get("Background") != 0)
 				continue;
-		}
 
-		for (int y = 0; y < mapdata.height; ++y)
-		{
-			for (int x = 0; x < mapdata.width; ++x)
+			if (layer->properties.Get("Draw") != 1)
+				continue;
+
+			if (time == 1)
 			{
-				int tile_id = layer->Get(x, y);
-				if (tile_id > 0)
+				if (layer->properties.Get("NoDraw") != 1)
+					continue;
+			}
+			else
+			{
+				if (layer->properties.Get("NoDraw") != 0)
+					continue;
+			}
+			for (int y = 0; y < mapdata.height; ++y)
+			{
+				for (int x = 0; x < mapdata.width; ++x)
 				{
-					TileSet* tileset = GetTilesetFromTileId(tile_id);
+					int tile_id = layer->Get(x, y);
+					if (tile_id > 0)
+					{
+						TileSet* tileset = GetTilesetFromTileId(tile_id);
 
-					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
+						SDL_Rect r = tileset->GetTileRect(tile_id);
+						iPoint pos = MapToWorld(x, y);
 
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					}
 				}
 			}
 		}
@@ -181,6 +224,22 @@ bool j1Map::CleanUp()
 	return true;
 }
 
+bool j1Map::NextLvl(int x, int y, int width, int height) const //TODO ELLIOT NEED FIX
+{
+	int blue_nextlvl = mapdata.tilesets.start->next->data->firstgid + 1; // RED TILE
+
+	iPoint center = WorldToMap(x + width / 2, y + height / 2); //left position
+
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
+
+	int center_player = meta_layer->Get(center.x, center.y);
+
+	if (center_player == blue_nextlvl)
+		return true;
+
+	return false;
+}
+
 bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const //TODO ELLIOT NEED FIX
 {
 	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
@@ -192,7 +251,7 @@ bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) con
 	iPoint down_left = WorldToMap(x, y + height); //left position
 
 
-	const MapLayer* meta_layer = mapdata.layers.start->next->next->data;
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
 
 	int up = meta_layer->Get(up_left.x, up_left.y);
 	int left = meta_layer->Get(up_left.x, up_left.y);
