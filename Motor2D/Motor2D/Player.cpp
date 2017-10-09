@@ -11,8 +11,11 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 
-Player::Player()
+
+Player::Player() : j1Module()
 {
+	
+	name.create("player");
 
 	idle.PushBack({ 3,  5, 24, 21 });
 	idle.PushBack({ 33, 5, 24, 21 });
@@ -65,10 +68,6 @@ Player::Player()
 	fly_left.PushBack({ 30, 240,  30, 30 });
 	fly_left.PushBack({ 60, 240,  30, 30 });
 	fly_left.speed = AnimationSpeed3;
-
-
-
-
 
 }
 
@@ -123,6 +122,28 @@ bool Player::PostUpdate()
 	Draw();
 	App->map->Draw(1);
 	return true;
+}
+
+bool Player::Load(pugi::xml_node &node)
+{
+	bool ret = true;
+
+	position.x = node.child("position").attribute("x").as_int();
+	position.y = node.child("position").attribute("y").as_int();
+
+	return ret;
+}
+
+bool Player::Save(pugi::xml_node &node)
+{
+	bool ret = true;
+
+	pugi::xml_node playerpos = node.append_child("position");
+
+	playerpos.append_attribute("x") = position.x;
+	playerpos.append_attribute("y") = position.y;
+
+	return ret;
 }
 
 

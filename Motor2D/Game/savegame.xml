@@ -8,8 +8,8 @@
 	</audio>
 	<map />
 	<scene />
-	<:anonymous />
+	<player />
 	<renderer>
-		<camera x="60" y="-120" />
+		<camera x="-20" y="-30" />
 	</renderer>
 </save>

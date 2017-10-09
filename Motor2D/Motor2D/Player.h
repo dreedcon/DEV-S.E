@@ -37,6 +37,12 @@ enum Direction
 	RIGHT
 };
 
+enum Levels
+{
+   LVL_1,
+   LVL_2
+};
+
 class Player : public j1Module
 {
 public:
@@ -74,6 +80,10 @@ public:
 
 	// Called before all Updates
 	bool PostUpdate();
+
+	//Save and Load functions
+	bool Load(pugi::xml_node &);
+	bool Save(pugi::xml_node&);
 
 	// Called before quitting
 	bool CleanUp();
