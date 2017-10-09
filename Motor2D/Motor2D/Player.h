@@ -83,7 +83,7 @@ public:
 
 	//Save and Load functions
 	bool Load(pugi::xml_node &);
-	bool Save(pugi::xml_node&);
+	bool Save(pugi::xml_node&)const;
 
 	// Called before quitting
 	bool CleanUp();

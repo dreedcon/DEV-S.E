@@ -134,7 +134,7 @@ bool Player::Load(pugi::xml_node &node)
 	return ret;
 }
 
-bool Player::Save(pugi::xml_node &node)
+bool Player::Save(pugi::xml_node &node)const
 {
 	bool ret = true;
 
