@@ -89,6 +89,8 @@ public:
 
 	bool CanFollowPlayer();
 
+	void ChangeMap(const char* path);
+
 	// Called before quitting
 	bool CleanUp();
 

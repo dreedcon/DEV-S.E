@@ -105,6 +105,10 @@ bool Player::Update(float dt)
 	//TODO SERGIO 3:
 	//Create a function to change lvls (F1, F2, etc...)
 	//Remember use Setzero();
+	if (App->map->NextLvl(position.x,position.y,App->map->mapdata.width,App->map->mapdata.height))
+	{
+		ChangeMap("LVL2.tmx");
+	}
 
 	Input();
 
@@ -437,7 +441,12 @@ void Player::Draw()
 	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
 }
 
-
+void Player::ChangeMap(const char* path)
+{
+	App->map->CleanUp();
+	App->map->Load(path);
+	Setzero();
+}
 bool Player::CleanUp()
 {
 	return true;
