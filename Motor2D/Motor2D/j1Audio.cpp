@@ -24,7 +24,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
-	volume;
+	volume = 40;
 
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{

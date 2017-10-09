@@ -4,14 +4,14 @@
 	<window />
 	<textures />
 	<audio>
-		<audio volume="90" />
+		<audio volume="40" />
 	</audio>
 	<map />
 	<scene />
 	<player>
-		<position x="1479" y="363.198242" />
+		<position x="85" y="354" />
 	</player>
 	<renderer>
-		<camera x="-998" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </save>
