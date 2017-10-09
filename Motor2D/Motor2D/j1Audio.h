@@ -20,6 +20,9 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	//Update 
+	bool Update(float dt);
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -29,11 +32,11 @@ public:
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
 
-	//Volume of the game
-	int const Returnvolume();
-
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
+
+	//Volume
+	int volume;
 
 	//Load and Save functions
 	bool Load(pugi::xml_node&);
@@ -41,7 +44,7 @@ public:
 
 private:
 	 
-	int volume = 0;
+	
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 };

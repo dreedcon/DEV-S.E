@@ -52,7 +52,16 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+
 	return ret;
+}
+
+
+//Update the state of the volume music
+bool j1Audio::Update(float dt)
+{
+	Mix_VolumeMusic(volume);
+	return true;
 }
 
 // Called before quitting
@@ -156,11 +165,6 @@ unsigned int j1Audio::LoadFx(const char* path)
 	}
 
 	return ret;
-}
-
-int const j1Audio::Returnvolume()
-{
-	return volume;
 }
 
 // Play WAV
