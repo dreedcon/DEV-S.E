@@ -219,6 +219,16 @@ bool j1Map::CleanUp()
 	}
 	mapdata.tilesets.clear();
 
+	p2List_item<MapLayer*>* layeritem;
+	layeritem = mapdata.layers.start;
+
+	while (layeritem != NULL)
+	{
+		RELEASE(layeritem->data);
+		layeritem = layeritem->next;
+	}
+	mapdata.layers.clear();
+
 	map_file.reset();
 
 	return true;

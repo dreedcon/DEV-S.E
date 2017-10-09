@@ -90,13 +90,13 @@ public:
 	bool CanFollowPlayer();
 
 	void ChangeMap(const char* path);
-
 	// Called before quitting
 	bool CleanUp();
 
 private:
 	SDL_Texture* graphics = nullptr;
-	//fPoint position;
+	fPoint position;
+	Levels actualvl;
 	fPoint velocity;
 	bool isFly = false;
 	bool returntoZero = false;
@@ -108,7 +108,6 @@ private:
 
 
 public:
-	fPoint position;
 	State state;
 	Direction direction;
 

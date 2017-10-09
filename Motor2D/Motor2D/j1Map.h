@@ -61,12 +61,12 @@ struct Properties
 	~Properties()
 	{
 		//p2List_item<Property*>* item;
-		p2List_item<Property*> item = properties.start->data;
+		p2List_item<Property*>* item = properties.start;
 
-		while (item.data != properties.end->data)
+		while (item != properties.end)
 		{
-			RELEASE(item.data);
-			item = item.next->data;
+			RELEASE(item->data);
+			item = item->next;
 		}
 
 		properties.clear();
@@ -79,6 +79,11 @@ struct Properties
 
 struct TileSet
 {
+	~TileSet()
+	{
+		App->tex->UnLoad(texture);
+	}
+
 	SDL_Rect GetTileRect(int id) const;
 
 	p2SString name;
@@ -109,6 +114,7 @@ struct MapLayer
 
 	~MapLayer()
 	{
+		//properties.~Properties();
 		RELEASE(data);
 	}
 
@@ -198,7 +204,7 @@ public:
 
 	// TODO 1: Add your struct for map info as public for now
 	MapData mapdata;
-	TileSet tileset;
+	//TileSet tileset;
 private:
 	fPoint posBackground;
 	pugi::xml_document	map_file;

@@ -80,7 +80,7 @@ bool Player::Awake(pugi::xml_node& config)
 	position.create(85, 354);
 	velocity.create(0, 0);
 	//TODO SERGIO 2: Init start position
-
+	actualvl = LVL_1;
 	// Sprites
 	return true;
 }
@@ -105,6 +105,20 @@ bool Player::Update(float dt)
 	//TODO SERGIO 3:
 	//Create a function to change lvls (F1, F2, etc...)
 	//Remember use Setzero();
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		if (actualvl == LVL_1)
+		{
+			ChangeMap("LVL2.tmx");
+			actualvl = LVL_2;
+		}
+		else if (actualvl == LVL_2)
+		{
+			ChangeMap("LVL3.tmx");
+			actualvl = LVL_1;
+		}
+	}
+
 	if (App->map->NextLvl(position.x,position.y,App->map->mapdata.width,App->map->mapdata.height))
 	{
 		ChangeMap("LVL2.tmx");
