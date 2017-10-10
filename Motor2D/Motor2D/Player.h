@@ -91,7 +91,10 @@ public:
 
 	void ChangeMap(const char* path);
 	
+	//Debuf Functions
 	void StartFromFirstLvl();
+
+	void StartFromBeginCurrentLvl();
 	
 	// Called before quitting
 	bool CleanUp();

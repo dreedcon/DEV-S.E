@@ -110,6 +110,10 @@ bool Player::Update(float dt)
 	{
 		StartFromFirstLvl();
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
+	{
+		StartFromBeginCurrentLvl();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
@@ -481,6 +485,26 @@ void Player::StartFromFirstLvl()
    App->render->camera.y = 0;
    ChangeMap("LVL3.tmx");
   
+}
+
+void Player::StartFromBeginCurrentLvl()
+{
+	if (actualvl != LVL_1)
+	{
+		position.create(320, 832);
+		App->render->camera.x = -50;
+		App->render->camera.y = -330;
+		ChangeMap("LVL2.tmx");
+		actualvl = LVL_2;
+	}
+	else if (actualvl != LVL_2)
+	{
+		position.create(85, 354);
+		App->render->camera.x = 0;
+		App->render->camera.y = 0;
+		ChangeMap("LVL3.tmx");
+		actualvl = LVL_1;
+	}
 }
 
 bool Player::CleanUp()
