@@ -105,6 +105,12 @@ bool Player::Update(float dt)
 	//TODO SERGIO 3:
 	//Create a function to change lvls (F1, F2, etc...)
 	//Remember use Setzero();
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
+	{
+		StartFromFirstLvl();
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
 		if (actualvl == LVL_1)
@@ -467,6 +473,16 @@ void Player::ChangeMap(const char* path)
 	App->map->Load(path);
 	Setzero();
 }
+
+void Player::StartFromFirstLvl()
+{
+   position.create(85, 354);
+   App->render->camera.x = 0;
+   App->render->camera.y = 0;
+   ChangeMap("LVL3.tmx");
+  
+}
+
 bool Player::CleanUp()
 {
 	return true;

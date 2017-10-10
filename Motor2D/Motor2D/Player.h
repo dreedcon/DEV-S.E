@@ -90,6 +90,9 @@ public:
 	bool CanFollowPlayer();
 
 	void ChangeMap(const char* path);
+	
+	void StartFromFirstLvl();
+	
 	// Called before quitting
 	bool CleanUp();
 
