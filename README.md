@@ -14,7 +14,7 @@
 * F6 Load the previous state
 
 ## Link to Github
-*(https://github.com/dreedcon/DEV-S.E)
+https://github.com/dreedcon/DEV-S.E
 
 # Autors
 * Sergio Saez
