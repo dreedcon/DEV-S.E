@@ -115,7 +115,7 @@ bool Player::Update(float dt)
 		StartFromBeginCurrentLvl();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
 		if (actualvl == LVL_1)
 		{
@@ -127,14 +127,11 @@ bool Player::Update(float dt)
 			ChangeMap("LVL3.tmx");
 			actualvl = LVL_1;
 		}
-	}
+	}*/
 
 	if (App->map->NextLvl(position.x,position.y,App->map->mapdata.width,App->map->mapdata.height))
 	{
-		position.create(320,832);
-		App->render->camera.x = -50;
-		App->render->camera.y = -330;
-		ChangeMap("LVL2.tmx");
+		ChangeLVL();
 	}
 
 	Input();
@@ -146,6 +143,40 @@ bool Player::Update(float dt)
 	//Draw();
 	//App->map->Draw(1);
 	return true;
+}
+
+void Player::ChangeLVL()
+{
+	if (actualvl == LVL_1)
+	{
+		position.create(320, 832);
+		App->render->camera.x = -50;
+		App->render->camera.y = -330;
+		ChangeMap("LVL2.tmx");
+		actualvl = LVL_2;
+	}
+	else if (actualvl == LVL_2)
+	{
+		position.create(85, 354);
+		App->render->camera.x = 0;
+		App->render->camera.y = 0;
+		ChangeMap("LVL3.tmx");
+		actualvl = LVL_1;
+	}
+}
+
+void Player::LoadChangeLvl()
+{
+	if (actualvl == LVL_1)
+	{
+		ChangeMap("LVL2.tmx");
+		actualvl = LVL_2;
+	}
+	else if (actualvl == LVL_2)
+	{
+		ChangeMap("LVL3.tmx");
+		actualvl = LVL_1;
+	}
 }
 
 bool Player::PostUpdate()
@@ -162,6 +193,10 @@ bool Player::Load(pugi::xml_node &node)
 
 	position.x = node.child("position").attribute("x").as_int();
 	position.y = node.child("position").attribute("y").as_int();
+	if (actualvl != node.child("position").attribute("Actual_LVL").as_int())
+	{
+		LoadChangeLvl();
+	}
 
 	return ret;
 }
@@ -174,6 +209,7 @@ bool Player::Save(pugi::xml_node &node)const
 
 	playerpos.append_attribute("x") = position.x;
 	playerpos.append_attribute("y") = position.y;
+	playerpos.append_attribute("Actual_LVL") = actualvl;
 
 	return ret;
 }
@@ -229,8 +265,10 @@ void Player::Input()
 		{
 			position.x -= Velocity_X;
 			FollowPlayer(Velocity_X);
-			//velocity.x -= 0.001f;
+			isMove = true;
 		}
+		else
+			isMove = false;
 		if (!isFly)
 			state = W_LEFT;
 		else if (state == FLY_RIGHT)
@@ -239,6 +277,7 @@ void Player::Input()
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
 		direction = NON;
+		isMove = false;
 		//returntoZero = true;
 		//goZero = LEFT;
 		if (!isFly)state = IDLE;
@@ -251,13 +290,17 @@ void Player::Input()
 		{
 			position.x -= Velocity_X * 2;
 			FollowPlayer(Velocity_X * 2);
-			//velocity.x -= 0.05f;
+			isMove = true;
 		}
+		else
+			isMove = false;
 		if (!isFly)state = RUN_LEFT;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_UP)
 	{
 		direction = NON;
+
+		isMove = false;
 		if (!isFly)state = IDLE;
 	}
 
@@ -268,8 +311,10 @@ void Player::Input()
 		{
 			position.x += Velocity_X;
 			FollowPlayer(Velocity_X);
-			//velocity.x += 0.001f;
+			isMove = true;
 		}
+		else
+			isMove = false;
 		if (!isFly)state = W_RIGHT;
 		else if (state == FLY_LEFT)
 			state = FLY_RIGHT;
@@ -277,6 +322,7 @@ void Player::Input()
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 		direction = NON;
+		isMove = false;
 		//returntoZero = true;
 		//goZero = RIGHT;
 		if (!isFly)state = IDLE;
@@ -289,13 +335,16 @@ void Player::Input()
 		{
 			position.x += Velocity_X * 2;
 			FollowPlayer(Velocity_X * 2);
-			//velocity.x += 0.05f;
+			isMove = true;
 		}
+		else
+			isMove = false;
 		if (!isFly)state = RUN_RIGHT;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_UP)
 	{
 		direction = NON;
+		isMove = false;
 		if (!isFly)state = IDLE;
 	}
 
@@ -484,6 +533,7 @@ void Player::StartFromFirstLvl()
    App->render->camera.x = 0;
    App->render->camera.y = 0;
    ChangeMap("LVL3.tmx");
+   actualvl = LVL_1;
   
 }
 

@@ -9,7 +9,7 @@
 	<map />
 	<scene />
 	<player>
-		<position x="85" y="354" />
+		<position x="217" y="364.5" Actual_LVL="0" />
 	</player>
 	<renderer>
 		<camera x="0" y="0" />

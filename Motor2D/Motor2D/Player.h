@@ -64,6 +64,10 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	void ChangeLVL();
+
+	void LoadChangeLvl();
+
 	void FollowPlayer(float speed);
 
 	void Input();
@@ -116,6 +120,8 @@ private:
 public:
 	State state;
 	Direction direction;
+
+	bool isMove = false;
 
 	//Animations
 	Animation* current_animation;
