@@ -183,6 +183,8 @@ public:
 
 	bool NextLvl(int x, int y, int width, int height) const;
 
+	bool CheckDead(int x, int y, int width, int height) const;
+
 	bool MovementCost(int x, int y, int width, int height, Direction dir) const;
 
 	// Load new map

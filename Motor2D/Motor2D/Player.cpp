@@ -90,6 +90,7 @@ bool Player::Start()
 	graphics = App->tex->Load("textures/Kirby.png");
 	current_animation = &idle;
 	state = IDLE;
+	App->Save();
 	return true;
 }
 
@@ -129,16 +130,23 @@ bool Player::Update(float dt)
 		}
 	}*/
 
-	if (App->map->NextLvl(position.x,position.y,App->map->mapdata.width,App->map->mapdata.height))
-	{
-		ChangeLVL();
-	}
+
+	//CheckDead
 
 	Input();
-
+	
 	processPos();
 	processGravity();
 	ReturnToZero();
+
+	if (App->map->NextLvl(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h))
+	{
+		ChangeLVL();
+	}
+	if (App->map->CheckDead(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h))
+	{
+		App->Load();
+	}
 
 	//Draw();
 	//App->map->Draw(1);
@@ -154,6 +162,7 @@ void Player::ChangeLVL()
 		App->render->camera.y = -330;
 		ChangeMap("LVL2.tmx");
 		actualvl = LVL_2;
+		App->Save();
 	}
 	else if (actualvl == LVL_2)
 	{
@@ -162,6 +171,7 @@ void Player::ChangeLVL()
 		App->render->camera.y = 0;
 		ChangeMap("LVL3.tmx");
 		actualvl = LVL_1;
+		App->Save();
 	}
 }
 
@@ -286,7 +296,7 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
 	{
 		direction = LEFT;
-		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
+		if (App->map->MovementCost(position.x - Velocity_X * 2, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x -= Velocity_X * 2;
 			FollowPlayer(Velocity_X * 2);
@@ -307,7 +317,7 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x + Velocity_X, position.y - 10, current_animation->frames[0].w, current_animation->frames[0].h, direction))
+		if (App->map->MovementCost(position.x + Velocity_X, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x += Velocity_X;
 			FollowPlayer(Velocity_X);
@@ -331,7 +341,7 @@ void Player::Input()
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 	{
 		direction = RIGHT;
-		if (App->map->MovementCost(position.x, position.y - 10, current_animation->frames[0].w, current_animation->frames[0].h, direction))
+		if (App->map->MovementCost(position.x + Velocity_X * 2, position.y, current_animation->frames[0].w, current_animation->frames[0].h, direction))
 		{
 			position.x += Velocity_X * 2;
 			FollowPlayer(Velocity_X * 2);
@@ -439,6 +449,13 @@ void Player::processPos()
 
 void Player::processGravity()
 {
+	if (velocity.y < 0)
+	{
+		if (App->map->MovementCost(position.x, position.y - 20, current_animation->frames[0].w, current_animation->frames[0].h, UP) == false && isFly)
+		{
+			velocity.y = 0;
+		}
+	}
 	if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) && state != FLY_LEFT && state != FLY_RIGHT)
 	{
 		velocity.y += Gravity;

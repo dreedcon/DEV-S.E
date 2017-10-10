@@ -52,7 +52,7 @@ void j1Map::Draw(int time)
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 
-						if (App->player->CanFollowPlayer())
+						if (App->player->CanFollowPlayer() && App->player->isMove)
 						{
 							if (App->player->GetDirection() == LEFT)
 							{
@@ -228,6 +228,7 @@ bool j1Map::CleanUp()
 		layeritem = layeritem->next;
 	}
 	mapdata.layers.clear();
+	posBackground.SetToZero();
 
 	map_file.reset();
 
@@ -250,14 +251,30 @@ bool j1Map::NextLvl(int x, int y, int width, int height) const //TODO ELLIOT NEE
 	return false;
 }
 
+bool j1Map::CheckDead(int x, int y, int width, int height) const //TODO ELLIOT NEED FIX
+{
+	int blue_nextlvl = mapdata.tilesets.start->next->data->firstgid + 2; // RED TILE
+
+	iPoint center = WorldToMap(x + width / 2, y + height / 2); //left position
+
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
+
+	int center_player = meta_layer->Get(center.x, center.y);
+
+	if (center_player == blue_nextlvl)
+		return true;
+
+	return false;
+}
+
 bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) const //TODO ELLIOT NEED FIX
 {
 	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
 	bool ret = true;
 
 	iPoint up_left = WorldToMap(x, y); //left position
-	iPoint up_right = WorldToMap(x + width, y); //left position
-	iPoint down_right = WorldToMap(x + width, y + height); //left position
+	iPoint up_right = WorldToMap(x + width * 2, y); //left position
+	iPoint down_right = WorldToMap(x + width * 2, y + height); //left position
 	iPoint down_left = WorldToMap(x, y + height); //left position
 
 
@@ -265,7 +282,7 @@ bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) con
 
 	int up = meta_layer->Get(up_left.x, up_left.y);
 	int left = meta_layer->Get(up_left.x, up_left.y);
-	int right = meta_layer->Get(down_right.x, down_right.y);
+	int right = meta_layer->Get(up_right.x, up_right.y);
 	int down = meta_layer->Get(down_right.x, down_right.y);
 	//Special
 	int up_right_special = meta_layer->Get(up_right.x, up_right.y);
