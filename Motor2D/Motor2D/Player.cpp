@@ -53,9 +53,9 @@ Player::Player() : j1Module()
 	walk_left.PushBack({ 91, 155, 23, 22 });
 	walk_left.speed = AnimationSpeed4;
 
-	jump_left.PushBack({ 5,  185, 23, 22 });
-	jump_left.PushBack({ 30, 185, 23, 22 });
-	jump_left.PushBack({ 60, 185, 23, 22 });
+	jump_left.PushBack({ 5,  184, 23, 22 });
+	jump_left.PushBack({ 35, 184, 24, 22 });
+	jump_left.PushBack({ 65, 184, 24, 22 });
 	jump_left.speed = AnimationSpeed3;
 
 	run_left.PushBack({ 6,  215, 23, 21 });
