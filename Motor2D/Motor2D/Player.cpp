@@ -121,6 +121,9 @@ bool Player::Update(float dt)
 
 	if (App->map->NextLvl(position.x,position.y,App->map->mapdata.width,App->map->mapdata.height))
 	{
+		position.create(320,832);
+		App->render->camera.x = -50;
+		App->render->camera.y = -330;
 		ChangeMap("LVL2.tmx");
 	}
 

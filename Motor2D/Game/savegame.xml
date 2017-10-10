@@ -9,9 +9,9 @@
 	<map />
 	<scene />
 	<player>
-		<position x="85" y="354" />
+		<position x="724" y="998.996033" />
 	</player>
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-262" y="-330" />
 	</renderer>
 </save>
