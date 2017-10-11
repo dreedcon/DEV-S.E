@@ -13,6 +13,7 @@
 #include "j1App.h"
 #include "Player.h"
 #include "ParticleManager.h"
+#include "j1FadeToBlack.h"
 #include "j1Map.h"
 
 // Constructor
@@ -29,6 +30,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	player = new Player();
 	particles = new ParticleManager();
+	fade = new j1FadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(player);
 	AddModule(particles);
+	AddModule(fade);
 
 	// render last to swap buffer
 	AddModule(render);

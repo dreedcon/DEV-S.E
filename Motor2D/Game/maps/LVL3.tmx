@@ -7046,7 +7046,7 @@
   </data>
  </layer>
  <objectgroup name="Particles">
-  <object id="1" name="Particle1" x="319.152" y="201.091" width="1568.67" height="450.909">
+  <object id="1" name="Wind" x="319.152" y="201.091" width="1568.67" height="450.909">
    <properties>
     <property name="NumParticles" type="int" value="1000"/>
     <property name="NumTextureParticle" type="int" value="4"/>
@@ -7084,7 +7084,7 @@
     <property name="Type_particle" value="0"/>
    </properties>
   </object>
-  <object id="15" name="Particle2" x="826.304" y="297.879" width="149.21" height="134.333">
+  <object id="15" name="Drop " x="826.304" y="297.879" width="149.21" height="134.333">
    <properties>
     <property name="NumParticles" type="int" value="15"/>
     <property name="NumTextureParticle" type="int" value="4"/>
@@ -7103,7 +7103,7 @@
     <property name="Type_particle" value="1"/>
    </properties>
   </object>
-  <object id="16" name="Particle3" x="1797.39" y="708.833" width="159.21" height="52.333">
+  <object id="16" name="Fire" x="1797.39" y="708.833" width="159.21" height="52.333">
    <properties>
     <property name="NumParticles" type="int" value="100"/>
     <property name="NumTextureParticle" type="int" value="4"/>

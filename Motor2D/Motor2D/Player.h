@@ -118,6 +118,9 @@ private:
 	bool isInPlataform = false;
 
 	bool GoDead = false;
+	bool fade = false;
+	bool notRepeatDead = false;
+	bool now_switch = false;
 	//TODO SERGIO 1
 	//Create 3 variables (2 iPoint / 1 enum LVL)
 

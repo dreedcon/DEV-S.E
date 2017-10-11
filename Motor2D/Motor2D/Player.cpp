@@ -8,6 +8,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Textures.h"
+#include "j1FadeToBlack.h"
 #include "j1Map.h"
 #include "j1Scene.h"
 
@@ -96,7 +97,7 @@ bool Player::Start()
 	current_animation = &idle;
 	state = IDLE;
 	App->Save();
-
+	fade = false;
 	return true;
 }
 
@@ -128,9 +129,11 @@ bool Player::Update(float dt)
 	//}
 
 
+
+
 	//CheckDead
 
-	if (state != DEAD)
+	if (state != DEAD && GoDead == false)
 	{
 		Input();
 	}
@@ -147,23 +150,45 @@ bool Player::Update(float dt)
 	{
 		if (GoDead == false)
 		{
+			fade = false;
 			GoDead = true;
+			notRepeatDead = true;
+			current_animation->SetZero();
+			dead.SetZero();
+			current_animation = &dead;
 		}
 	}
 	if (GoDead)
 	{
 		if (current_animation->FinishAnimation())
 		{
-			GoDead = false;
-			App->audio->ResumeMusic();
-			App->Load();
+			if (fade == false)
+			{
+				App->fade->FadeToBlack();
+				fade = true;
+				now_switch = true;
+			}
+
 		}
 
-		if (state != DEAD)
+		if (App->fade->Checkfadetoblack() && now_switch)
+		{
+			now_switch = false;
+			App->Load();
+		}
+		if (App->fade->Checkfadefromblack() && fade)
+		{
+			fade = false;
+			GoDead = false;
+			App->audio->ResumeMusic();
+		}
+
+		if (state != DEAD && notRepeatDead)
 		{
 			App->audio->StopMusic();
 			App->audio->PlayFx(3);
 			state = DEAD;
+			notRepeatDead = false;
 		}
 	}
 
@@ -555,8 +580,17 @@ void Player::Draw()
 		break;
 	}
 	}
-	SDL_Rect r = current_animation->GetCurrentFrame();
-	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
+	if (fade)
+	{
+		SDL_Rect r = current_animation->GetCurrentFrameSTOP();
+		App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
+	}
+	else
+	{
+		SDL_Rect r = current_animation->GetCurrentFrame();
+		App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
+	}
+
 }
 
 void Player::ChangeMap(const char* path)

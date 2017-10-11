@@ -9,6 +9,8 @@
   <renderer>
     <vsync value="false"/>
   </renderer>
+  
+  <fadetoblack width="1024" height="768" scale="1"/>
 
   <window>
     <resolution width="1024" height="768" scale="1"/>

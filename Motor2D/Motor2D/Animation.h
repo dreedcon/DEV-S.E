@@ -30,6 +30,16 @@ public:
 		return frames[(int)current_frame];
 	}
 
+	SDL_Rect& GetCurrentFrameSTOP()
+	{
+		return frames[(int)current_frame];
+	}
+
+	void SetZero()
+	{
+		current_frame = 0;
+	}
+
 	bool FinishAnimation()
 	{
 		if (current_frame >= last_frame - 0.5f)

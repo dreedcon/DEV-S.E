@@ -55,6 +55,9 @@
     <ClCompile Include="P_Follow.cpp">
       <Filter>Desenvolupament  ========\Particle Manager</Filter>
     </ClCompile>
+    <ClCompile Include="j1FadeToBlack.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -131,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="P_Follow.h">
       <Filter>Desenvolupament  ========\Particle Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FadeToBlack.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ class j1Scene;
 class j1Map;
 class Player;
 class ParticleManager;
+class j1FadeToBlack;
 
 class j1App
 {
@@ -88,6 +89,7 @@ public:
 	j1Scene*			scene;
 	Player*				player;
 	ParticleManager*    particles;
+	j1FadeToBlack*		fade;
 
 	int		capped_ms = -1;
 	j1TimeNormal	frame_time;
