@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "ParticleManager.h"
 #include "j1Map.h"
 #include <math.h>
 
@@ -230,9 +231,40 @@ bool j1Map::CleanUp()
 	mapdata.layers.clear();
 	posBackground.SetToZero();
 
+	p2List_item<ParticleObject*>*  objectitem;
+	objectitem = mapdata.particleobj.start;
+
+	while (objectitem != NULL)
+	{
+		RELEASE(objectitem->data);
+		objectitem = objectitem->next;
+	}
+	mapdata.particleobj.clear();
+
 	map_file.reset();
 
 	return true;
+}
+
+iPoint j1Map::GetPositionStart()
+{
+	int start_position = mapdata.tilesets.start->next->data->firstgid + 3; //Tile Green
+
+
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
+
+	for (int y = 0; y < meta_layer->height; y++)
+	{
+		for (int x = 0; x < meta_layer->width; x++)
+		{
+			int up = meta_layer->Get(x, y);
+			if (up == start_position)
+			{
+
+				return iPoint(MapToWorld(x, y));
+			}
+		}
+	}
 }
 
 bool j1Map::NextLvl(int x, int y, int width, int height) const //TODO ELLIOT NEED FIX
@@ -379,16 +411,19 @@ bool j1Map::Load(const char* file_name)
 
 
 	//Load ParticleObjects ----------------------------------------------
-	//pugi::xml_node partcileObj;
-	//for (partcileObj = map_file.child("map").child("objectgroup").child("object"); partcileObj && ret; layer = layer.next_sibling("object"))
-	//{
-	//	MapLayer* lay = new MapLayer();
+	pugi::xml_node partcileObj;
+	for (partcileObj = map_file.child("map").child("objectgroup").child("object"); partcileObj && ret; partcileObj = partcileObj.next_sibling("object"))
+	{
+		ParticleObject* partobj = new ParticleObject();
 
-	//	ret = LoadLayer(layer, lay);
+		ret = LoadParticleObject(partcileObj, partobj);
 
-	//	if (ret == true)
-	//		mapdata.layers.add(lay);
-	//}
+		if (ret == true)
+			mapdata.particleobj.add(partobj);
+	}
+	//Apply particles
+	if(mapdata.particleobj.count() > 0)
+		SetParticles();
 
 	map_loaded = ret;
 
@@ -562,6 +597,19 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
+bool j1Map::LoadParticleObject(pugi::xml_node& node, ParticleObject* object)
+{
+	object->name = node.attribute("name").as_string();
+	object->pos_x = node.attribute("x").as_int();
+	object->pos_y = node.attribute("y").as_int();
+	object->height = node.attribute("height").as_int();
+	object->width = node.attribute("width").as_int();
+	LoadProperties(node, object->properties);
+
+
+	return true;
+}
+
 // Load a group of properties from a node and fill a list with it
 bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
@@ -586,6 +634,56 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 	return ret;
 }
+
+void j1Map::SetParticles()
+{
+	p2List_item<ParticleObject*>* item;
+	item = mapdata.particleobj.start;
+	while (item != NULL)
+	{
+		ParticleObject* obj = item->data;
+		if (obj->properties.Get("Type_particle") == 0)//FOLLOW player
+		{
+			SDL_Rect rect;
+			rect.x = obj->properties.Get("Rect_X");
+			rect.y = obj->properties.Get("Rect_Y");
+			rect.w = obj->properties.Get("Rect_W");
+			rect.h = obj->properties.Get("Rect_H");
+			//Create Particle Follow
+			App->particles->CreateFollow_P(App->player->Getposition(),
+			fPoint(obj->properties.Get("Offset_X"),obj->properties.Get("Offset_Y")),
+				rect, iPoint(obj->width, obj->height),
+				iPoint(obj->properties.Get("TimeLifeMax"),obj->properties.Get("TimeLifeMin")),
+				obj->properties.Get("Size"),
+				obj->properties.Get("NumTextureParticle"),
+				obj->properties.Get("NumParticles"));
+			App->player->particlePlayer = App->particles->Group_Follow.start->data;//This is only use 1 Particle Follow
+		}
+		if (obj->properties.Get("Type_particle") == 1)//FIRE
+		{
+			SDL_Rect rect;
+			rect.x = obj->properties.Get("Rect_X");
+			rect.y = obj->properties.Get("Rect_Y");
+			rect.w = obj->properties.Get("Rect_W");
+			rect.h = obj->properties.Get("Rect_H");
+			//Create Particle Fire
+			//Warning (If speed = 100) -> speed = 0.5
+			App->particles->CreateFire_Particle(fPoint(item->data->pos_x, item->data->pos_y),
+				rect, iPoint(obj->width, obj->height),
+				iPoint(obj->properties.Get("TimeLifeMax"),obj->properties.Get("TimeLifeMin")),
+				fPoint(obj->properties.Get("Speed_X"), obj->properties.Get("Speed_Y")),
+				(P_Direction)obj->properties.Get("Particle_Direction"),
+				obj->properties.Get("Size"),
+				obj->properties.Get("NumParticles"),
+				obj->properties.Get("NumTextureParticle"), true);
+		}
+
+
+
+		item = item->next;
+	}
+}
+
 
 /*bool TileSet::LoadTile(pugi::xml_node &node, Tile *tile)
 {

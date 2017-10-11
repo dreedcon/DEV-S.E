@@ -91,6 +91,7 @@ bool Player::Start()
 	current_animation = &idle;
 	state = IDLE;
 	App->Save();
+
 	return true;
 }
 
@@ -149,7 +150,7 @@ void Player::ChangeLVL()
 	if (actualvl == LVL_1)
 	{
 		ChangeMap("LVL2.tmx");
-		position.create(320, 832);
+		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		App->render->camera.x = 0;
 		App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
 		actualvl = LVL_2;
@@ -157,32 +158,21 @@ void Player::ChangeLVL()
 	}
 	else if (actualvl == LVL_2)
 	{
-		position.create(85, 354);
+		ChangeMap("LVL3.tmx");
+		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		App->render->camera.x = 0;
 		App->render->camera.y = 0;
-		ChangeMap("LVL3.tmx");
 		actualvl = LVL_1;
 		App->Save();
 	}
 }
 
-void Player::LoadChangeLvl()
-{
-	if (actualvl == LVL_1)
-	{
-		ChangeMap("LVL2.tmx");
-		actualvl = LVL_2;
-	}
-	else if (actualvl == LVL_2)
-	{
-		ChangeMap("LVL3.tmx");
-		actualvl = LVL_1;
-	}
-}
-
 bool Player::PostUpdate()
 {
-
+	if(isFly == false && isMove && isInPlataform)
+		particlePlayer->active = true;
+	else
+		particlePlayer->active = false;
 	Draw();
 	App->map->Draw(1);
 	return true;
@@ -192,12 +182,16 @@ bool Player::Load(pugi::xml_node &node)
 {
 	bool ret = true;
 
-	position.x = node.child("position").attribute("x").as_int();
-	position.y = node.child("position").attribute("y").as_int();
 	if (actualvl != node.child("position").attribute("Actual_LVL").as_int())
 	{
-		LoadChangeLvl();
+		StartFromBeginCurrentLvl();
 	}
+	else
+	{
+		position.x = node.child("position").attribute("x").as_int();
+		position.y = node.child("position").attribute("y").as_int();
+	}
+
 
 	return ret;
 }
@@ -351,6 +345,7 @@ void Player::Input()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
+		isInPlataform = false;
 		if (isFly == false)
 		{
 			//JUMP!!!!
@@ -442,9 +437,10 @@ void Player::processGravity()
 {
 	if (velocity.y < 0)
 	{
-		if (App->map->MovementCost(position.x, position.y - 20, current_animation->frames[0].w, current_animation->frames[0].h, UP) == false && isFly)
+		if (App->map->MovementCost(position.x, position.y - OFFSET_Y, current_animation->frames[0].w, current_animation->frames[0].h, UP) == false && isFly)
 		{
 			velocity.y = 0;
+			isInPlataform = true;
 		}
 	}
 	if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) && state != FLY_LEFT && state != FLY_RIGHT)
@@ -453,6 +449,10 @@ void Player::processGravity()
 	}
 	else if (isFly == false)
 	{
+		if (App->map->MovementCost(position.x, position.y + OFFSET_Y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) == false)
+		{
+			isInPlataform = true;
+		}
 		velocity.y = 0;
 	}
 	else
@@ -465,7 +465,6 @@ void Player::processGravity()
 		}
 		else
 		{
-			LOG("LOL");
 			velocity.y = 0.8;
 		}
 	}
@@ -538,29 +537,30 @@ void Player::ChangeMap(const char* path)
 void Player::StartFromFirstLvl()
 {
 	ChangeMap("LVL3.tmx");
-   position.create(85, 354);
-   App->render->camera.x = 0;
-   App->render->camera.y = 0;
-   actualvl = LVL_1;
-  
+	position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
+	actualvl = LVL_1;
+
 }
 
 void Player::StartFromBeginCurrentLvl()
 {
 	if (actualvl != LVL_1)
 	{
-		position.create(320, 832);
+		ChangeMap("LVL2.tmx");
+
+		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		App->render->camera.x = 0;
 		App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
-		ChangeMap("LVL2.tmx");
 		actualvl = LVL_2;
 	}
 	else if (actualvl != LVL_2)
 	{
-		position.create(85, 354);
+		ChangeMap("LVL3.tmx");
+		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		App->render->camera.x = 0;
 		App->render->camera.y = 0;
-		ChangeMap("LVL3.tmx");
 		actualvl = LVL_1;
 	}
 }
@@ -568,4 +568,9 @@ void Player::StartFromBeginCurrentLvl()
 bool Player::CleanUp()
 {
 	return true;
+}
+
+fPoint* Player::Getposition()
+{
+	return &position;
 }

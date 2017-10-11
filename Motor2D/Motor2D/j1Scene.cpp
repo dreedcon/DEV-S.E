@@ -61,10 +61,17 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x += 10;
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+	{
 		App->audio->volume += 10;
+		App->audio->Changevolume(App->audio->volume);
+	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+	{
 		App->audio->volume -= 10;
+		App->audio->Changevolume(App->audio->volume);
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->Load();

@@ -11,6 +11,7 @@
 	<player>
 		<position x="85" y="354" Actual_LVL="0" />
 	</player>
+	<:anonymous />
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>

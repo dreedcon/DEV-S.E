@@ -23,6 +23,8 @@ public:
 	//Update 
 	bool Update(float dt);
 
+	bool Changevolume(int volume);
+
 	// Called before quitting
 	bool CleanUp();
 

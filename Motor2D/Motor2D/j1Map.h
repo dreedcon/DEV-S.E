@@ -193,6 +193,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	iPoint GetPositionStart();
+
 	bool NextLvl(int x, int y, int width, int height) const;
 
 	bool CheckDead(int x, int y, int width, int height) const;
@@ -208,11 +210,15 @@ private:
 	bool LoadMap();
 	bool loadTileSet(pugi::xml_node&, TileSet*);
 
-	bool LoadTilesetImage(pugi::xml_node & tileset_node, TileSet * set);
+	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 
-	bool LoadLayer(pugi::xml_node & node, MapLayer * layer);
+	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
-	bool LoadProperties(pugi::xml_node & node, Properties & properties);
+	bool LoadParticleObject(pugi::xml_node& node, ParticleObject* layer);
+
+	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+
+	void SetParticles();
 
 public:
 

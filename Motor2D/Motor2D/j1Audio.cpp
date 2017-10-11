@@ -52,13 +52,18 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-
 	return ret;
 }
 
 
 //Update the state of the volume music
 bool j1Audio::Update(float dt)
+{
+	
+	return true;
+}
+
+bool j1Audio::Changevolume(int volume)
 {
 	Mix_VolumeMusic(volume);
 	return true;

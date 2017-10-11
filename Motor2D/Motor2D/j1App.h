@@ -15,6 +15,7 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class Player;
+class ParticleManager;
 
 class j1App
 {
@@ -86,6 +87,7 @@ public:
 	j1Map*              map;
 	j1Scene*			scene;
 	Player*				player;
+	ParticleManager*    particles;
 
 	int		capped_ms = -1;
 	j1TimeNormal	frame_time;
