@@ -14,6 +14,7 @@ ParticleManager::ParticleManager()
 
 ParticleManager::~ParticleManager()
 {
+	
 }
 
 bool ParticleManager::Awake()
@@ -96,6 +97,23 @@ bool ParticleManager::PostUpdate()
 
 bool ParticleManager::CleanUp()
 {
+	p2List_item<P_Fire*>* item = Group_Fire.start;
+	while (item != NULL)
+	{
+		item->data->particle.Clear();
+		item = item->next;
+	}
+	Group_Fire.clear();
+	
+	p2List_item<P_Follow*>* item2 = Group_Follow.start;
+	while (item2 != NULL)
+	{
+		item2->data->particle.Clear();
+		item2 = item2->next;
+	}
+	Group_Follow.clear();
+
+	App->tex->UnLoad(atlas_particle);
 	return true;
 }
 
@@ -116,7 +134,7 @@ void ParticleManager::CreateFire_Particle(fPoint position_static, SDL_Rect initi
 bool ParticleManager::DeleteFollow_p(P_Follow* group)
 {
 	p2List_item<P_Follow*>* item = Group_Follow.start;
-	while (item != Group_Follow.end)
+	while (item != NULL)
 	{
 		if (item->data == group)
 		{
@@ -130,7 +148,7 @@ bool ParticleManager::DeleteFollow_p(P_Follow* group)
 bool ParticleManager::DeleteFire_p(P_Fire* group)
 {
 	p2List_item<P_Fire*>* item = Group_Fire.start;
-	while (item != Group_Fire.end)
+	while (item != NULL)
 	{
 		if (item->data == group)
 		{
@@ -139,4 +157,15 @@ bool ParticleManager::DeleteFire_p(P_Fire* group)
 		item = item->next;
 	}
 	return true;
+}
+
+void ParticleManager::DeleteFireGroup()
+{
+	p2List_item<P_Fire*>* item = Group_Fire.start;
+	while (item != NULL)
+	{
+		item->data->particle.Clear();
+		item = item->next;
+	}
+	Group_Fire.clear();
 }

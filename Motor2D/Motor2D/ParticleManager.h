@@ -54,6 +54,8 @@ public:
 	void CreateFire_Particle(fPoint position_static, SDL_Rect initial_rect, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int size = 1, int num_particles = 20, int num_textures = 4, bool active_ = false);
 	bool DeleteFire_p(P_Fire* group);
 
+	void DeleteFireGroup();
+
 
 
 public:

@@ -29,6 +29,16 @@ public:
 
 		return frames[(int)current_frame];
 	}
+
+	bool FinishAnimation()
+	{
+		if (current_frame >= last_frame - 0.5f)
+		{
+			current_frame = 0;
+			return true;
+		}
+		return false;
+	}
 };
 
 #endif

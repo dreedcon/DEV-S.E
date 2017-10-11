@@ -77,20 +77,20 @@ void j1Map::Draw(int time)
 		}
 		else
 		{
-			if (layer->properties.Get("Background") != 0)
+			if (layer->properties.GetInt("Background") != 0)
 				continue;
 
-			if (layer->properties.Get("Draw") != 1)
+			if (layer->properties.GetInt("Draw") != 1)
 				continue;
 
 			if (time == 1)
 			{
-				if (layer->properties.Get("NoDraw") != 1)
+				if (layer->properties.GetInt("NoDraw") != 1)
 					continue;
 			}
 			else
 			{
-				if (layer->properties.Get("NoDraw") != 0)
+				if (layer->properties.GetInt("NoDraw") != 0)
 					continue;
 			}
 			for (int y = 0; y < mapdata.height; ++y)
@@ -113,13 +113,26 @@ void j1Map::Draw(int time)
 	}
 }
 
-int Properties::Get(const char* value, int default_value) const
+int Properties::GetInt(const char* value, int default_value) const
 {
 	p2List_item<Property*>* item = properties.start;
 	while (item != properties.end->next)
 	{
 		if (strcmp(item->data->name.GetString(), value) == 0)
 			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
+}
+
+float Properties::GetFloat(const char* value, float default_value) const
+{
+	p2List_item<Property*>* item = properties.start;
+	while (item != properties.end->next)
+	{
+		if (strcmp(item->data->name.GetString(), value) == 0)
+			return item->data->valuefloat;
 		item = item->next;
 	}
 
@@ -240,6 +253,8 @@ bool j1Map::CleanUp()
 		objectitem = objectitem->next;
 	}
 	mapdata.particleobj.clear();
+
+	App->particles->DeleteFireGroup();
 
 	map_file.reset();
 
@@ -627,6 +642,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 			p->name = prop.attribute("name").as_string();
 			p->value = prop.attribute("value").as_int();
+			p->valuefloat = prop.attribute("value").as_float();
 
 			properties.properties.add(p);
 		}
@@ -642,40 +658,39 @@ void j1Map::SetParticles()
 	while (item != NULL)
 	{
 		ParticleObject* obj = item->data;
-		if (obj->properties.Get("Type_particle") == 0)//FOLLOW player
+		if (obj->properties.GetInt("Type_particle") == 0)//FOLLOW player
 		{
 			SDL_Rect rect;
-			rect.x = obj->properties.Get("Rect_X");
-			rect.y = obj->properties.Get("Rect_Y");
-			rect.w = obj->properties.Get("Rect_W");
-			rect.h = obj->properties.Get("Rect_H");
+			rect.x = obj->properties.GetInt("Rect_X");
+			rect.y = obj->properties.GetInt("Rect_Y");
+			rect.w = obj->properties.GetInt("Rect_W");
+			rect.h = obj->properties.GetInt("Rect_H");
 			//Create Particle Follow
 			App->particles->CreateFollow_P(App->player->Getposition(),
-			fPoint(obj->properties.Get("Offset_X"),obj->properties.Get("Offset_Y")),
+			fPoint(obj->properties.GetInt("Offset_X"),obj->properties.GetInt("Offset_Y")),
 				rect, iPoint(obj->width, obj->height),
-				iPoint(obj->properties.Get("TimeLifeMax"),obj->properties.Get("TimeLifeMin")),
-				obj->properties.Get("Size"),
-				obj->properties.Get("NumTextureParticle"),
-				obj->properties.Get("NumParticles"));
+				iPoint(obj->properties.GetInt("TimeLifeMax"),obj->properties.GetInt("TimeLifeMin")),
+				obj->properties.GetInt("Size"),
+				obj->properties.GetInt("NumTextureParticle"),
+				obj->properties.GetInt("NumParticles"));
 			App->player->particlePlayer = App->particles->Group_Follow.start->data;//This is only use 1 Particle Follow
 		}
-		if (obj->properties.Get("Type_particle") == 1)//FIRE
+		if (obj->properties.GetInt("Type_particle") == 1)//FIRE
 		{
 			SDL_Rect rect;
-			rect.x = obj->properties.Get("Rect_X");
-			rect.y = obj->properties.Get("Rect_Y");
-			rect.w = obj->properties.Get("Rect_W");
-			rect.h = obj->properties.Get("Rect_H");
+			rect.x = obj->properties.GetInt("Rect_X");
+			rect.y = obj->properties.GetInt("Rect_Y");
+			rect.w = obj->properties.GetInt("Rect_W");
+			rect.h = obj->properties.GetInt("Rect_H");
 			//Create Particle Fire
-			//Warning (If speed = 100) -> speed = 0.5
-			App->particles->CreateFire_Particle(fPoint(item->data->pos_x, item->data->pos_y),
+			App->particles->CreateFire_Particle(fPoint(obj->pos_x + (obj->width/2), obj->pos_y + (obj->height / 2)),
 				rect, iPoint(obj->width, obj->height),
-				iPoint(obj->properties.Get("TimeLifeMax"),obj->properties.Get("TimeLifeMin")),
-				fPoint(obj->properties.Get("Speed_X"), obj->properties.Get("Speed_Y")),
-				(P_Direction)obj->properties.Get("Particle_Direction"),
-				obj->properties.Get("Size"),
-				obj->properties.Get("NumParticles"),
-				obj->properties.Get("NumTextureParticle"), true);
+				iPoint(obj->properties.GetInt("TimeLifeMax"),obj->properties.GetInt("TimeLifeMin")),
+				fPoint(obj->properties.GetFloat("Speed_X"), obj->properties.GetFloat("Speed_Y")),
+				(P_Direction)obj->properties.GetInt("Particle_Direction"),
+				obj->properties.GetInt("Size"),
+				obj->properties.GetInt("NumParticles"),
+				obj->properties.GetInt("NumTextureParticle"), true);
 		}
 
 

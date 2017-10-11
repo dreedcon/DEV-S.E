@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="40" tilewidth="32" tileheight="32" nextobjectid="9">
  <tileset firstgid="1" name="level_tiles" tilewidth="32" tileheight="32" tilecount="140" columns="20">
   <image source="level_tiles.png" width="640" height="241"/>
   <tile id="69">
@@ -16042,4 +16042,158 @@
    <tile gid="141"/>
   </data>
  </layer>
+ <objectgroup name="Capa de Objetos 1">
+  <object id="1" name="Particle1" x="685.362" y="613.939" width="1965.64" height="484.242">
+   <properties>
+    <property name="NumParticles" type="int" value="1000"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="3"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="10"/>
+    <property name="Size" type="int" value="1"/>
+    <property name="Speed_X" type="float" value="1"/>
+    <property name="Speed_Y" type="float" value="0"/>
+    <property name="TimeLifeMax" type="int" value="5"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="2" name="Particle2" x="649.637" y="381.318" width="127.998" height="119.181">
+   <properties>
+    <property name="NumParticles" type="int" value="15"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="2"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="4"/>
+    <property name="Size" type="int" value="2"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.75"/>
+    <property name="TimeLifeMax" type="int" value="3"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="3" name="Particle3" x="986.001" y="596.47" width="85.5736" height="76.7572">
+   <properties>
+    <property name="NumParticles" type="int" value="15"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="2"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="4"/>
+    <property name="Size" type="int" value="2"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.75"/>
+    <property name="TimeLifeMax" type="int" value="3"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="4" name="Particle4" x="1292.06" y="511.621" width="115.877" height="110.091">
+   <properties>
+    <property name="NumParticles" type="int" value="15"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="2"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="4"/>
+    <property name="Size" type="int" value="2"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.75"/>
+    <property name="TimeLifeMax" type="int" value="3"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="5" name="Particle5" x="2189.03" y="751.015" width="167.392" height="58.5754">
+   <properties>
+    <property name="NumParticles" type="int" value="15"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="2"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="4"/>
+    <property name="Size" type="int" value="2"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.75"/>
+    <property name="TimeLifeMax" type="int" value="3"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="6" name="Particle6" x="2601.15" y="505.561" width="106.786" height="94.9391">
+   <properties>
+    <property name="NumParticles" type="int" value="15"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="2"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="4"/>
+    <property name="Size" type="int" value="2"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.75"/>
+    <property name="TimeLifeMax" type="int" value="3"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="7" name="Particle7" x="2901.15" y="611.621" width="118.907" height="113.121">
+   <properties>
+    <property name="NumParticles" type="int" value="15"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="2"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="4"/>
+    <property name="Size" type="int" value="2"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.75"/>
+    <property name="TimeLifeMax" type="int" value="3"/>
+    <property name="TimeLifeMin" type="int" value="1"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+  <object id="8" name="Particle8" x="1050.51" y="1199.52" width="1326.25" height="10.9087">
+   <properties>
+    <property name="NumParticles" type="int" value="500"/>
+    <property name="NumTextureParticle" type="int" value="4"/>
+    <property name="Offset_X" type="int" value="0"/>
+    <property name="Offset_Y" type="int" value="0"/>
+    <property name="Particle_Direction" value="1"/>
+    <property name="Rect_H" type="int" value="0"/>
+    <property name="Rect_W" type="int" value="2"/>
+    <property name="Rect_X" type="int" value="0"/>
+    <property name="Rect_Y" type="int" value="0"/>
+    <property name="Size" type="int" value="1"/>
+    <property name="Speed_X" type="float" value="0"/>
+    <property name="Speed_Y" type="float" value="0.38"/>
+    <property name="TimeLifeMax" type="int" value="10"/>
+    <property name="TimeLifeMin" type="int" value="5"/>
+    <property name="Type_particle" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
