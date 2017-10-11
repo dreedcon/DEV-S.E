@@ -116,19 +116,10 @@ bool Player::Update(float dt)
 		StartFromBeginCurrentLvl();
 	}
 
-	/*if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
-		if (actualvl == LVL_1)
-		{
-			ChangeMap("LVL2.tmx");
-			actualvl = LVL_2;
-		}
-		else if (actualvl == LVL_2)
-		{
-			ChangeMap("LVL3.tmx");
-			actualvl = LVL_1;
-		}
-	}*/
+		ChangeLVL();
+	}
 
 
 	//CheckDead
@@ -157,10 +148,10 @@ void Player::ChangeLVL()
 {
 	if (actualvl == LVL_1)
 	{
-		position.create(320, 832);
-		App->render->camera.x = -50;
-		App->render->camera.y = -330;
 		ChangeMap("LVL2.tmx");
+		position.create(320, 832);
+		App->render->camera.x = 0;
+		App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
 		actualvl = LVL_2;
 		App->Save();
 	}
@@ -546,10 +537,10 @@ void Player::ChangeMap(const char* path)
 
 void Player::StartFromFirstLvl()
 {
+	ChangeMap("LVL3.tmx");
    position.create(85, 354);
    App->render->camera.x = 0;
    App->render->camera.y = 0;
-   ChangeMap("LVL3.tmx");
    actualvl = LVL_1;
   
 }
@@ -559,8 +550,8 @@ void Player::StartFromBeginCurrentLvl()
 	if (actualvl != LVL_1)
 	{
 		position.create(320, 832);
-		App->render->camera.x = -50;
-		App->render->camera.y = -330;
+		App->render->camera.x = 0;
+		App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
 		ChangeMap("LVL2.tmx");
 		actualvl = LVL_2;
 	}

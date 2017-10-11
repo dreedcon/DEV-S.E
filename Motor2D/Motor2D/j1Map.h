@@ -50,6 +50,8 @@ struct Tile
 	bool LoadTile(pugi::xml_node&, Tile*);
 
 };*/
+
+
 struct Properties
 {
 	struct Property
@@ -75,6 +77,16 @@ struct Properties
 	int Get(const char* name, int default_value = 0) const;
 
 	p2List<Property*> properties;
+};
+
+struct ParticleObject
+{
+	std::string name;
+	int			width;
+	int			height;
+	int			pos_x;
+	int			pos_y;
+	Properties	properties;
 };
 
 struct TileSet
@@ -114,7 +126,6 @@ struct MapLayer
 
 	~MapLayer()
 	{
-		//properties.~Properties();
 		RELEASE(data);
 	}
 
@@ -153,6 +164,7 @@ struct MapData
 
 	p2List<TileSet*> tilesets;
 	p2List<MapLayer*> layers;
+	p2List<ParticleObject*> particleobj;
 };
 
 

@@ -378,8 +378,17 @@ bool j1Map::Load(const char* file_name)
 	}
 
 
-	// TODO 5: LOG all the data loaded
-	// iterate all tilesets and LOG everything
+	//Load ParticleObjects ----------------------------------------------
+	//pugi::xml_node partcileObj;
+	//for (partcileObj = map_file.child("map").child("objectgroup").child("object"); partcileObj && ret; layer = layer.next_sibling("object"))
+	//{
+	//	MapLayer* lay = new MapLayer();
+
+	//	ret = LoadLayer(layer, lay);
+
+	//	if (ret == true)
+	//		mapdata.layers.add(lay);
+	//}
 
 	map_loaded = ret;
 

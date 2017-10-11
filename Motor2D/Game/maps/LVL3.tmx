@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="70" height="25" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="70" height="25" tilewidth="32" tileheight="32" nextobjectid="8">
  <properties>
   <property name="Draw" type="int" value="1"/>
  </properties>
@@ -7045,4 +7045,66 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="Particles">
+  <object id="1" name="Particle1" x="808" y="292" width="154" height="112">
+   <properties>
+    <property name="NumParticles" type="int" value="0"/>
+    <property name="NumTextureParticle" type="int" value="0"/>
+    <property name="Particle_Direction" value="Down"/>
+    <property name="Speed_X" type="int" value="0"/>
+    <property name="Speed_Y" type="int" value="0"/>
+    <property name="TimeLifeMax" type="int" value="0"/>
+    <property name="TimeLifeMin" type="int" value="0"/>
+    <property name="Type_particle" value="Fire"/>
+   </properties>
+  </object>
+  <object id="4" name="Particle2" x="1729" y="658" width="286" height="96">
+   <properties>
+    <property name="NumParticles" type="int" value="0"/>
+    <property name="NumTextureParticle" type="int" value="0"/>
+    <property name="Particle_Direction" value="Down"/>
+    <property name="Speed_X" type="int" value="0"/>
+    <property name="Speed_Y" type="int" value="0"/>
+    <property name="TimeLifeMax" type="int" value="0"/>
+    <property name="TimeLifeMin" type="int" value="0"/>
+    <property name="Type_particle" value="Fire"/>
+   </properties>
+  </object>
+  <object id="5" name="Particle3" x="323" y="650" width="94" height="84">
+   <properties>
+    <property name="NumParticles" type="int" value="0"/>
+    <property name="NumTextureParticle" type="int" value="0"/>
+    <property name="Particle_Direction" value="Down"/>
+    <property name="Speed_X" type="int" value="0"/>
+    <property name="Speed_Y" type="int" value="0"/>
+    <property name="TimeLifeMax" type="int" value="0"/>
+    <property name="TimeLifeMin" type="int" value="0"/>
+    <property name="Type_particle" value="Fire"/>
+   </properties>
+  </object>
+  <object id="6" name="Particle4" x="62.3939" y="147.818" width="2175.21" height="474.182">
+   <properties>
+    <property name="NumParticles" type="int" value="0"/>
+    <property name="NumTextureParticle" type="int" value="0"/>
+    <property name="Particle_Direction" value="Down"/>
+    <property name="Speed_X" type="int" value="0"/>
+    <property name="Speed_Y" type="int" value="0"/>
+    <property name="TimeLifeMax" type="int" value="0"/>
+    <property name="TimeLifeMin" type="int" value="0"/>
+    <property name="Type_particle" value="Fire"/>
+   </properties>
+  </object>
+  <object id="7" name="Particle5" x="1929" y="290" width="110" height="100">
+   <properties>
+    <property name="NumParticles" type="int" value="0"/>
+    <property name="NumTextureParticle" type="int" value="0"/>
+    <property name="Particle_Direction" value="Down"/>
+    <property name="Speed_X" type="int" value="0"/>
+    <property name="Speed_Y" type="int" value="0"/>
+    <property name="TimeLifeMax" type="int" value="0"/>
+    <property name="TimeLifeMin" type="int" value="0"/>
+    <property name="Type_particle" value="Fire"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
