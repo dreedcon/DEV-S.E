@@ -7,10 +7,10 @@
 *Implemented Particle Systems with Tiled.
 
 ## Game controls
-* WASD to control the player
-* Q to run at max speed
+* A - D to control the player (Run)
+* A + ShiftLeft to walk 
+* D + ShiftLeft to walk 
 * SPACE to jump, and double click to float
-* UP,DOWN,LEFT,RIGHT to move the camera
 * F1 Start from the very first level
 * F2 Start from the beginning of the current level
 * F5 Save the current state
