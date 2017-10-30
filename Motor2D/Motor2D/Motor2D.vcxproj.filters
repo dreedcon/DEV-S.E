@@ -35,7 +35,7 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Desenvolupament  ========\Player</Filter>
+      <Filter>Desenvolupament  ========\Criatures\Player</Filter>
     </ClCompile>
     <ClCompile Include="j1Collision.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -57,6 +57,12 @@
     </ClCompile>
     <ClCompile Include="j1FadeToBlack.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFly.cpp">
+      <Filter>Desenvolupament  ========\Criatures\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyNormal.cpp">
+      <Filter>Desenvolupament  ========\Criatures\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +118,7 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Desenvolupament  ========\Player</Filter>
+      <Filter>Desenvolupament  ========\Criatures\Player</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -138,6 +144,12 @@
     <ClInclude Include="j1FadeToBlack.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyFly.h">
+      <Filter>Desenvolupament  ========\Criatures\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyNormal.h">
+      <Filter>Desenvolupament  ========\Criatures\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -158,11 +170,17 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Player">
-      <UniqueIdentifier>{b26bacfa-fb88-444a-8ce7-be82f10810c4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========\Particle Manager">
       <UniqueIdentifier>{a37af7ae-74b3-45b8-b811-68c18eac7d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Criatures">
+      <UniqueIdentifier>{6555a5f0-89e8-45d7-9dc3-26bd9dfde35f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Criatures\Player">
+      <UniqueIdentifier>{b26bacfa-fb88-444a-8ce7-be82f10810c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Criatures\Enemies">
+      <UniqueIdentifier>{cffe0b9e-8da4-45fe-b5d9-91449eb77bfa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
