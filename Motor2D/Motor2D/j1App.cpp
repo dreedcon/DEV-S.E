@@ -12,8 +12,12 @@
 #include "j1Scene.h"
 #include "j1App.h"
 #include "Player.h"
+#include "EnemyFly.h"
+#include "EnemyNormal.h"
+#include "ManagerCriatures.h"
 #include "ParticleManager.h"
 #include "j1FadeToBlack.h"
+#include "j1Collision.h"
 #include "j1Map.h"
 
 // Constructor
@@ -28,9 +32,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
-	player = new Player();
+	managerC = new ManagerCriatures();
+	//player = new Player();
+	//enemy_normal = new EnemyNormal();
+	//enemy_fly = new EnemyFly();
 	particles = new ParticleManager();
 	fade = new j1FadeToBlack();
+	collision = new ModuleCollision();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,7 +48,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	AddModule(player);
+	AddModule(managerC);
+	//AddModule(player);
+	//AddModule(enemy_normal);
+	//AddModule(enemy_fly);
+	AddModule(collision);
 	AddModule(particles);
 	AddModule(fade);
 

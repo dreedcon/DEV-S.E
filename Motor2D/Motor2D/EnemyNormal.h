@@ -2,42 +2,23 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "Criature.h"
 //#include "ParticleManager.h"
 //#include "P_Follow.h"
 #define AnimationSpeed4 0.15f
 #define AnimationSpeedDead 0.019f
 
-enum State
-{
-	IDLE,
-	W_LEFT,
-	W_RIGHT,
-	RUN_LEFT,
-	RUN_RIGHT,
-	JUMP_LEFT,
-	JUMP_RIGHT,
-	FLY_LEFT,
-	FLY_RIGHT,
-	DEAD
-};
+struct SDL_Texture;
 
-enum Direction
-{
-	NON,
-	UP,
-	LEFT,
-	DOWN,
-	RIGHT
-};
 
-class EnemyNormal : public j1Module
+class EnemyNormal : public Criature
 {
 public:
 	EnemyNormal();
-	~EnemyNormal();
+	virtual ~EnemyNormal();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node& conf);
+	bool Awake();
 
 	// Called before the first frame
 	bool Start();
@@ -71,9 +52,20 @@ public:
 	bool CleanUp();
 
 private:
+	State state;
+	Direction direction;
+	SDL_Texture* graphics = nullptr;
+	bool isMove = false;
+
+	fPoint position;
+	fPoint velocity;
+
+	Animation* current_animation;
+
 	Animation idle;
-	Animation run_rignt;
+	Animation run_right;
 	Animation run_left;
 	Animation dead;
+
 };
 

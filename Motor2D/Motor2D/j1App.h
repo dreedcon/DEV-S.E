@@ -14,9 +14,13 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class Player;
+//class Player;
+//class EnemyNormal;
+//class EnemyFly;
+class ManagerCriatures;
 class ParticleManager;
 class j1FadeToBlack;
+class ModuleCollision;
 
 class j1App
 {
@@ -87,14 +91,22 @@ public:
 	j1Audio*			audio;
 	j1Map*              map;
 	j1Scene*			scene;
-	Player*				player;
+	ManagerCriatures*	managerC;
+	//Player*				player;
+	//EnemyNormal*		enemy_normal;
+	//EnemyFly*			enemy_fly;
 	ParticleManager*    particles;
 	j1FadeToBlack*		fade;
+	ModuleCollision*	collision;
 
-	int		capped_ms = -1;
-	j1TimeNormal	frame_time;
-	j1TimeNormal		startup_time;
 	uint64				frame_count = 0;
+	j1TimeNormal		startup_time;
+	j1TimeNormal		frame_time;
+	j1TimeNormal	    last_sec_frame_time;
+	uint32				last_sec_frame_count = 0;
+	uint32				prev_last_sec_frame_count = 0;
+	//float				dt = 0.0f;
+	int					capped_ms = -1;
 
 private:
 
