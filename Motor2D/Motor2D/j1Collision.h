@@ -5,8 +5,9 @@
 #define MAX_COLLIDERS 100
 
 #include "j1Module.h"
-
 #include "SDL\include\SDL_rect.h"
+
+class Criature;
 
 enum COLLIDER_TYPE
 {
@@ -23,9 +24,9 @@ struct Collider
 	SDL_Rect rect;
 	bool to_delete = false;
 	COLLIDER_TYPE type;
-	j1Module* callback = nullptr;
+	Criature* callback = nullptr;
 
-	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr) :
+	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, Criature* callback = nullptr) :
 		rect(rectangle),
 		type(type),
 		callback(callback)
@@ -49,10 +50,10 @@ public:
 
 	bool PreUpdate();
 	bool Update(float dt);
-	//update_status PostUpdate();
+	bool PostUpdate();
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Criature* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
 

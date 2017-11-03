@@ -12,7 +12,6 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 
-
 Player::Player() : Criature()
 {
 
@@ -98,6 +97,7 @@ bool Player::Start()
 	state = IDLE;
 	App->Save();
 	fade = false;
+	collision_feet = App->collision->AddCollider({ (int)position.x, (int)position.y - 45, 45, 45 }, COLLIDER_PLAYER, this);
 	return true;
 }
 
@@ -202,8 +202,8 @@ bool Player::Update(float dt)
 		}
 	}
 
-	//Draw();
-	//App->map->Draw(1);
+	//Collision follow 
+	collision_feet->SetPos(position.x, position.y - 23);
 	return true;
 }
 
@@ -649,4 +649,9 @@ bool Player::CleanUp()
 fPoint* Player::Getposition()
 {
 	return &position;
+}
+
+void Player::OnCollision(Collider* player, Collider* enemy)
+{
+	LOG("HIT!");
 }

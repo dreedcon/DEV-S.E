@@ -85,6 +85,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void OnCollision(Collider*, Collider*);
+
 private:
 	SDL_Texture* graphics = nullptr;
 	fPoint position;
@@ -99,8 +101,6 @@ private:
 	bool fade = false;
 	bool notRepeatDead = false;
 	bool now_switch = false;
-	//TODO SERGIO 1
-	//Create 3 variables (2 iPoint / 1 enum LVL)
 
 
 

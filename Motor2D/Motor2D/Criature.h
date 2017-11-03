@@ -1,4 +1,6 @@
 #pragma once
+#include "j1Collision.h"
+#include "p2Log.h"
 
 struct SDL_Texture;
 
@@ -87,4 +89,6 @@ public:
 
 	p2SString	name;
 	bool		active;
+
+	Collider* collision_feet = nullptr;
 };

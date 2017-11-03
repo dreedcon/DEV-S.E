@@ -66,6 +66,7 @@ bool EnemyFly::Start()
 	graphics = App->tex->Load("textures/Fly_enemy.png");
 	current_animation = &idle;
 	state = IDLE;
+	collision_feet = App->collision->AddCollider({ (int)position.x, (int)position.y, 64, 64 }, COLLIDER_ENEMY_FLY, this);
 	return true;
 }
 
@@ -84,6 +85,9 @@ bool EnemyFly::Update(float dt)
 	{
 		state = IDLE;
 	}
+
+	//Collision follow 
+	collision_feet->SetPos(position.x, position.y - 32);
 	return true;
 }
 
