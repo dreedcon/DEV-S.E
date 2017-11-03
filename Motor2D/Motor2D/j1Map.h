@@ -7,7 +7,7 @@
 #include "p2DynArray.h"
 #include "j1Module.h"
 #include "Player.h"
-
+#include "j1Textures.h"
 #define VelocityParallax 0.0001
 
 // TODO 2: Create a struct to hold information for a TileSet
@@ -204,6 +204,8 @@ public:
 	bool CheckDead(int x, int y, int width, int height) const;
 
 	bool MovementCost(int x, int y, int width, int height, Direction dir) const;
+
+	bool IsWalkable(iPoint position);
 
 	// Load new map
 	bool Load(const char* path);

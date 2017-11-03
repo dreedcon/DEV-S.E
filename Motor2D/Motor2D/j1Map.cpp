@@ -370,6 +370,14 @@ bool j1Map::MovementCost(int x, int y, int width, int height, Direction dir) con
 	return ret;
 }
 
+bool j1Map::IsWalkable(iPoint position)
+{
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
+	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
+
+	return red_wall == meta_layer->Get(position.x, position.y);
+}
+
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
