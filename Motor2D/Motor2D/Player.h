@@ -4,19 +4,21 @@
 
 #include "j1Module.h"
 #include "Criature.h"
-#include "p2Point.h"
 #include "Animation.h"
 #include "ParticleManager.h"
 #include "P_Follow.h"
 
-#define Gravity 0.5
+
 #define AnimationSpeed4 0.15f
 #define AnimationSpeed3 0.2f
 #define AnimationSpeedDead 0.019f
 
-#define Velocity_X 2.0f
-#define Velocity_Y 10.0f
+#define Velocity_X 80
+#define Velocity_Y 580
 #define OFFSET_Y 20
+
+#define Gravity 1
+#define Gravity_LOW 1
 
 struct SDL_Texture;
 
@@ -51,15 +53,13 @@ public:
 
 	void FollowPlayer(float speed);
 
-	void Input();
+	void Input(float dt);
 
 	void Setzero();
 
 	void processPos();
 
-	void processGravity();
-
-	void ReturnToZero();
+	void processGravity(float dt);
 
 	void Draw();
 
@@ -75,7 +75,8 @@ public:
 	bool CanFollowPlayer();
 
 	void ChangeMap(const char* path);
-	fPoint* Getposition();
+	iPoint Getposition()const;
+	iPoint* GetpositionPointer();
 	
 	//Debuf Functions
 	void StartFromFirstLvl();
@@ -89,19 +90,14 @@ public:
 
 private:
 	SDL_Texture* graphics = nullptr;
-	fPoint position;
+
 	Levels actualvl;
-	fPoint velocity;
-	bool isFly = false;
-	bool returntoZero = false;
-	Direction goZero = NON;
-	bool isInPlataform = false;
 
 	bool GoDead = false;
 	bool fade = false;
 	bool notRepeatDead = false;
 	bool now_switch = false;
-
+	bool apply_g = false;
 
 
 public:

@@ -375,7 +375,7 @@ bool j1Map::IsWalkable(iPoint position)
 	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
 	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
 
-	return red_wall == meta_layer->Get(position.x, position.y);
+	return red_wall != meta_layer->Get(position.x, position.y);
 }
 
 // Load new map
@@ -675,7 +675,7 @@ void j1Map::SetParticles()
 			rect.w = obj->properties.GetInt("Rect_W");
 			rect.h = obj->properties.GetInt("Rect_H");
 			//Create Particle Follow
-			App->particles->CreateFollow_P(App->managerC->player->Getposition(),
+			App->particles->CreateFollow_P(App->managerC->player->GetpositionPointer(),
 			fPoint(obj->properties.GetInt("Offset_X"),obj->properties.GetInt("Offset_Y")),
 				rect, iPoint(obj->width, obj->height),
 				iPoint(obj->properties.GetInt("TimeLifeMax"),obj->properties.GetInt("TimeLifeMin")),

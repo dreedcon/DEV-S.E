@@ -11,7 +11,7 @@ struct NodeList;
 struct Node
 {
 	Node();
-	Node(int g,int h,iPoint position, Node*parent);
+	Node(int g, int h, iPoint position, Node*parent);
 	
 	int g;
 	int h;

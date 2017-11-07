@@ -47,7 +47,7 @@ public:
 	//FUNCTIONS TO CREATE
 
 	//Create & Delete Follow Group
-	void CreateFollow_P(fPoint* object_follow, fPoint offset, SDL_Rect initial_rect, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int size = 1, int num_textures = 4, int num_particles = 20, bool active_ = false, bool isMouse = false);
+	void CreateFollow_P(iPoint* object_follow, fPoint offset, SDL_Rect initial_rect, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int size = 1, int num_textures = 4, int num_particles = 20, bool active_ = false, bool isMouse = false);
 	bool DeleteFollow_p(P_Follow* group);
 
 	//Create & DeleteFire Group

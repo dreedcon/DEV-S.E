@@ -7,6 +7,9 @@
 #include "j1Window.h"
 #include "j1Textures.h"
 #include "Player.h"
+#include "ManagerCriatures.h"
+#include "j1Map.h"
+#include "j1Astar.h"
 
 EnemyNormal::EnemyNormal() : Criature()
 {
@@ -58,7 +61,7 @@ EnemyNormal::~EnemyNormal()
 
 bool EnemyNormal::Awake()
 {
-	position.create(200, 354);
+	position.create(360, 354);
 	velocity.create(0, 0);
 	return true;
 }
@@ -68,6 +71,8 @@ bool EnemyNormal::Start()
 	graphics = App->tex->Load("textures/Snow_Man.png");
 	current_animation = &idle;
 	state = IDLE;
+	astar = new j1Astar();
+	path = astar->GenerateAstar(position, App->managerC->player->Getposition());
 	collision_feet = App->collision->AddCollider({ (int)position.x, (int)position.y, 50, 50 }, COLLIDER_ENEMY_NORMAL, this);
 	return true;
 }
@@ -88,21 +93,68 @@ bool EnemyNormal::Update(float dt)
 		state = IDLE;
 	}
 
+
+	MoveEnemy(dt);
+	processPos();
+	processGravity(dt);
+
 	//Collision follow 
 	collision_feet->SetPos(position.x, position.y - 25);
 	return true;
 }
 
+void EnemyNormal::MoveEnemy(float dt)
+{
+	if (App->managerC->player->Getposition().DistanceTo(position) < 200)
+	{
+		//if()
+	}
+	else
+	{
+		LOG("NO!");
+	}
+}
+
 void EnemyNormal::processPos()
 {
+	position.y = position.y + velocity.y;   // current velocity components.
 }
 
-void EnemyNormal::processGravity()
+void EnemyNormal::processGravity(float dt)
 {
-}
-
-void EnemyNormal::ReturnToZero()
-{
+	if (velocity.y < 0)
+	{
+		if (App->map->MovementCost(position.x, position.y - OFFSET_Y, current_animation->frames[0].w, current_animation->frames[0].h, UP) == false && isFly)
+		{
+			velocity.y = 0;
+			isInPlataform = true;
+		}
+	}
+	if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) && state != FLY_LEFT && state != FLY_RIGHT)
+	{
+		velocity.y += ceil(Gravity * dt);
+	}
+	else if (isFly == false)
+	{
+		if (App->map->MovementCost(position.x, position.y + OFFSET_Y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) == false)
+		{
+			isInPlataform = true;
+		}
+		velocity.y = 0;
+	}
+	else
+	{
+		if (App->map->MovementCost(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h, DOWN) == false)
+		{
+			isFly = false;
+			velocity.y = 0;
+			state = IDLE;
+		}
+		else
+		{
+			velocity.y = ceil(Gravity_LOW * dt);
+		}
+	}
 }
 
 void EnemyNormal::Draw()

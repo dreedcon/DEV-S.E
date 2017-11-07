@@ -5,6 +5,7 @@
 
 ManagerCriatures::ManagerCriatures() : j1Module()
 {
+	name = "Criatures";
 }
 
 
@@ -94,4 +95,26 @@ void ManagerCriatures::CreateEnemyNormal()
 	elements.add(enemy_normal);
 
 	LOG("Enemy Normal Created!");
+}
+
+bool ManagerCriatures::Load(pugi::xml_node& node)
+{
+	p2List_item<Criature*>* item = elements.start;
+	while (item != NULL)
+	{
+		item->data->Load(node);
+		item = item->next;
+	}
+	return true;
+}
+
+bool ManagerCriatures::Save(pugi::xml_node& node) const
+{
+	p2List_item<Criature*>* item = elements.start;
+	while (item != NULL)
+	{
+		item->data->Save(node);
+		item = item->next;
+	}
+	return true;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "j1Module.h"
 #include "p2Point.h"
+#include "p2DynArray.h"
 #include "Animation.h"
 #include "Criature.h"
 //#include "ParticleManager.h"
@@ -9,7 +10,7 @@
 #define AnimationSpeedDead 0.019f
 
 struct SDL_Texture;
-
+class j1Astar;
 
 class EnemyNormal : public Criature
 {
@@ -29,11 +30,9 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	void MoveEnemy(float dt);
 	void processPos();
-
-	void processGravity();
-
-	void ReturnToZero();
+	void processGravity(float dt);
 
 	void Draw();
 
@@ -57,10 +56,9 @@ private:
 	SDL_Texture* graphics = nullptr;
 	bool isMove = false;
 
-	fPoint position;
-	fPoint velocity;
-
 	Animation* current_animation;
+	p2DynArray<iPoint>* path;
+	j1Astar* astar = nullptr;
 
 	Animation idle;
 	Animation run_right;

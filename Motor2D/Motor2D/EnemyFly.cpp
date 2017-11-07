@@ -56,7 +56,7 @@ EnemyFly::~EnemyFly()
 
 bool EnemyFly::Awake()
 {
-	position.create(300, 354);
+	position.create(900, 354);
 	velocity.create(0, 0);
 	return true;
 }
