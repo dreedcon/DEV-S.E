@@ -230,17 +230,12 @@ Node::Node()
 {
 }
 
-<<<<<<< HEAD
 Node::Node(int g_n, int h_n, iPoint positions_n, Node * parent_n)
 {
 	g = g_n;
 	h = h_n;
 	position = positions_n;
 	parent = parent_n;
-=======
-Node::Node(int g, int h, iPoint position, Node * parent): g(g),h(h),position(position),parent(parent)
-{
->>>>>>> 6cf442e926a747009f5616c69978baf7f8841a6b
 }
 
 int Node::DataTile()
