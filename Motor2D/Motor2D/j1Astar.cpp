@@ -43,12 +43,9 @@ void j1Astar::Path(int x, int y)
 
 }
 
-
+//recursive A*
 void j1Astar::PropagateAstar(iPoint destination)
 {
-	// TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm
-	// use the 2 dimensional array "cost_so_far" to track the accumulated costs
-	// on each cell (is already reset to 0 automatically)
 	iPoint curr;
 	int distance = 0;
 	int priority = 0;
@@ -233,12 +230,17 @@ Node::Node()
 {
 }
 
+<<<<<<< HEAD
 Node::Node(int g_n, int h_n, iPoint positions_n, Node * parent_n)
 {
 	g = g_n;
 	h = h_n;
 	position = positions_n;
 	parent = parent_n;
+=======
+Node::Node(int g, int h, iPoint position, Node * parent): g(g),h(h),position(position),parent(parent)
+{
+>>>>>>> 6cf442e926a747009f5616c69978baf7f8841a6b
 }
 
 int Node::DataTile()
