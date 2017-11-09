@@ -21,7 +21,7 @@ EnemyNormal::EnemyNormal() : Criature()
 	idle.PushBack({ 192, 19, 31, 28 });
 	idle.PushBack({ 254, 18, 29, 29 });
 	idle.PushBack({ 314, 17, 28, 30 });
-	idle.speed = AnimationSpeed4;
+	idle.speed = 0.13;
 
 	//Walk---------------------------------------
 
@@ -73,14 +73,14 @@ bool EnemyNormal::PreUpdate()
 
 bool EnemyNormal::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		state = RUN_LEFT;
-	}
-	else
-	{
-		state = IDLE;
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	//{
+	//	state = RUN_LEFT;
+	//}
+	//else
+	//{
+	//	state = IDLE;
+	//}
 
 
 	MoveEnemy(dt);
@@ -100,7 +100,7 @@ void EnemyNormal::MoveEnemy(float dt)
 	}
 	else
 	{
-		LOG("NO!");
+		//LOG("NO!");
 	}
 }
 
@@ -196,9 +196,9 @@ int EnemyNormal::GetDirection() const
 	return 0;
 }
 
-fPoint* EnemyNormal::Getposition() const
+iPoint EnemyNormal::Getposition() const
 {
-	return nullptr;
+	return position;
 }
 
 bool EnemyNormal::CleanUp()

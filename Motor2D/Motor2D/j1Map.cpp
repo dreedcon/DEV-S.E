@@ -276,7 +276,6 @@ iPoint j1Map::GetPositionStart()
 			int up = meta_layer->Get(x, y);
 			if (up == start_position)
 			{
-
 				return iPoint(MapToWorld(x, y));
 			}
 		}
@@ -434,7 +433,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 
-	//Load ParticleObjects ----------------------------------------------
+	// Load ParticleObjects ----------------------------------------------
 	pugi::xml_node partcileObj;
 	for (partcileObj = map_file.child("map").child("objectgroup").child("object"); partcileObj && ret; partcileObj = partcileObj.next_sibling("object"))
 	{
@@ -449,9 +448,39 @@ bool j1Map::Load(const char* file_name)
 	if(mapdata.particleobj.count() > 0)
 		SetParticles();
 
+	// Load Enemies ---------------------------------------------------------
+	LOG("Loading Enemies!");
+	LoadEnemies();
+
 	map_loaded = ret;
 
 	return ret;
+}
+
+void j1Map::LoadEnemies()
+{
+	int enemy_normal = mapdata.tilesets.start->next->data->firstgid + 4; // Yellow 1
+	int enemi_fly = mapdata.tilesets.start->next->data->firstgid + 5; // Yellow 2
+
+	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
+
+	for (int y = 0; y < mapdata.height; ++y)
+	{
+		for (int x = 0; x < mapdata.width; ++x)
+		{
+			int tile = meta_layer->Get(x, y);
+			if (enemy_normal == tile)
+			{
+				App->managerC->CreateEnemyNormal(MapToWorld(x, y));
+			}
+			else if (enemi_fly == tile)
+			{
+				App->managerC->CreateEnemyFly(MapToWorld(x, y));
+			}
+		}
+	}
+
+
 }
 
 bool j1Map::LoadMap()

@@ -210,6 +210,8 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	void LoadEnemies();
+
 private:
 	
 	//Load map function are private alone map can acces
