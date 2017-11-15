@@ -3,11 +3,14 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "Criature.h"
+#include "p2DynArray.h"
 //#include "ParticleManager.h"
 //#include "P_Follow.h"
 
 #define AnimationSpeed4 0.15f
 #define AnimationSpeedDead 0.019f
+
+class j1Astar;
 
 class EnemyFly : public Criature
 {
@@ -26,6 +29,8 @@ public:
 
 	// Called each loop iteration
 	bool Update(float dt);
+
+	void MoveEnemy(float dt);
 
 	void processPos();
 
@@ -54,6 +59,11 @@ private:
 	Direction direction;
 	SDL_Texture* graphics = nullptr;
 	bool isMove = false;
+
+	p2DynArray<iPoint>* path;
+	j1Astar* astar = nullptr;
+
+	iPoint PlayerLastPos;
 
 	Animation* current_animation = new Animation();
 	Animation idle;

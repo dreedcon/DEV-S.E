@@ -60,6 +60,8 @@ private:
 	p2DynArray<iPoint>* path;
 	j1Astar* astar = nullptr;
 
+	iPoint PlayerLastPos;
+
 	Animation idle;
 	Animation run_right;
 	Animation run_left;

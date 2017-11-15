@@ -14,6 +14,7 @@
 EnemyNormal::EnemyNormal() : Criature()
 {
 	name.create("enemynormal");
+	type = Type::NORMAL;
 
 	idle.PushBack({ 12,  16, 28, 30 });
 	idle.PushBack({ 73,  19, 29, 29 });
@@ -46,12 +47,15 @@ EnemyNormal::EnemyNormal() : Criature()
 
 EnemyNormal::~EnemyNormal()
 {
+	RELEASE(current_animation);
+	RELEASE(astar);
+	App->tex->UnLoad(graphics);
+	collision_feet->to_delete = true;
+	graphics = nullptr;
 }
 
 bool EnemyNormal::Awake()
 {
-	position.create(360, 354);
-	velocity.create(0, 0);
 	return true;
 }
 
@@ -61,6 +65,7 @@ bool EnemyNormal::Start()
 	current_animation = &idle;
 	state = IDLE;
 	astar = new j1Astar();
+	PlayerLastPos = App->managerC->player->Getposition();
 	path = astar->GenerateAstar(position, App->managerC->player->Getposition());
 	collision_feet = App->collision->AddCollider({ (int)position.x, (int)position.y, 50, 50 }, COLLIDER_ENEMY_NORMAL, this);
 	return true;
@@ -73,16 +78,11 @@ bool EnemyNormal::PreUpdate()
 
 bool EnemyNormal::Update(float dt)
 {
-	//if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	//{
-	//	state = RUN_LEFT;
-	//}
-	//else
-	//{
-	//	state = IDLE;
-	//}
-
-
+	if (PlayerLastPos.DistanceTo(App->managerC->player->Getposition()) > 10)
+	{
+		path = astar->GenerateAstar(position, App->managerC->player->Getposition());
+		PlayerLastPos = App->managerC->player->Getposition();
+	}
 	MoveEnemy(dt);
 	processPos();
 	processGravity(dt);
@@ -94,9 +94,23 @@ bool EnemyNormal::Update(float dt)
 
 void EnemyNormal::MoveEnemy(float dt)
 {
-	if (App->managerC->player->Getposition().DistanceTo(position) < 200)
+	if (App->managerC->player->Getposition().DistanceTo(position) < 250)
 	{
-		//if()
+		iPoint temp = *path->At(path->Count() - 1);
+		int distancetoMove = temp.x - position.x;
+		if (distancetoMove < 0)
+		{
+			position.x -= ceil(-distancetoMove * dt);
+		}
+		else
+		{
+			position.x += ceil(distancetoMove * dt);
+		}
+		if (position.DistanceTo(temp) < 5)
+		{
+			iPoint popiPoint;
+			path->Pop(popiPoint);
+		}
 	}
 	else
 	{
@@ -173,6 +187,14 @@ void EnemyNormal::Draw()
 	}
 	SDL_Rect r = current_animation->GetCurrentFrame();
 	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
+
+	Uint8 alpha = 80;
+	for (int i = 0; i < path->Count(); i++)
+	{
+		iPoint temp = *path->At(i);
+		SDL_Rect t = { temp.x,temp.y,10,10 };
+		App->render->DrawQuad(t, 255, 255, 255, alpha);
+	}
 }
 
 bool EnemyNormal::PostUpdate()

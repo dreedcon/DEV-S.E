@@ -31,6 +31,12 @@ enum Direction
 class Criature
 {
 public:
+	enum Type
+	{
+		PLAYER,
+		NORMAL,
+		FLY
+	};
 	Criature() {};
 	virtual ~Criature() {};
 
@@ -99,5 +105,6 @@ public:
 	p2SString	name;
 	bool		active;
 
+	Type type;
 	Collider* collision_feet = nullptr;
 };

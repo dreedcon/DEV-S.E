@@ -82,6 +82,16 @@ public:
 		return false;
 	}
 
+	//void Pop_back()
+	//{
+	//	if (num_elements > 0)
+	//	{
+	//		result = data[--num_elements];
+	//		return true;
+	//	}
+	//	return false;
+	//}
+
 	void Clear()
 	{
 		num_elements = 0;
