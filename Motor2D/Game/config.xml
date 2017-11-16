@@ -4,7 +4,7 @@
   <app>
     <title>Kirby Platformer S.E.</title>
     <organization>UPC</organization>
-    <framerate_cap Cap="60"/>
+    <framerate_cap Cap="30"/>
   </app>
 	
   <renderer>
