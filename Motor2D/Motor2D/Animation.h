@@ -21,9 +21,9 @@ public:
 		frames[last_frame++] = rect;
 	}
 
-	SDL_Rect& GetCurrentFrame()
+	SDL_Rect& GetCurrentFrame(float dt)
 	{
-		current_frame += speed;
+		current_frame += (speed * dt);
 		if(current_frame >= last_frame)
 			current_frame = 0;
 

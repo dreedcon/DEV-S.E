@@ -415,13 +415,13 @@ void Player::Input(float dt)
 			{
 				App->audio->PlayFx(1);
 				state = JUMP_LEFT;
-				velocity.y -= ceil(Velocity_Y * dt);
+				velocity.y -= Velocity_Y;
 				isFly = true;
 			}
 			if (state == W_RIGHT || state == RUN_RIGHT || state == IDLE)
 			{
 				App->audio->PlayFx(1);
-				velocity.y -= ceil(Velocity_Y * dt);
+				velocity.y -= Velocity_Y;
 				state = JUMP_RIGHT;
 				isFly = true;
 			}
@@ -569,7 +569,7 @@ void Player::Draw()
 	}
 	else
 	{
-		SDL_Rect r = current_animation->GetCurrentFrame();
+		SDL_Rect r = current_animation->GetCurrentFrame(App->GetDT());
 		App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
 	}
 

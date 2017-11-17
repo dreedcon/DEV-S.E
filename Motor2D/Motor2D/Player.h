@@ -8,13 +8,8 @@
 #include "ParticleManager.h"
 #include "P_Follow.h"
 
-
-#define AnimationSpeed4 0.15f
-#define AnimationSpeed3 0.2f
-#define AnimationSpeedDead 0.019f
-
 #define Velocity_X 80
-#define Velocity_Y 580
+#define Velocity_Y 10
 #define OFFSET_Y 20
 
 #define Gravity 1

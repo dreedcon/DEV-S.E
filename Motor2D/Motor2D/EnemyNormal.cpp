@@ -22,7 +22,7 @@ EnemyNormal::EnemyNormal() : Criature()
 	idle.PushBack({ 192, 19, 31, 28 });
 	idle.PushBack({ 254, 18, 29, 29 });
 	idle.PushBack({ 314, 17, 28, 30 });
-	idle.speed = 0.13;
+	idle.speed = AnimationSpeed4;
 
 	//Walk---------------------------------------
 
@@ -185,7 +185,7 @@ void EnemyNormal::Draw()
 		break;
 	}
 	}
-	SDL_Rect r = current_animation->GetCurrentFrame();
+	SDL_Rect r = current_animation->GetCurrentFrame(App->GetDT());
 	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
 
 	Uint8 alpha = 80;

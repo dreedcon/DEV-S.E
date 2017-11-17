@@ -19,7 +19,7 @@ EnemyFly::EnemyFly() : Criature()
 	idle.PushBack({ 10,  14, 30, 29 });
 	idle.PushBack({ 73,  14, 32, 31 });
 	idle.PushBack({ 134, 11, 32, 32 });
-	idle.speed = AnimationSpeed4;
+	idle.speed = AnimationSpeed3;
 
 	idle_left.PushBack({ 13,193, 30, 29});
 	idle_left.PushBack({ 75,192, 32, 28});
@@ -168,7 +168,7 @@ void EnemyFly::Draw()
 		break;
 	}
 	}
-	SDL_Rect r = current_animation->GetCurrentFrame();
+	SDL_Rect r = current_animation->GetCurrentFrame(App->GetDT());
 	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
 	Uint8 alpha = 80;
 	for (int i = 0; i < path->Count(); i++)
