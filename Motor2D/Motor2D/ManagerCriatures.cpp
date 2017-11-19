@@ -63,7 +63,11 @@ bool ManagerCriatures::Update(float dt)
 	while (item != NULL)
 	{
 		item->data->Update(dt);
-
+		if (newMap)
+		{
+			newMap = false;
+			break;
+		}
 		item = item->next;
 	}
 	return true;

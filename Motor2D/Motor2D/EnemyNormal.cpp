@@ -57,6 +57,7 @@ EnemyNormal::~EnemyNormal()
 bool EnemyNormal::Awake()
 {
 	velocity.create(0, 0);
+	state = IDLE;
 	return true;
 }
 
@@ -100,20 +101,23 @@ void EnemyNormal::MoveEnemy(float dt)
 {
 	if (App->managerC->player->Getposition().DistanceTo(position) < 250)
 	{
-		iPoint temp = *path->At(path->Count() - 1);
-		int distancetoMove = temp.x - position.x;
-		if (distancetoMove < 0)
+		if (path != nullptr)
 		{
-			position.x -= ceil(-distancetoMove * dt);
-		}
-		else
-		{
-			position.x += ceil(distancetoMove * dt);
-		}
-		if (position.DistanceTo(temp) < 5)
-		{
-			iPoint popiPoint;
-			path->Pop(popiPoint);
+			iPoint temp = *path->At(path->Count() - 1);
+			int distancetoMove = temp.x - position.x;
+			if (distancetoMove < 0)
+			{
+				position.x -= ceil(-distancetoMove * dt);
+			}
+			else
+			{
+				position.x += ceil(distancetoMove * dt);
+			}
+			if (position.DistanceTo(temp) < 5)
+			{
+				iPoint popiPoint;
+				path->Pop(popiPoint);
+			}
 		}
 	}
 	else

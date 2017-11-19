@@ -170,14 +170,18 @@ bool Player::Update(float dt)
 			if (App->fade->Checkfadetoblack() && now_switch)
 			{
 				now_switch = false;
-				App->Load();
+				//App->Load();
 				if (actualvl != LVL_2)
 				{
+					App->managerC->newMap = true;
+					StartFromBeginCurrentLvl();
 					App->render->camera.x = 0;
 					App->render->camera.y = 0;
 				}
 				else
 				{
+					App->managerC->newMap = true;
+					StartFromBeginCurrentLvl();
 					App->render->camera.x = 0;
 					App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
 				}
@@ -262,6 +266,7 @@ bool Player::Load(pugi::xml_node &node)
 	{
 		if (LVL_1 != node.child("Player").child("position").attribute("Actual_LVL").as_int())
 		{
+			//App->managerC->DeleteAllEnemies();
 			ChangeMap("LVL2.tmx");
 			position.x = node.child("Player").child("position").attribute("x").as_int();
 			position.y = node.child("Player").child("position").attribute("y").as_int();
@@ -269,6 +274,7 @@ bool Player::Load(pugi::xml_node &node)
 		}
 		else
 		{
+			//App->managerC->DeleteAllEnemies();
 			ChangeMap("LVL3.tmx");
 			position.x = node.child("Player").child("position").attribute("x").as_int();
 			position.y = node.child("Player").child("position").attribute("y").as_int();
@@ -598,6 +604,7 @@ void Player::ChangeMap(const char* path)
 
 void Player::StartFromFirstLvl()
 {
+	App->managerC->DeleteAllEnemies();
 	ChangeMap("LVL3.tmx");
 	position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 	App->render->camera.x = 0;
@@ -610,14 +617,17 @@ void Player::StartFromBeginCurrentLvl()
 {
 	if (actualvl != LVL_1)
 	{
+		App->managerC->DeleteAllEnemies();
 		ChangeMap("LVL2.tmx");
-
+		state = IDLE;
 		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		actualvl = LVL_2;
 	}
 	else if (actualvl != LVL_2)
 	{
+		App->managerC->DeleteAllEnemies();
 		ChangeMap("LVL3.tmx");
+		state = IDLE;
 		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		actualvl = LVL_1;
 	}

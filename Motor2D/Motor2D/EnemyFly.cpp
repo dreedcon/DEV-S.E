@@ -104,29 +104,32 @@ void EnemyFly::MoveEnemy(float dt)
 {
 	if (App->managerC->player->Getposition().DistanceTo(position) < 350)
 	{
-		iPoint temp = *path->At(path->Count() - 1);
-		int moveX = temp.x - position.x;
-		if (moveX < 0)
+		if (path != nullptr)
 		{
-			position.x -= ceil(-moveX * dt);
-		}
-		else
-		{
-			position.x += ceil(moveX * dt);
-		}
-		int moveY = temp.y - position.y;
-		if (moveY < 0)
-		{
-			position.y -= ceil(-moveY * dt);
-		}
-		else
-		{
-			position.y += ceil(moveY * dt);
-		}
-		if (position.DistanceTo(temp) < 5)
-		{
-			iPoint popiPoint;
-			path->Pop(popiPoint);
+			iPoint temp = *path->At(path->Count() - 1);
+			int moveX = temp.x - position.x;
+			if (moveX < 0)
+			{
+				position.x -= ceil(-moveX * dt);
+			}
+			else
+			{
+				position.x += ceil(moveX * dt);
+			}
+			int moveY = temp.y - position.y;
+			if (moveY < 0)
+			{
+				position.y -= ceil(-moveY * dt);
+			}
+			else
+			{
+				position.y += ceil(moveY * dt);
+			}
+			if (position.DistanceTo(temp) < 5)
+			{
+				iPoint popiPoint;
+				path->Pop(popiPoint);
+			}
 		}
 	}
 	else
