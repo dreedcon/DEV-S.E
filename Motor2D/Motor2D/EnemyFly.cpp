@@ -178,13 +178,17 @@ void EnemyFly::Draw()
 	}
 	SDL_Rect r = current_animation->GetCurrentFrame(App->GetDT());
 	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
-	//Uint8 alpha = 80;
-	//for (int i = 0; i < path->Count(); i++)
-	//{
-	//	iPoint temp = *path->At(i);
-	//	SDL_Rect t = { temp.x,temp.y,10,10 };
-	//	App->render->DrawQuad(t, 255, 255, 255, alpha);
-	//}
+
+	Uint8 alpha = 80;
+	if (path != nullptr && App->collision->debug)
+	{
+		for (int i = 0; i < path->Count(); i++)
+		{
+			iPoint temp = *path->At(i);
+			SDL_Rect t = { temp.x,temp.y,10,10 };
+			App->render->DrawQuad(t, 255, 255, 255, alpha);
+		}
+	}
 }
 
 bool EnemyFly::PostUpdate()
