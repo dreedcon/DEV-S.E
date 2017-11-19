@@ -374,7 +374,8 @@ bool j1Map::IsWalkable(iPoint position)
 	const MapLayer* meta_layer = mapdata.layers.start->next->next->next->data;
 	int red_wall = mapdata.tilesets.start->next->data->firstgid; // RED TILE
 
-	return red_wall != meta_layer->Get(position.x, position.y);
+	if(position.x < meta_layer->width && position.y < meta_layer->height)
+		return red_wall != meta_layer->Get(position.x, position.y);
 }
 
 // Load new map

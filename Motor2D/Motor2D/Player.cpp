@@ -124,14 +124,10 @@ bool Player::Update(float dt)
 		StartFromBeginCurrentLvl();
 	}
 
-	//if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	//{
-	//	ChangeLVL();
-	//}
-
-
-
-
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		GodMode = !GodMode;
+	}
 	//CheckDead
 
 	if (state != DEAD && GoDead == false)
@@ -142,65 +138,65 @@ bool Player::Update(float dt)
 	processPos();
 	processGravity(dt);
 
-	if (App->map->NextLvl(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h))
+	if (GodMode == false)
 	{
-		ChangeLVL();
-	}
-	if (App->map->CheckDead(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h))
-	{
-		if (GoDead == false)
+		if (App->map->CheckDead(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h))
 		{
-			fade = false;
-			GoDead = true;
-			notRepeatDead = true;
-			current_animation->SetZero();
-			dead.SetZero();
-			current_animation = &dead;
-		}
-	}
-	if (GoDead)
-	{
-		if (current_animation->FinishAnimation())
-		{
-			if (fade == false)
+			if (GoDead == false)
 			{
-				App->fade->FadeToBlack();
-				fade = true;
-				now_switch = true;
-			}
-
-		}
-
-		if (App->fade->Checkfadetoblack() && now_switch)
-		{
-			now_switch = false;
-			App->Load();
-			if (actualvl != LVL_2)
-			{
-				App->render->camera.x = 0;
-				App->render->camera.y = 0;
-			}
-			else
-			{
-				App->render->camera.x = 0;
-				App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
+				fade = false;
+				GoDead = true;
+				notRepeatDead = true;
+				current_animation->SetZero();
+				dead.SetZero();
+				current_animation = &dead;
 			}
 		}
-		if (App->fade->Checkfadefromblack() && fade)
+		if (GoDead)
 		{
-			fade = false;
-			GoDead = false;
-			App->audio->ResumeMusic();
-		}
+			if (current_animation->FinishAnimation())
+			{
+				if (fade == false)
+				{
+					App->fade->FadeToBlack();
+					fade = true;
+					now_switch = true;
+				}
 
-		if (state != DEAD && notRepeatDead)
-		{
-			App->audio->StopMusic();
-			App->audio->PlayFx(3);
-			state = DEAD;
-			notRepeatDead = false;
+			}
+
+			if (App->fade->Checkfadetoblack() && now_switch)
+			{
+				now_switch = false;
+				App->Load();
+				if (actualvl != LVL_2)
+				{
+					App->render->camera.x = 0;
+					App->render->camera.y = 0;
+				}
+				else
+				{
+					App->render->camera.x = 0;
+					App->render->camera.y = App->win->GetHeight() - App->map->mapdata.height * App->map->mapdata.tile_height;
+				}
+			}
+			if (App->fade->Checkfadefromblack() && fade)
+			{
+				fade = false;
+				GoDead = false;
+				App->audio->ResumeMusic();
+			}
+
+			if (state != DEAD && notRepeatDead)
+			{
+				App->audio->StopMusic();
+				App->audio->PlayFx(3);
+				state = DEAD;
+				notRepeatDead = false;
+			}
 		}
 	}
+
 
 	//Collision follow 
 	collision_feet->SetPos(position.x, position.y - 23);
@@ -211,6 +207,7 @@ void Player::ChangeLVL()
 {
 	if (actualvl == LVL_1)
 	{
+		App->managerC->DeleteAllEnemies();
 		ChangeMap("LVL2.tmx");
 		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		App->render->camera.x = 0;
@@ -220,6 +217,7 @@ void Player::ChangeLVL()
 	}
 	else if (actualvl == LVL_2)
 	{
+		App->managerC->DeleteAllEnemies();
 		ChangeMap("LVL3.tmx");
 		position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 		App->render->camera.x = 0;
@@ -237,6 +235,20 @@ bool Player::PostUpdate()
 		particlePlayer->active = false;
 	Draw();
 	App->map->Draw(1);
+	if (GodMode == false)
+	{
+		if (App->map->NextLvl(position.x, position.y, current_animation->frames[0].w, current_animation->frames[0].h))
+		{
+			ChangeLVL();
+			App->managerC->newMap = true;
+		}
+	}
+
+	//if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	//{
+	//	ChangeLVL();
+	//	App->managerC->newMap = true;
+	//}
 	return true;
 }
 
@@ -627,11 +639,11 @@ void Player::OnCollision(Collider* player, Collider* enemy)
 	//LOG("HIT!");
 	if (player != nullptr && enemy != nullptr)
 	{
-		if (enemy->callback->type == Type::FLY)
+		if (enemy->callback->type == Criature::Type::FLY)
 		{
 			App->managerC->DeleteEnemyFly(enemy->callback);
 		}
-		else if (enemy->callback->type == Type::NORMAL)
+		else if (enemy->callback->type == Criature::Type::NORMAL)
 		{
 			App->managerC->DeleteEnemyNormal(enemy->callback);
 		}

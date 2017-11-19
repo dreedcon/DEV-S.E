@@ -34,6 +34,8 @@ public:
 	void DeleteEnemyFly(Criature* enemyFly);
 	void DeleteEnemyNormal(Criature* enemy_normal);
 
+	void DeleteAllEnemies();
+
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
 
@@ -41,6 +43,7 @@ public:
 public:
 	p2List<Criature*> elements;
 	Player* player = nullptr;
+	bool newMap = false;
 	//EnemyFly* enfly = nullptr;
 	//EnemyNormal* ennormal = nullptr;
 	//p2List<EnemyFly> enFly;

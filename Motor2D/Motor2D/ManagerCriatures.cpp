@@ -12,6 +12,14 @@ ManagerCriatures::ManagerCriatures() : j1Module()
 
 ManagerCriatures::~ManagerCriatures()
 {
+	p2List_item<Criature*>* item = elements.start;
+	while (item != NULL)
+	{
+		item->data->~Criature();
+		elements.del(item);
+		item = item->next;
+	}
+	elements.clear();
 }
 
 bool ManagerCriatures::Awake(pugi::xml_node& conf)
@@ -27,7 +35,10 @@ bool ManagerCriatures::Start()
 	p2List_item<Criature*>* item = elements.start;
 	while (item != NULL)
 	{
-		item->data->Start();
+		if (item->data->type == Criature::Type::PLAYER)
+		{
+			item->data->Start();
+		}
 		item = item->next;
 	}
 
@@ -52,6 +63,7 @@ bool ManagerCriatures::Update(float dt)
 	while (item != NULL)
 	{
 		item->data->Update(dt);
+
 		item = item->next;
 	}
 	return true;
@@ -63,6 +75,11 @@ bool ManagerCriatures::PostUpdate()
 	while (item != NULL)
 	{
 		item->data->PostUpdate();
+		if (newMap)
+		{
+			newMap = false;
+			break;
+		}
 		item = item->next;
 	}
 	return true;
@@ -72,7 +89,7 @@ void ManagerCriatures::CreatePlayer()
 {
 	player = new Player();
 	player->Awake();
-
+	//player->Start();
 	elements.add(player);
 
 	LOG("Player Created!");
@@ -82,8 +99,8 @@ void ManagerCriatures::CreateEnemyFly(iPoint position)
 {
 	EnemyFly* enemy_fly = new EnemyFly();
 	enemy_fly->Awake();
-	//enemy_fly->Start();
 	enemy_fly->position = position;
+	enemy_fly->Start();
 	elements.add(enemy_fly);
 
 	LOG("Enemy Fly Created!");
@@ -93,8 +110,8 @@ void ManagerCriatures::CreateEnemyNormal(iPoint position)
 {
 	EnemyNormal* enemy_normal = new EnemyNormal();
 	enemy_normal->Awake();
-	//enemy_normal->Start();
 	enemy_normal->position = position;
+	enemy_normal->Start();
 	elements.add(enemy_normal);
 
 	LOG("Enemy Normal Created!");
@@ -109,6 +126,7 @@ void ManagerCriatures::DeleteEnemyFly(Criature* enemyFly)
 	{
 		if (i == ds)
 		{
+			item->data->~Criature();
 			elements.del(item);
 			return;
 		}
@@ -126,10 +144,25 @@ void ManagerCriatures::DeleteEnemyNormal(Criature* enemy_normal)
 	{
 		if (i == ds)
 		{
+			item->data->~Criature();
 			elements.del(item);
 			return;
 		}
 		ds++;
+		item = item->next;
+	}
+}
+
+void ManagerCriatures::DeleteAllEnemies()
+{
+	p2List_item<Criature*>* item = elements.start;
+	while (item != NULL)
+	{
+		if (item->data->type != Criature::Type::PLAYER)
+		{
+			item->data->~Criature();
+			elements.del(item);
+		}
 		item = item->next;
 	}
 }

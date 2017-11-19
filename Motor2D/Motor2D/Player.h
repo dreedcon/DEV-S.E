@@ -94,6 +94,7 @@ private:
 	bool now_switch = false;
 	bool apply_g = false;
 
+	bool GodMode = false;
 
 public:
 	State state;

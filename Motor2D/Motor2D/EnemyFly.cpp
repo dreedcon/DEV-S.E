@@ -51,9 +51,10 @@ EnemyFly::EnemyFly() : Criature()
 
 EnemyFly::~EnemyFly()
 {
-	RELEASE(current_animation);
-	RELEASE(astar);
+	current_animation = nullptr;
+	delete astar;
 	App->tex->UnLoad(graphics);
+	collision_feet->to_delete = true;
 	graphics = nullptr;
 }
 
@@ -91,7 +92,10 @@ bool EnemyFly::Update(float dt)
 	//processGravity(dt);
 
 	//Collision follow 
-	//collision_feet->SetPos(position.x, position.y - 32);
+	if (collision_feet != nullptr)
+	{
+		collision_feet->SetPos(position.x, position.y - 32);
+	}
 	return true;
 }
 
@@ -170,13 +174,13 @@ void EnemyFly::Draw()
 	}
 	SDL_Rect r = current_animation->GetCurrentFrame(App->GetDT());
 	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
-	Uint8 alpha = 80;
-	for (int i = 0; i < path->Count(); i++)
-	{
-		iPoint temp = *path->At(i);
-		SDL_Rect t = { temp.x,temp.y,10,10 };
-		App->render->DrawQuad(t, 255, 255, 255, alpha);
-	}
+	//Uint8 alpha = 80;
+	//for (int i = 0; i < path->Count(); i++)
+	//{
+	//	iPoint temp = *path->At(i);
+	//	SDL_Rect t = { temp.x,temp.y,10,10 };
+	//	App->render->DrawQuad(t, 255, 255, 255, alpha);
+	//}
 }
 
 bool EnemyFly::PostUpdate()
