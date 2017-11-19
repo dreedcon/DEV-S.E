@@ -9,6 +9,7 @@
    - Enemy Fly.
 * Added System Collision.
 * Added System Pathfinding.
+* Added Brofiler.
 
 ## Innovation
 * Implemented Particle Systems with Tiled.
