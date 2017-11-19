@@ -60,12 +60,14 @@ EnemyFly::~EnemyFly()
 
 bool EnemyFly::Awake()
 {
+	BROFILER_CATEGORY("Awake Enemy Normal", Profiler::Color::GreenYellow);
 	velocity.create(0, 0);
 	return true;
 }
 
 bool EnemyFly::Start()
 {
+	BROFILER_CATEGORY("Start Enemy Normal", Profiler::Color::GreenYellow);
 	graphics = App->tex->Load("textures/Fly_enemy.png");
 	current_animation = &idle;
 	state = IDLE;
@@ -83,6 +85,7 @@ bool EnemyFly::PreUpdate()
 
 bool EnemyFly::Update(float dt)
 {
+	BROFILER_CATEGORY("Update Enemy Fly", Profiler::Color::GreenYellow);
 	if (PlayerLastPos.DistanceTo(App->managerC->player->Getposition()) > 10)
 	{
 		path = astar->GenerateAstar(position, App->managerC->player->Getposition());
@@ -153,6 +156,7 @@ void EnemyFly::ReturnToZero()
 
 void EnemyFly::Draw()
 {
+	BROFILER_CATEGORY("Draw Enemy Fly", Profiler::Color::GreenYellow);
 	switch (state)
 	{
 	case IDLE:

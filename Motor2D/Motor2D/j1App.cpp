@@ -87,7 +87,7 @@ void j1App::AddModule(j1Module* module)
 bool j1App::Awake()
 {
 	bool ret = LoadConfig();
-
+	BROFILER_CATEGORY("Awake", Profiler::Color::Orchid);
 	// self-config
 	title.create(app_config.child("title").child_value());
 	organization.create(app_config.child("organization").child_value());
@@ -115,6 +115,7 @@ bool j1App::Awake()
 bool j1App::Start()
 {
 	bool ret = true;
+	BROFILER_CATEGORY("Start", Profiler::Color::Orchid);
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 
@@ -231,6 +232,7 @@ void j1App::FinishUpdate()
 bool j1App::PreUpdate()
 {
 	bool ret = true;
+	BROFILER_CATEGORY("PreUpdate", Profiler::Color::Aqua);
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
@@ -253,6 +255,7 @@ bool j1App::PreUpdate()
 bool j1App::DoUpdate()
 {
 	bool ret = true;
+	BROFILER_CATEGORY("Update", Profiler::Color::Cyan);
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
@@ -275,6 +278,7 @@ bool j1App::DoUpdate()
 bool j1App::PostUpdate()
 {
 	bool ret = true;
+	BROFILER_CATEGORY("PostUpdate", Profiler::Color::MediumPurple);
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
 
@@ -296,6 +300,7 @@ bool j1App::PostUpdate()
 bool j1App::CleanUp()
 {
 	bool ret = true;
+	BROFILER_CATEGORY("CleanUp", Profiler::Color::LightGreen);
 	p2List_item<j1Module*>* item;
 	item = modules.end;
 

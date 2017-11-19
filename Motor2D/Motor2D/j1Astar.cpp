@@ -79,6 +79,7 @@ void j1Astar::PropagateAstar(iPoint destination)
 
 p2DynArray<iPoint>* j1Astar::GenerateAstar(iPoint origin, iPoint destination)
 {
+	BROFILER_CATEGORY("Generate Astra", Profiler::Color::Crimson);
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
 	iPoint map_destination = App->map->WorldToMap(destination.x, destination.y);
 
