@@ -85,6 +85,7 @@ bool Player::Awake()
 {
 	velocity.create(0, 0);
 	//TODO SERGIO 2: Init start position
+
 	actualvl = LVL_1;
 	// Sprites
 	return true;
@@ -97,7 +98,6 @@ bool Player::Start()
 	state = IDLE;
 	App->Save();
 	fade = false;
-	position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 	collision_feet = App->collision->AddCollider({ (int)position.x, (int)position.y - 45, 45, 45 }, COLLIDER_PLAYER, this);
 	return true;
 }

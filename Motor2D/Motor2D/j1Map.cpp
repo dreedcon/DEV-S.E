@@ -451,6 +451,7 @@ bool j1Map::Load(const char* file_name)
 
 	// Load Enemies ---------------------------------------------------------
 	LOG("Loading Enemies!");
+	App->managerC->player->position.create(App->map->GetPositionStart().x, App->map->GetPositionStart().y);
 	LoadEnemies();
 
 	map_loaded = ret;

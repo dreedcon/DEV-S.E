@@ -56,6 +56,7 @@ EnemyNormal::~EnemyNormal()
 
 bool EnemyNormal::Awake()
 {
+	velocity.create(0, 0);
 	return true;
 }
 
