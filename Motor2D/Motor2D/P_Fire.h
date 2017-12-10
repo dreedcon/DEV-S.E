@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _P_FIRE_H_
 #define _P_FIRE_H_
 

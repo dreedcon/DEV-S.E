@@ -4,6 +4,14 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
+struct UI_Button;
+struct UI_String;
+struct Ui_img;
+struct Ui_Element;
+struct UI_Text_Box;
+struct UI_Scroll;
+
+enum INPUT_TYPE;
 
 class j1Scene : public j1Module
 {
@@ -32,8 +40,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void Input_get(INPUT_TYPE type);
+
+	void MoveSelector(INPUT_TYPE type);
+
 private:
 	SDL_Texture* img;
+
+	Ui_Element* mainscene = nullptr;
+	Ui_img*		test = nullptr;
 };
 
 #endif // __j1SCENE_H__

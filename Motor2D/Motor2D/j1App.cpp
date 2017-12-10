@@ -19,6 +19,8 @@
 #include "j1FadeToBlack.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "j1Gui.h"
+#include "j1Fonts.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -30,6 +32,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
+	gui = new j1Gui();
+	font = new j1Fonts();
 	scene = new j1Scene();
 	map = new j1Map();
 	managerC = new ManagerCriatures();
@@ -47,6 +51,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
+	AddModule(font);
+
+
 	AddModule(scene);
 	AddModule(managerC);
 	//AddModule(player);
@@ -54,6 +61,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//AddModule(enemy_fly);
 	AddModule(collision);
 	AddModule(particles);
+	AddModule(gui);
 	AddModule(fade);
 
 	// render last to swap buffer

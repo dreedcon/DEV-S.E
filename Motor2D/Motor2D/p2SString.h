@@ -248,6 +248,21 @@ public:
 		return true;
 	}
 
+	//Delete the character located in the index
+	bool DeleteChar(uint index) {
+
+		if (index >= size)return false;
+
+		for (uint k = index; k < size; k++) {
+
+			str[k] = str[k + 1];
+
+		}
+		size--;
+		index--;
+		return true;
+	}
+
 	void Trim()
 	{
 		// cut right --
@@ -328,6 +343,81 @@ public:
 		}
 
 		return ret;
+	}
+
+	/**
+	* Paste a substring into buffer
+	*/
+	uint SubString(unsigned int start, unsigned int end, p2SString& buffer) const
+	{
+		if(str != NULL)
+		{
+			start = MIN(start, size);
+			end = (end == 0) ? size : MIN(end, size);
+			uint s = end - start;
+
+			if(s > buffer.size)
+			{
+				char* tmp = buffer.str;
+				buffer.Alloc(s);
+				delete[] tmp;
+			}
+			strncpy_s(buffer.str, s, &str[start], s);
+			buffer.str[s] = '\0';
+			return(end - start);
+		}
+		else
+			return 0;
+	}
+
+	//Get a stringSegment
+	char* StringSegment(uint start, uint end)const {
+
+		char* segment = new char[end - start + 1];
+		
+		end = MIN(end, size);
+		start = MIN(start, size);
+
+		int k = end - start;
+		for (uint l = 0; l < k; l++) {
+
+			segment[l] = str[start + l];
+
+		}
+		segment[k] = '\0';
+		return segment;
+	}
+
+	//Push a stringSegment
+	char* InsertString(char* string_seg, uint location) {
+
+		uint s_size = strlen(string_seg);
+		char* segment = new char[size + strlen(string_seg)];
+
+		location = MIN(location, size);
+
+		uint l = 0;
+		for (l; l < location; l++) {
+
+			segment[l] = str[l];
+
+		}
+		for (uint k = 0; k < s_size; k++) {
+
+			
+			segment[l] = string_seg[k];
+			l++;
+		}
+		for (uint k = location; k < size; k++) {
+			
+			segment[l] = str[k];
+			l++;
+
+		}
+
+		str = segment;
+
+		return segment;
 	}
 
 private:

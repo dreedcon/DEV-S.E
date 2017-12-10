@@ -81,6 +81,8 @@
     <ClCompile Include="EnemyNormal.cpp" />
     <ClCompile Include="j1Astar.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
+    <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -100,6 +102,12 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="P_Fire.cpp" />
     <ClCompile Include="P_Follow.cpp" />
+    <ClCompile Include="UI_Button.cpp" />
+    <ClCompile Include="UI_Element.cpp" />
+    <ClCompile Include="UI_IMG.cpp" />
+    <ClCompile Include="UI_Scroll.cpp" />
+    <ClCompile Include="UI_String.cpp" />
+    <ClCompile Include="UI_Text_Box.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -108,6 +116,8 @@
     <ClInclude Include="EnemyNormal.h" />
     <ClInclude Include="j1Astar.h" />
     <ClInclude Include="j1FadeToBlack.h" />
+    <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Collision.h" />
@@ -134,6 +144,12 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="P_Fire.h" />
     <ClInclude Include="P_Follow.h" />
+    <ClInclude Include="UI_Button.h" />
+    <ClInclude Include="UI_Element.h" />
+    <ClInclude Include="UI_IMG.h" />
+    <ClInclude Include="UI_Scroll.h" />
+    <ClInclude Include="UI_String.h" />
+    <ClInclude Include="UI_Text_Box.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml" />

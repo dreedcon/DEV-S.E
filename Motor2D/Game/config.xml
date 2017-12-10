@@ -6,7 +6,15 @@
     <organization>UPC</organization>
     <framerate_cap Cap="30"/>
   </app>
-	
+
+  <font>
+    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
+  </font>
+
+  <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>
+  
   <renderer>
     <vsync value="true"/>
   </renderer>

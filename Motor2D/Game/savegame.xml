@@ -7,6 +7,7 @@
 		<audio volume="40" />
 	</audio>
 	<map />
+	<fonts />
 	<scene />
 	<Criatures>
 		<Player>
@@ -15,6 +16,7 @@
 	</Criatures>
 	<:anonymous />
 	<:anonymous />
+	<gui />
 	<fadetoblack />
 	<renderer>
 		<camera x="0" y="0" />

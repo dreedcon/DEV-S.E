@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _P_FOLLOW_H_
 #define _P_FOLLOW_H_
 
