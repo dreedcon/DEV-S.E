@@ -52,7 +52,7 @@ bool j1Scene::Start()
 	//mainscene->SetInputTarget(this);
 
 	test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	test->SetTextureRect({ 32, 538, 428, 459 });
+	test->SetTextureRect({266, 194, 392, 459 });
 	test->AdjustBox();
 	test->Activate();
 	mainscene->AddChild(test, 10);
@@ -64,9 +64,9 @@ bool j1Scene::Start()
 	text->Activate();
 	mainscene->AddChild(text, 20);
 
-	Ui_img tex_on({ 0,0 }, { 416, 172, 221, 60 });
-	Ui_img tex_off({ 0,0 }, { 647,172,222,60 });
-	Ui_img tex_over({ 0,0 }, { 5, 116, 220, 60 });
+	Ui_img tex_on({ 0,0 }, { 5,107,225,75});
+	Ui_img tex_off({ 0,0 }, { 234,108,222,73 });
+	Ui_img tex_over({ 0,0 }, { 459,106, 222,80 });
 
 	button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	button->Activate();

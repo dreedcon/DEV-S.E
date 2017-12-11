@@ -4,6 +4,14 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
+struct UI_Button;
+struct UI_String;
+struct Ui_img;
+struct Ui_Element;
+struct UI_Text_Box;
+struct UI_Scroll;
+
+struct SDL_Texture;
 
 class j1MainMenu : public j1Module
 {
@@ -32,6 +40,11 @@ public:
 
 public: 
 	SDL_Texture* background = nullptr;
+
+	Ui_Element*		mainscene = nullptr;
+	UI_Button*		button = nullptr;
+	UI_String*		play_button = nullptr;
+	Ui_img*			test = nullptr;
 };
 
 #endif
