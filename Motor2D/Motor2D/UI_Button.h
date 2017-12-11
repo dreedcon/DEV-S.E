@@ -6,13 +6,7 @@
 #include "UI_String.h"
 
 
-enum BUTTON_STATE {
 
-	ON,
-	OFF,
-	OVER
-
-};
 
 class UI_Button : public Ui_Element {
 public:
@@ -23,6 +17,13 @@ public:
 
 	~UI_Button();
 
+	enum BUTTON_STATE {
+
+		ON,
+		OFF,
+		OVER
+
+	};
 private:
 
 	Ui_img			tex_on;
@@ -38,6 +39,7 @@ public:
 	//Functionality
 	void			Change_State(BUTTON_STATE new_button_state);
 	void			HandleInput();
+	void			SetTextures_button(BUTTON_STATE state_texture, Ui_img texture);
 };
 
 #endif // __UI_BUTTON__

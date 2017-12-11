@@ -9,6 +9,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "j1MainMenu.h"
 #include "j1Scene.h"
 #include "j1App.h"
 #include "Player.h"
@@ -34,6 +35,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	gui = new j1Gui();
 	font = new j1Fonts();
+	mainmenu = new j1MainMenu();
 	scene = new j1Scene();
 	map = new j1Map();
 	managerC = new ManagerCriatures();
@@ -53,9 +55,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(font);
 
-
+	AddModule(mainmenu);
 	AddModule(scene);
+	scene->active = false;
 	AddModule(managerC);
+	managerC->active = false;
 	//AddModule(player);
 	//AddModule(enemy_normal);
 	//AddModule(enemy_fly);
@@ -129,7 +133,10 @@ bool j1App::Start()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->active)
+		{
+			ret = item->data->Start();
+		}
 		item = item->next;
 	}
 

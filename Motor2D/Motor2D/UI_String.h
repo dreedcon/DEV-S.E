@@ -28,6 +28,7 @@ public:
 	void		Deleteletter(uint position);
 	uint		GetPixelLenght(uint end)const;
 	void		DrawAt(int x, int y)const;
+	void		setText_Font(_TTF_Font* textfont);
 
 	p2SString			text;
 

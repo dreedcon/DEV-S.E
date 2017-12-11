@@ -45,10 +45,15 @@ public:
 	void MoveSelector(INPUT_TYPE type);
 
 private:
-	SDL_Texture* img;
+	//SDL_Texture* img;
 
-	Ui_Element* mainscene = nullptr;
-	Ui_img*		test = nullptr;
+	Ui_Element*		mainscene = nullptr;
+	Ui_img*			test = nullptr;
+	Ui_img*			test23 = nullptr;
+	UI_Text_Box*	text = nullptr;
+	UI_Button*		button = nullptr;
+	UI_String*		continue_button = nullptr;
+	UI_Button*		testbutton = nullptr;
 };
 
 #endif // __j1SCENE_H__

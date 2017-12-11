@@ -72,6 +72,11 @@ void UI_String::DrawAt(int x, int y) const
 
 }
 
+void UI_String::setText_Font(_TTF_Font * textfont)
+{
+	text_font = textfont;
+}
+
 /*bool UI_String::Insert(int position, p2SString new_buffer)
 {
 	uint len = Length();

@@ -13,6 +13,7 @@ class j1Input;
 class j1Render;
 class j1Textures;
 class j1Audio;
+class j1MainMenu;
 class j1Scene;
 class j1Map;
 class j1Gui;
@@ -101,6 +102,7 @@ public:
 	j1Map*              map;
 	j1Gui*				gui;
 	j1Fonts*			font;
+	j1MainMenu*			mainmenu;
 	j1Scene*			scene;
 	ManagerCriatures*	managerC;
 	//Player*				player;

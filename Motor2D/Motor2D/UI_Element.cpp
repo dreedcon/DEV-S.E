@@ -205,12 +205,12 @@ bool Ui_Element::Drag()
 	//Get mouse left button state
 	j1KeyState mouse_button_1 = App->input->GetMouseButtonDown(1);
 
-	int x_motion = 0, y_motion = 0;
-	App->input->GetMouseMotion(x_motion, y_motion);
 	if (mouse_button_1 == KEY_IDLE)
 	{
 		return false;
 	}
+	int x_motion, y_motion;
+	App->input->GetMouseMotion(x_motion, y_motion);
 
 	if (MouseIsIn() == false && App->gui->ItemSelected == this && (mouse_button_1 == KEY_DOWN))
 	{
@@ -222,7 +222,6 @@ bool Ui_Element::Drag()
 	{
 		//parent->childs.MovetoUP(this);
 		this->MoveBox(x_motion, y_motion);
-		LOG("%i - %i", x_motion, y_motion);
 		return true;
 	}
 

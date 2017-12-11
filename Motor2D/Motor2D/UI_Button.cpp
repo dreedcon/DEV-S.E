@@ -59,16 +59,17 @@ void UI_Button::HandleInput()
 
 	j1KeyState mouse_key_1 = App->input->GetMouseButtonDown(1);
 	
-	if (mouse_key_1 == KEY_IDLE && MouseIsIn() && App->gui->upper_element == this->layer && MouseIsIn(&App->gui->viewport_box))
+	if (mouse_key_1 == KEY_IDLE && MouseIsIn() && App->gui->upper_element == this->layer ||
+		mouse_key_1 == KEY_UP && MouseIsIn() && App->gui->upper_element == this->layer)
 	{
 		button_state = OVER;
 	}
-	else if (mouse_key_1 == KEY_DOWN && App->gui->upper_element == this->layer && MouseIsIn() && MouseIsIn(&App->gui->viewport_box))
+	else if (mouse_key_1 == KEY_DOWN && App->gui->upper_element == this->layer && MouseIsIn())
 	{
 		this->button_state = ON;
 		App->gui->ItemSelected = this;
 	}
-	else if (App->gui->ItemSelected == this && mouse_key_1 == KEY_REPEAT  && MouseIsIn() && MouseIsIn(&App->gui->viewport_box))
+	else if (App->gui->ItemSelected == this && mouse_key_1 == KEY_REPEAT  && MouseIsIn())
 	{
 		button_state = ON;
 	}
@@ -77,4 +78,20 @@ void UI_Button::HandleInput()
 		button_state = OFF;
 	}
 
+}
+
+void UI_Button::SetTextures_button(BUTTON_STATE state_texture, Ui_img texture)
+{
+	if (state_texture == ON)
+	{
+		this->tex_on = texture;
+	}
+	else if (state_texture == OFF)
+	{
+		this->tex_off = texture;
+	}
+	else if (state_texture == OVER)
+	{
+		this->tex_over = texture;
+	}
 }
