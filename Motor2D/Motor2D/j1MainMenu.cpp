@@ -39,7 +39,7 @@ bool j1MainMenu::Awake(pugi::xml_node & conf)
 bool j1MainMenu::Start()
 {
 	App->scene->active = false;
-	background = App->tex->Load("textures/atlas_kirby.png");
+	background = App->tex->Load("textures/Background.png");
 	App->audio->PlayMusic("audio/music/Music_LVL1.ogg");
 
 	mainscene = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
