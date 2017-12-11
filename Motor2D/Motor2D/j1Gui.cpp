@@ -72,7 +72,7 @@ bool j1Gui::PreUpdate()
 bool j1Gui::PostUpdate()
 {
 	//Debug Mode ------------------------------------------
-	if (type_input == INPUT_TYPE::INPUT_F1 && ItemSelected == nullptr)
+	if (type_input == INPUT_TYPE::INPUT_DEBUG && ItemSelected == nullptr)
 	{
 		debug = !debug;
 	}
@@ -235,9 +235,9 @@ INPUT_TYPE j1Gui::GetInputType()
 	{
 		type = INPUT_TYPE::INPUT_RIGHT;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
-		type = INPUT_TYPE::INPUT_F1;
+		type = INPUT_TYPE::INPUT_DEBUG;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
 	{
