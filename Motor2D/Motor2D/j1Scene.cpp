@@ -46,50 +46,50 @@ bool j1Scene::Start()
 	App->audio->LoadFx("audio/fx/dead.wav"); //Fx----->3
 	App->map->Load("LVL3.tmx");
 
-	mainscene = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
-	mainscene->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
-	mainscene->Activate();
-	//mainscene->SetInputTarget(this);
+	//mainscene = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
+	//mainscene->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
+	//mainscene->Activate();
+	////mainscene->SetInputTarget(this);
 
-	test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	test->SetTextureRect({266, 194, 392, 459 });
-	test->AdjustBox();
-	test->Activate();
-	mainscene->AddChild(test, 10);
+	//test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	//test->SetTextureRect({266, 194, 392, 459 });
+	//test->AdjustBox();
+	//test->Activate();
+	//mainscene->AddChild(test, 10);
 
-	UI_String Text({ 0,0,0,0 }, "Enter Your Name", App->font->default);
-	text = (UI_Text_Box*)App->gui->GenerateUI_Element(UI_TYPE::TEXT_BOX);
-	text->box = { 0,0,100,50 };
-	text->Text_entered = Text;
-	text->Activate();
-	mainscene->AddChild(text, 20);
+	//UI_String Text({ 0,0,0,0 }, "Enter Your Name", App->font->default);
+	//text = (UI_Text_Box*)App->gui->GenerateUI_Element(UI_TYPE::TEXT_BOX);
+	//text->box = { 0,0,100,50 };
+	//text->Text_entered = Text;
+	//text->Activate();
+	//mainscene->AddChild(text, 20);
 
-	Ui_img tex_on({ 0,0 }, { 5,107,225,75});
-	Ui_img tex_off({ 0,0 }, { 234,108,222,73 });
-	Ui_img tex_over({ 0,0 }, { 459,106, 222,80 });
+	//Ui_img tex_on({ 0,0 }, { 5,107,225,75});
+	//Ui_img tex_off({ 0,0 }, { 234,108,222,73 });
+	//Ui_img tex_over({ 0,0 }, { 459,106, 222,80 });
 
-	button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	button->Activate();
-	button->SetTextures_button(UI_Button::BUTTON_STATE::ON, tex_on);
-	button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, tex_off);
-	button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, tex_over);
-	button->box = { 200, 300, 220, 60 };
+	//button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	//button->Activate();
+	//button->SetTextures_button(UI_Button::BUTTON_STATE::ON, tex_on);
+	//button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, tex_off);
+	//button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, tex_over);
+	//button->box = { 200, 300, 220, 60 };
 
-	continue_button = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
-	continue_button->Activate();
-	button->AddChild(continue_button, 10);
-	continue_button->setText_Font(App->font->font_Title);
-	continue_button->MoveBox(35, 7);
-	continue_button->SetString("CONTINUE");
+	//continue_button = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	//continue_button->Activate();
+	//button->AddChild(continue_button, 10);
+	//continue_button->setText_Font(App->font->font_Title);
+	//continue_button->MoveBox(35, 7);
+	//continue_button->SetString("CONTINUE");
 
-	test->AddChild(button, 10);
+	//test->AddChild(button, 10);
 
-	//mainscene->AddChild(button, 30);
+	////mainscene->AddChild(button, 30);
 
-	testbutton = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	//testbutton->set
+	//testbutton = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	////testbutton->set
 
-	App->gui->PushScreen(mainscene);
+	//App->gui->PushScreen(mainscene);
 
 	return true;
 }
@@ -105,14 +105,14 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 
-	int x, y, x_motion, y_motion;
-	App->input->GetMousePosition(x, y);
-	App->input->GetMouseMotion(x_motion, y_motion);
-	App->gui->CalculateUpperElement(mainscene, 0);
+	//int x, y, x_motion, y_motion;
+	//App->input->GetMousePosition(x, y);
+	//App->input->GetMouseMotion(x_motion, y_motion);
+	//App->gui->CalculateUpperElement(mainscene, 0);
 
-	test->Drag();
-	text->Drag();
-	Input_get(App->gui->type_input);
+	//test->Drag();
+	//text->Drag();
+	//Input_get(App->gui->type_input);
 
 	//if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	//	App->render->camera.y -= 10;

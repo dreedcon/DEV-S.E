@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 
+
 struct SDL_Texture;
 struct UI_Button;
 struct UI_String;
@@ -41,10 +42,31 @@ public:
 public: 
 	SDL_Texture* background = nullptr;
 
+	//Scene Element
 	Ui_Element*		mainscene = nullptr;
+	
+	//Play Button
 	UI_Button*		button = nullptr;
 	UI_String*		play_button = nullptr;
+
+	//Exit Button
+	UI_Button*		button2 = nullptr;
+	UI_String*		Exit_button = nullptr;
+
+	//Continue Button
+	UI_Button*		button3 = nullptr;
+	UI_String*		Continue_button = nullptr;
+
+	//Settings Button
+	UI_Button*		button4 = nullptr;
+	UI_String*		settings_button = nullptr;
+
+	//Credits Button
+	UI_Button*		button5 = nullptr;
+	UI_String*		Credits_button = nullptr;
+
 	Ui_img*			test = nullptr;
+
 };
 
 #endif
