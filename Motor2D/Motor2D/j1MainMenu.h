@@ -65,8 +65,17 @@ public:
 	UI_Button*		button5 = nullptr;
 	UI_String*		Credits_button = nullptr;
 
-	Ui_img*			test = nullptr;
+	//Close Settings Button
+	UI_Button*     close_settings_button = nullptr;
+	
+	//Close Credits Button
+	UI_Button*     close_credits_button = nullptr;
 
+	//Settings Window
+	Ui_img*		   settings_window = nullptr;
+
+	//Credits Window
+	Ui_img*		   credits_window = nullptr;
 };
 
 #endif

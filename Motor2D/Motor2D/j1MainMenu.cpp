@@ -47,18 +47,24 @@ bool j1MainMenu::Start()
 	mainscene->Activate();
 	//mainscene->SetInputTarget(this);
 
-	//Test Window
-	//test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	//test->SetTextureRect({ 266, 194, 392, 426 });
-	//test->AdjustBox();
-	//test->Activate();
-	//mainscene->AddChild(test, 10);
+	//Setting Window
+	settings_window = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	settings_window->SetTextureRect({ 266, 194, 392, 426 });
+	settings_window->AdjustBox();
+	settings_window->box = { 300, 100, 397,425 };
+	
+	//Credits Window
+	credits_window = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	credits_window->SetTextureRect({ 266, 194, 392, 426 });
+	credits_window->AdjustBox();
+	credits_window->box = { 300, 100, 397,425 };
 
-	//Play Button
+	//Button states
 	Ui_img tex_on({ 0,0 }, { 5,107,225,75 });
 	Ui_img tex_off({ 0,0 }, { 234,108,222,73 });
 	Ui_img tex_over({ 0,0 }, { 459,106, 222,80 });
 
+	//Play Button
 	button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	button->Activate();
 	button->SetTextures_button(UI_Button::BUTTON_STATE::ON, tex_on);
@@ -133,12 +139,35 @@ bool j1MainMenu::Start()
 	Credits_button->MoveBox(65, 15);
 	Credits_button->SetString("Credits");
 
+	//Button states
+	Ui_img close_button_on({ 0,0 }, { 854,860,33,32 });
+	Ui_img close_button_off({ 0,0 }, { 854,860,33,32 });
+	Ui_img close_button_over({ 0,0 }, { 854,860,33,32 });
+
+	//Close Settings Button
+	close_settings_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	close_settings_button->Activate();
+	close_settings_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, close_button_on);
+	close_settings_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, close_button_off);
+	close_settings_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, close_button_over);
+	close_settings_button->box = { 345,18,33,32 };
+	settings_window->AddChild(close_settings_button, 10);
+
+	//Close Credits Button
+	close_credits_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	close_credits_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, close_button_on);
+	close_credits_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, close_button_off);
+	close_credits_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, close_button_over);
+	close_credits_button->box = { 345,18,33,32 };
+	credits_window->AddChild(close_credits_button, 20);
+
 	//AddChilds
 	mainscene->AddChild(button, 30);
 	mainscene->AddChild(button2, 30);
 	mainscene->AddChild(button3, 30);
 	mainscene->AddChild(button4, 30);
 	mainscene->AddChild(button5, 30);
+	
 
 	App->gui->PushScreen(mainscene);
 	
@@ -178,14 +207,41 @@ bool j1MainMenu::Update(float dt)
 
 	if (button3->button_state == UI_Button::BUTTON_STATE::ON)//Continue
 	{
-		
+	
 	}
 
 	if (button4->button_state == UI_Button::BUTTON_STATE::ON)//Settings
-	{
+	{	
+		//Test Window Activate
+		settings_window->Activate();
+		close_settings_button->Activate();
 
+		mainscene->AddChild(settings_window, 10);
 	}
 
+	if (button5->button_state == UI_Button::BUTTON_STATE::ON)//Settings
+	{
+		//Test Window Activate
+		credits_window->Activate();
+		close_credits_button->Activate();
+
+		mainscene->AddChild(credits_window, 20);
+	}
+
+
+	if (close_settings_button->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		settings_window->Desactivate();
+		close_settings_button->Desactivate();
+		close_settings_button->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
+
+	if (close_credits_button->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		credits_window->Desactivate();
+		close_credits_button->Desactivate();
+		close_credits_button->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
 
 	int x, y, x_motion, y_motion;
 	App->input->GetMousePosition(x, y);
