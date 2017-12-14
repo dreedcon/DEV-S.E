@@ -6,11 +6,11 @@
 #include "j1Gui.h"
 
 //Constructors
-UI_Button::UI_Button(const SDL_Rect & box, const Ui_img& tex_on, const Ui_img& tex_off, const Ui_img& tex_over) :Ui_Element(box, BUTTON), tex_on(tex_on), tex_off(tex_off), tex_over(tex_over), button_state(OFF) {}
+UI_Button::UI_Button(const SDL_Rect & box, const Ui_img& tex_on, const Ui_img& tex_off, const Ui_img& tex_over) :Ui_Element(box, BUTTON), tex_on(tex_on), tex_off(tex_off), tex_over(tex_over), button_state(OFF), interactive(true) {}
 
-UI_Button::UI_Button(const UI_Button* copy) : Ui_Element(copy->box, copy->ui_type), tex_on(copy->tex_on), tex_off(copy->tex_off), tex_over(copy->tex_over), button_state(OFF) {}
+UI_Button::UI_Button(const UI_Button* copy) : Ui_Element(copy->box, copy->ui_type), tex_on(copy->tex_on), tex_off(copy->tex_off), tex_over(copy->tex_over), button_state(OFF), interactive(true) {}
 
-UI_Button::UI_Button() : Ui_Element({ 0,0,0,0 }, BUTTON), button_state(OFF) {}
+UI_Button::UI_Button() : Ui_Element({ 0,0,0,0 }, BUTTON), button_state(OFF), interactive(true) {}
 
 //Destructor
 UI_Button::~UI_Button()
@@ -44,9 +44,17 @@ void UI_Button::Draw(bool debug)const
 
 bool UI_Button::Update()
 {
-	HandleInput();
+	if (interactive)
+	{
+		HandleInput();
+	}
 	UpdateChilds();
 	return true;
+}
+
+void UI_Button::SetInteractive(bool inter_)
+{
+	interactive = inter_;
 }
 
 void UI_Button::Change_State(BUTTON_STATE new_button_state)

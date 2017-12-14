@@ -46,34 +46,50 @@ bool j1Scene::Start()
 	App->audio->LoadFx("audio/fx/dead.wav"); //Fx----->3
 	App->map->Load("LVL3.tmx");
 
-	//mainscene = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
-	//mainscene->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
-	//mainscene->Activate();
-	////mainscene->SetInputTarget(this);
+	mainscene = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
+	mainscene->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
+	mainscene->Activate();
+	//mainscene->SetInputTarget(this);
 
-	//test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	//test->SetTextureRect({266, 194, 392, 459 });
-	//test->AdjustBox();
-	//test->Activate();
-	//mainscene->AddChild(test, 10);
+	test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	test->SetTextureRect({3, 196, 226, 88 });
+	test->AdjustBox();
+	test->Activate();
+	test->box = { 10,650,0,0 };
+	mainscene->AddChild(test, 10);
+	
+	UI_String Text({ 0,0,0,0 }, "LEVEL 1", App->font->default);
+	text = (UI_Text_Box*)App->gui->GenerateUI_Element(UI_TYPE::TEXT_BOX);
+	text->box = { 20,20,20,20 };
+	text->Text_entered = Text;
+	text->Activate();
+	test->AddChild(text, 20);
 
-	//UI_String Text({ 0,0,0,0 }, "Enter Your Name", App->font->default);
+
+	//UI_String Textsd({ 0,0,0,0 }, "Enter Your Name", App->font->default);
 	//text = (UI_Text_Box*)App->gui->GenerateUI_Element(UI_TYPE::TEXT_BOX);
 	//text->box = { 0,0,100,50 };
 	//text->Text_entered = Text;
 	//text->Activate();
 	//mainscene->AddChild(text, 20);
 
-	//Ui_img tex_on({ 0,0 }, { 5,107,225,75});
-	//Ui_img tex_off({ 0,0 }, { 234,108,222,73 });
-	//Ui_img tex_over({ 0,0 }, { 459,106, 222,80 });
 
-	//button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	//button->Activate();
-	//button->SetTextures_button(UI_Button::BUTTON_STATE::ON, tex_on);
-	//button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, tex_off);
-	//button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, tex_over);
-	//button->box = { 200, 300, 220, 60 };
+
+
+
+
+
+	Ui_img tex_on({ 0,0 }, { 450,732,30,30});
+	Ui_img tex_off({ 0,0 }, { 450,766,31,29 });
+	Ui_img tex_over({ 0,0 }, { 0,0, 0,0 });
+
+	button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	button->Activate();
+	button->SetInteractive(false);
+	button->SetTextures_button(UI_Button::BUTTON_STATE::ON, tex_on);
+	button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, tex_off);
+	button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, tex_over);
+	button->box = { 200, 300, 220, 60 };
 
 	//continue_button = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
 	//continue_button->Activate();
@@ -84,12 +100,12 @@ bool j1Scene::Start()
 
 	//test->AddChild(button, 10);
 
-	////mainscene->AddChild(button, 30);
+	mainscene->AddChild(button, 30);
 
 	//testbutton = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	////testbutton->set
+	//testbutton->set
 
-	//App->gui->PushScreen(mainscene);
+	App->gui->PushScreen(mainscene);
 
 	return true;
 }

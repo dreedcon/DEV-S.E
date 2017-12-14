@@ -29,12 +29,15 @@ private:
 	Ui_img			tex_on;
 	Ui_img			tex_off;
 	Ui_img			tex_over;
+	bool			interactive = true;
 
 public:
 	BUTTON_STATE	button_state;
 	//App Loop
 	void	Draw(bool debug)const;
 	bool	Update();
+
+	void			SetInteractive(bool inter_);
 
 	//Functionality
 	void			Change_State(BUTTON_STATE new_button_state);
