@@ -39,6 +39,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+private:
+	bool isLoadedUI = false;
+	bool isNewGame = true;
 public: 
 	SDL_Texture* background = nullptr;
 

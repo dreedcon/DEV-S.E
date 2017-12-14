@@ -85,7 +85,7 @@ public:
 private:
 	SDL_Texture* graphics = nullptr;
 
-	Levels actualvl;
+
 
 	bool GoDead = false;
 	bool fade = false;
@@ -98,6 +98,9 @@ private:
 public:
 	State state;
 	Direction direction;
+
+	int lifes;
+	Levels actualvl;
 
 	bool isMove = false;
 	P_Follow* particlePlayer;

@@ -18,6 +18,8 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	bool NewGame();
+
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -35,6 +37,8 @@ public:
 	void DeleteEnemyNormal(Criature* enemy_normal);
 
 	void DeleteAllEnemies();
+
+	void DeleteAll();
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;

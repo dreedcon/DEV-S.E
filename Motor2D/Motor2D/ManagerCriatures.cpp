@@ -45,6 +45,13 @@ bool ManagerCriatures::Start()
 	return true;
 }
 
+bool ManagerCriatures::NewGame()
+{
+	player->lifes = 5;
+	player->actualvl = Levels::LVL_1;
+	return true;
+}
+
 bool ManagerCriatures::PreUpdate()
 {
 	BROFILER_CATEGORY("PreUpdate", Profiler::Color::Red);
@@ -175,6 +182,18 @@ void ManagerCriatures::DeleteAllEnemies()
 		}
 		item = item->next;
 	}
+}
+
+void ManagerCriatures::DeleteAll()
+{
+	p2List_item<Criature*>* item = elements.start;
+	while (item != NULL)
+	{
+		item->data->~Criature();
+		elements.del(item);
+		item = item->next;
+	}
+	player = nullptr;
 }
 
 bool ManagerCriatures::Load(pugi::xml_node& node)

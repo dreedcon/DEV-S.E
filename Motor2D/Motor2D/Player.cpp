@@ -99,6 +99,7 @@ bool Player::Start()
 	current_animation = &idle;
 	state = IDLE;
 	App->Save();
+	lifes = 5;
 	fade = false;
 	collision_feet = App->collision->AddCollider({ (int)position.x, (int)position.y - 45, 45, 45 }, COLLIDER_PLAYER, this);
 	return true;
@@ -149,6 +150,7 @@ bool Player::Update(float dt)
 		{
 			if (GoDead == false)
 			{
+				lifes--;
 				fade = false;
 				GoDead = true;
 				notRepeatDead = true;

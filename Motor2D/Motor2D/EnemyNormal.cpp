@@ -198,7 +198,7 @@ void EnemyNormal::Draw()
 	}
 	}
 	SDL_Rect r = current_animation->GetCurrentFrame(App->GetDT());
-	App->render->Blit(graphics, position.x / 2, position.y / 2 - 10, &r, 2);
+	App->render->Blit(graphics, position.x / 2, position.y / 2 - 13, &r, 2);
 
 	Uint8 alpha = 80;
 	if (path != nullptr && App->collision->debug)

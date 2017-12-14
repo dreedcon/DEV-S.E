@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 
 struct SDL_Texture;
 struct UI_Button;
@@ -10,6 +11,8 @@ struct Ui_img;
 struct Ui_Element;
 struct UI_Text_Box;
 struct UI_Scroll;
+
+#define PlayerLifes 5
 
 enum INPUT_TYPE;
 
@@ -28,6 +31,12 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	void LoadUi();
+	void NewGame();
+	void SetLevelInfo(int lvl);
+
+	void SetLife(UI_Button* life, int& number);
+
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -44,16 +53,21 @@ public:
 
 	void MoveSelector(INPUT_TYPE type);
 
+public:
+	Ui_Element*		mainscene = nullptr;
 private:
 	//SDL_Texture* img;
 
-	Ui_Element*		mainscene = nullptr;
-	Ui_img*			test = nullptr;
-	Ui_img*			test23 = nullptr;
-	UI_Text_Box*	text = nullptr;
-	UI_Button*		button = nullptr;
-	UI_String*		continue_button = nullptr;
-	UI_Button*		testbutton = nullptr;
+
+	Ui_img*			imageLVL = nullptr;
+	UI_Text_Box*	actualvl = nullptr;
+	p2List<UI_Button*> lifes;
+	int numlifesactive;
+	UI_Button*		buttonReturnMenu = nullptr;
+	UI_String*		Options = nullptr;
+	UI_Button*		O_imgButtonReturn = nullptr;
+	UI_Button*		O_imgLoad = nullptr;
+	UI_Button*		O_imgSave = nullptr;
 };
 
 #endif // __j1SCENE_H__

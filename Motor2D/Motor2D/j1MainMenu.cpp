@@ -38,7 +38,14 @@ bool j1MainMenu::Awake(pugi::xml_node & conf)
 
 bool j1MainMenu::Start()
 {
+	if (isLoadedUI == false)
+	{
+		App->scene->LoadUi();
+		isLoadedUI = true;
+	}
+	App->scene->mainscene->Desactivate();
 	App->scene->active = false;
+
 	background = App->tex->Load("textures/Background.png");
 	App->audio->PlayMusic("audio/music/Music_LVL1.ogg");
 
@@ -76,8 +83,8 @@ bool j1MainMenu::Start()
 	play_button->Activate();
 	button->AddChild(play_button, 10);
 	play_button->setText_Font(App->font->font_Title);
-	play_button->MoveBox(85, 15);
-	play_button->SetString("Play");
+	play_button->MoveBox(46, 15);
+	play_button->SetString("New Game");
 
 	//exit
 	button2 = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
@@ -181,13 +188,18 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
+	int x, y, x_motion, y_motion;
+	App->input->GetMousePosition(x, y);
+	App->input->GetMouseMotion(x_motion, y_motion);
+	App->gui->CalculateUpperElement(mainscene, 0);
+
 	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 	{
-		App->scene->active = true;
-		App->managerC->active = true;
-		App->scene->Start();
-		App->managerC->Start();
-		mainscene->Desactivate();
+		//App->scene->active = true;
+		//App->managerC->active = true;
+		//App->scene->Start();
+		//App->managerC->Start();
+		//mainscene->Desactivate();
 	}
 
     //Button Funcionalities --------------------------------------------------------
@@ -197,7 +209,13 @@ bool j1MainMenu::Update(float dt)
 		App->managerC->active = true;
 		App->scene->Start();
 		App->managerC->Start();
+		App->managerC->NewGame();
 		mainscene->Desactivate();
+		if (isNewGame == false)
+		{
+			App->scene->NewGame();
+		}
+		isNewGame = false;
 	}
 
 	if (button2->button_state == UI_Button::BUTTON_STATE::ON)//Exit
@@ -207,7 +225,15 @@ bool j1MainMenu::Update(float dt)
 
 	if (button3->button_state == UI_Button::BUTTON_STATE::ON)//Continue
 	{
-	
+		if (isNewGame == false)
+		{
+			App->scene->active = true;
+			App->managerC->active = true;
+			App->scene->Start();
+			App->managerC->Start();
+			App->Load();
+			mainscene->Desactivate();
+		}
 	}
 
 	if (button4->button_state == UI_Button::BUTTON_STATE::ON)//Settings
@@ -242,11 +268,6 @@ bool j1MainMenu::Update(float dt)
 		close_credits_button->Desactivate();
 		close_credits_button->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
-
-	int x, y, x_motion, y_motion;
-	App->input->GetMousePosition(x, y);
-	App->input->GetMouseMotion(x_motion, y_motion);
-	App->gui->CalculateUpperElement(mainscene, 0);
 
 
 
