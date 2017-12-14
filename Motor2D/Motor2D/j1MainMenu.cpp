@@ -168,6 +168,14 @@ bool j1MainMenu::Start()
 	close_credits_button->box = { 345,18,33,32 };
 	credits_window->AddChild(close_credits_button, 20);
 
+	//OpenWeb
+	openWeb = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::ON, close_button_on);
+	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OFF, close_button_off);
+	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OVER, close_button_over);
+	openWeb->box = { 200,18,33,32 };
+	credits_window->AddChild(openWeb, 20);
+
 	//AddChilds
 	mainscene->AddChild(button, 30);
 	mainscene->AddChild(button2, 30);
@@ -267,6 +275,12 @@ bool j1MainMenu::Update(float dt)
 		credits_window->Desactivate();
 		close_credits_button->Desactivate();
 		close_credits_button->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
+
+	if (openWeb->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		ShellExecuteA(NULL, "open", "https://elliotjb.github.io/DEV-S.E/", NULL, NULL, SW_SHOWNORMAL);
+		openWeb->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
 
 

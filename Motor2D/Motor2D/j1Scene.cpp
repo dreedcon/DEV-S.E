@@ -147,6 +147,19 @@ void j1Scene::LoadUi()
 	S_imgSave->SetString("Save");
 	O_imgSave->AddChild(S_imgSave, 10);
 
+	clock = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	clock->SetTextureRect({ 2, 634, 170, 87 });
+	clock->AdjustBox();
+	clock->Activate();
+	clock->box = { 430,20,20,20 };
+	mainscene->AddChild(clock, 60);
+	clocktime = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	clocktime->Activate();
+	clocktime->setText_Font(App->font->font_Title);
+	clocktime->MoveBox(50, 20);
+	clocktime->SetString("00:00");
+	clock->AddChild(clocktime, 10);
+
 
 
 	numlifesactive = PlayerLifes;
@@ -306,6 +319,10 @@ bool j1Scene::PostUpdate()
 
 	if (O_imgButtonReturn->button_state == UI_Button::BUTTON_STATE::ON)
 	{
+		O_imgButtonReturn->Desactivate();
+		O_imgLoad->Desactivate();
+		O_imgSave->Desactivate();
+		settingOpen = false;
 		O_imgButtonReturn->button_state = UI_Button::BUTTON_STATE::OFF;
 		O_imgLoad->button_state = UI_Button::BUTTON_STATE::OFF;
 		O_imgSave->button_state = UI_Button::BUTTON_STATE::OFF;

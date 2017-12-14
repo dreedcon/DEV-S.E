@@ -72,6 +72,12 @@ private:
 	UI_String*		S_imgLoad = nullptr;
 	UI_Button*		O_imgSave = nullptr;
 	UI_String*		S_imgSave = nullptr;
+	
+
+	Ui_img*			clock = nullptr;
+	UI_String*		clocktime = nullptr;
+
+	//2-634-170-87 
 };
 
 #endif // __j1SCENE_H__

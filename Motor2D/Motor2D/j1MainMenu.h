@@ -79,6 +79,8 @@ public:
 
 	//Credits Window
 	Ui_img*		   credits_window = nullptr;
+	UI_Button*     openWeb = nullptr;
+
 };
 
 #endif
