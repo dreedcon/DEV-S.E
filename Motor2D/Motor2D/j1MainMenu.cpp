@@ -230,7 +230,7 @@ bool j1MainMenu::Update(float dt)
 			App->scene->active = true;
 			App->managerC->active = true;
 			App->scene->Start();
-			App->managerC->Start();
+			//App->managerC->Start();
 			App->Load();
 			mainscene->Desactivate();
 		}

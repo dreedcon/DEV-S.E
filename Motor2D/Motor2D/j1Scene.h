@@ -57,7 +57,8 @@ public:
 	Ui_Element*		mainscene = nullptr;
 private:
 	//SDL_Texture* img;
-
+	bool settingOpen = false;
+	bool goOpen = true;
 
 	Ui_img*			imageLVL = nullptr;
 	UI_Text_Box*	actualvl = nullptr;
@@ -66,8 +67,11 @@ private:
 	UI_Button*		buttonReturnMenu = nullptr;
 	UI_String*		Options = nullptr;
 	UI_Button*		O_imgButtonReturn = nullptr;
+	UI_String*		S_imgButtonReturn = nullptr;
 	UI_Button*		O_imgLoad = nullptr;
+	UI_String*		S_imgLoad = nullptr;
 	UI_Button*		O_imgSave = nullptr;
+	UI_String*		S_imgSave = nullptr;
 };
 
 #endif // __j1SCENE_H__

@@ -101,33 +101,51 @@ void j1Scene::LoadUi()
 	Options->SetString("Settings");
 	buttonReturnMenu->AddChild(Options, 10);
 
-	Ui_img button_onOptions({ 0,0 }, { 3, 826, 233,86 });
-	Ui_img button_offOptions({ 0,0 }, { 3, 915, 233,86 });
+	Ui_img button_onOptions({ 0,0 }, { 3, 915, 233,86 });
 	Ui_img button_overOptions({ 0,0 }, { 238,827,233,86 });
+	Ui_img button_offOptions({ 0,0 }, { 3, 826, 233,86 });
 
 	O_imgButtonReturn = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	O_imgButtonReturn->Desactivate();
 	O_imgButtonReturn->SetTextures_button(UI_Button::BUTTON_STATE::ON, button_onOptions);
 	O_imgButtonReturn->SetTextures_button(UI_Button::BUTTON_STATE::OFF, button_offOptions);
 	O_imgButtonReturn->SetTextures_button(UI_Button::BUTTON_STATE::OVER, button_overOptions);
-	O_imgButtonReturn->box = { 780,600,230,87 };
+	O_imgButtonReturn->box = { 780,590,230,87 };
 	mainscene->AddChild(O_imgButtonReturn, 50);
+	S_imgButtonReturn = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	S_imgButtonReturn->Activate();
+	S_imgButtonReturn->setText_Font(App->font->font_Title);
+	S_imgButtonReturn->MoveBox(63, 10);
+	S_imgButtonReturn->SetString("Go Menu");
+	O_imgButtonReturn->AddChild(S_imgButtonReturn, 10);
 
 	O_imgLoad = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	O_imgLoad->Desactivate();
 	O_imgLoad->SetTextures_button(UI_Button::BUTTON_STATE::ON, button_onOptions);
 	O_imgLoad->SetTextures_button(UI_Button::BUTTON_STATE::OFF, button_offOptions);
 	O_imgLoad->SetTextures_button(UI_Button::BUTTON_STATE::OVER, button_overOptions);
-	O_imgLoad->box = { 780,520,230,87 };
+	O_imgLoad->box = { 780,506,230,87 };
 	mainscene->AddChild(O_imgLoad, 50);
+	S_imgLoad = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	S_imgLoad->Activate();
+	S_imgLoad->setText_Font(App->font->font_Title);
+	S_imgLoad->MoveBox(83, 15);
+	S_imgLoad->SetString("Load");
+	O_imgLoad->AddChild(S_imgLoad, 10);
 
 	O_imgSave = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	O_imgSave->Desactivate();
 	O_imgSave->SetTextures_button(UI_Button::BUTTON_STATE::ON, button_onOptions);
 	O_imgSave->SetTextures_button(UI_Button::BUTTON_STATE::OFF, button_offOptions);
 	O_imgSave->SetTextures_button(UI_Button::BUTTON_STATE::OVER, button_overOptions);
-	O_imgSave->box = { 780,450,230,87 };
+	O_imgSave->box = { 780,422,230,87 };
 	mainscene->AddChild(O_imgSave, 50);
+	S_imgSave = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	S_imgSave->Activate();
+	S_imgSave->setText_Font(App->font->font_Title);
+	S_imgSave->MoveBox(83, 15);
+	S_imgSave->SetString("Save");
+	O_imgSave->AddChild(S_imgSave, 10);
 
 
 
@@ -148,7 +166,7 @@ void j1Scene::NewGame()
 
 void j1Scene::SetLevelInfo(int lvl)
 {
-	if (lvl == 1)
+	if (lvl == 0)
 	{
 		actualvl->SetText("LEVEL 1");
 	}
@@ -176,11 +194,27 @@ void j1Scene::SetLife(UI_Button* life, int& number)
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	if (buttonReturnMenu->button_state == UI_Button::BUTTON_STATE::ON)//Exit
+	if (buttonReturnMenu->button_state == UI_Button::BUTTON_STATE::ON && goOpen)//Exit
 	{
-		O_imgButtonReturn->Activate();
-		O_imgLoad->Activate();
-		O_imgSave->Activate();
+		if (settingOpen == false)
+		{
+			O_imgButtonReturn->Activate();
+			O_imgLoad->Activate();
+			O_imgSave->Activate();
+			settingOpen = true;
+		}
+		else if (settingOpen == true)
+		{
+			O_imgButtonReturn->Desactivate();
+			O_imgLoad->Desactivate();
+			O_imgSave->Desactivate();
+			settingOpen = false;
+		}
+		goOpen = false;
+	}
+	if (buttonReturnMenu->button_state != UI_Button::BUTTON_STATE::ON)
+	{
+		goOpen = true;
 	}
 
 	return true;
@@ -268,6 +302,34 @@ bool j1Scene::PostUpdate()
 		App->mainmenu->Start();
 		App->managerC->DeleteAllEnemies();
 		App->managerC->active = false;
+	}
+
+	if (O_imgButtonReturn->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		O_imgButtonReturn->button_state = UI_Button::BUTTON_STATE::OFF;
+		O_imgLoad->button_state = UI_Button::BUTTON_STATE::OFF;
+		O_imgSave->button_state = UI_Button::BUTTON_STATE::OFF;
+		App->map->CleanUp();
+		App->mainmenu->active = true;
+		App->mainmenu->Start();
+		App->managerC->DeleteAllEnemies();
+		App->managerC->active = false;
+	}
+
+	if (O_imgLoad->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		O_imgButtonReturn->button_state = UI_Button::BUTTON_STATE::OFF;
+		O_imgLoad->button_state = UI_Button::BUTTON_STATE::OFF;
+		O_imgSave->button_state = UI_Button::BUTTON_STATE::OFF;
+		App->Load();
+	}
+
+	if (O_imgSave->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		O_imgButtonReturn->button_state = UI_Button::BUTTON_STATE::OFF;
+		O_imgLoad->button_state = UI_Button::BUTTON_STATE::OFF;
+		O_imgSave->button_state = UI_Button::BUTTON_STATE::OFF;
+		App->Save();
 	}
 	//if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		//ret = false;
