@@ -169,24 +169,39 @@ bool j1MainMenu::Start()
 	credits_window->AddChild(close_credits_button, 20);
 
 	//Web Button states
-	Ui_img web_button_on({ 0,0 }, { 712,12,228,93 });
-	Ui_img web_button_off({ 0,0 }, { 712,12,228,93 });
-	Ui_img web_button_over({ 0,0 }, { 712,12,228,93 });
+	Ui_img web_button_on({ 0,0 }, { 5,107,225,75 });
+	Ui_img web_button_off({ 0,0 }, { 234,108,222,73 });
+	Ui_img web_button_over({ 0,0 }, { 459,106, 222,80 });
 
-	//OpenWeb Button
-	openWeb = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::ON, web_button_on);
-	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OFF, web_button_off);
-	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OVER, web_button_over);
-	openWeb->box = { 120,58,228,93 };
-	credits_window->AddChild(openWeb, 20);
+	//elliot button Web Button
+	elliot_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	elliot_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, web_button_on);
+	elliot_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, web_button_off);
+	elliot_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, web_button_over);
+	elliot_button->box = { 100,125,228,93 };
+	credits_window->AddChild(elliot_button, 20);
 
 	elliot_jimenez = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
 	elliot_jimenez->Activate();
-	openWeb->AddChild(elliot_jimenez, 10);
+	elliot_button->AddChild(elliot_jimenez, 10);
 	elliot_jimenez->setText_Font(App->font->font_Title);
 	elliot_jimenez->MoveBox(5, 15);
 	elliot_jimenez->SetString("Elliot Jimenez");
+
+	//sergio button Web Button
+	sergio_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	sergio_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, web_button_on);
+	sergio_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, web_button_off);
+	sergio_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, web_button_over);
+	sergio_button->box = { 100,200,228,93 };
+	credits_window->AddChild(sergio_button, 20);
+
+	sergio_saez = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	sergio_saez->Activate();
+	sergio_button->AddChild(sergio_saez, 10);
+	sergio_saez->setText_Font(App->font->font_Title);
+	sergio_saez->MoveBox(5, 15);
+	sergio_saez->SetString("Sergio Saez");
 
 	//Web Button states
 	Ui_img github_button_on({ 0,0 }, { 888,823,68,66});
@@ -199,7 +214,7 @@ bool j1MainMenu::Start()
 	github_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, github_button_on);
 	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, github_button_off);
 	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, github_button_over);
-	github_button->box = {675, 550, 68, 66};
+	github_button->box = {925, 690, 68, 66};
 
 	//AddChilds
 	mainscene->AddChild(button, 30);
@@ -303,10 +318,16 @@ bool j1MainMenu::Update(float dt)
 		close_credits_button->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
 
-	if (openWeb->button_state == UI_Button::BUTTON_STATE::ON)
+	if (elliot_button->button_state == UI_Button::BUTTON_STATE::ON)
 	{
 		ShellExecuteA(NULL, "open", "https://github.com/elliotjb", NULL, NULL, SW_SHOWNORMAL);
-		openWeb->button_state = UI_Button::BUTTON_STATE::OFF;
+		elliot_button->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
+
+	if (sergio_button->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		ShellExecuteA(NULL, "open", "https://github.com/dreedcon", NULL, NULL, SW_SHOWNORMAL);
+		sergio_button->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
 
 	if (github_button->button_state == UI_Button::BUTTON_STATE::ON)

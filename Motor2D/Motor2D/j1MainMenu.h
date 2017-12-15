@@ -81,8 +81,12 @@ public:
 	Ui_img*		   credits_window = nullptr;
 	
 	//Elliot Button go to web
-	UI_Button*     openWeb = nullptr;
+	UI_Button*     elliot_button = nullptr;
 	UI_String*	   elliot_jimenez = nullptr;
+
+	//Sergio Button go to web
+	UI_Button*     sergio_button = nullptr;
+	UI_String*	   sergio_saez = nullptr;
 
 	//GitHub Button
 	UI_Button*      github_button = nullptr;
