@@ -79,8 +79,13 @@ public:
 
 	//Credits Window
 	Ui_img*		   credits_window = nullptr;
+	
+	//Elliot Button go to web
 	UI_Button*     openWeb = nullptr;
+	UI_String*	   elliot_jimenez = nullptr;
 
+	//GitHub Button
+	UI_Button*      github_button = nullptr;
 };
 
 #endif

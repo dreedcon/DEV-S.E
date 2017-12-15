@@ -168,13 +168,38 @@ bool j1MainMenu::Start()
 	close_credits_button->box = { 345,18,33,32 };
 	credits_window->AddChild(close_credits_button, 20);
 
-	//OpenWeb
+	//Web Button states
+	Ui_img web_button_on({ 0,0 }, { 712,12,228,93 });
+	Ui_img web_button_off({ 0,0 }, { 712,12,228,93 });
+	Ui_img web_button_over({ 0,0 }, { 712,12,228,93 });
+
+	//OpenWeb Button
 	openWeb = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::ON, close_button_on);
-	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OFF, close_button_off);
-	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OVER, close_button_over);
-	openWeb->box = { 200,18,33,32 };
+	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::ON, web_button_on);
+	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OFF, web_button_off);
+	openWeb->SetTextures_button(UI_Button::BUTTON_STATE::OVER, web_button_over);
+	openWeb->box = { 120,58,228,93 };
 	credits_window->AddChild(openWeb, 20);
+
+	elliot_jimenez = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	elliot_jimenez->Activate();
+	openWeb->AddChild(elliot_jimenez, 10);
+	elliot_jimenez->setText_Font(App->font->font_Title);
+	elliot_jimenez->MoveBox(5, 15);
+	elliot_jimenez->SetString("Elliot Jimenez");
+
+	//Web Button states
+	Ui_img github_button_on({ 0,0 }, { 888,823,68,66});
+	Ui_img github_button_off({ 0,0 }, { 888,823,68,66});
+	Ui_img github_button_over({ 0,0 }, { 888,823,68,66});
+
+	//Github Button
+	github_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	github_button->Activate();
+	github_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, github_button_on);
+	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, github_button_off);
+	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, github_button_over);
+	github_button->box = {675, 550, 68, 66};
 
 	//AddChilds
 	mainscene->AddChild(button, 30);
@@ -182,6 +207,7 @@ bool j1MainMenu::Start()
 	mainscene->AddChild(button3, 30);
 	mainscene->AddChild(button4, 30);
 	mainscene->AddChild(button5, 30);
+	mainscene->AddChild(github_button, 30);
 	
 
 	App->gui->PushScreen(mainscene);
@@ -279,10 +305,15 @@ bool j1MainMenu::Update(float dt)
 
 	if (openWeb->button_state == UI_Button::BUTTON_STATE::ON)
 	{
-		ShellExecuteA(NULL, "open", "https://elliotjb.github.io/DEV-S.E/", NULL, NULL, SW_SHOWNORMAL);
+		ShellExecuteA(NULL, "open", "https://github.com/elliotjb", NULL, NULL, SW_SHOWNORMAL);
 		openWeb->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
 
+	if (github_button->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		ShellExecuteA(NULL, "open", "https://elliotjb.github.io/DEV-S.E/index.html", NULL, NULL, SW_SHOWNORMAL);
+		github_button->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
 
 
 
