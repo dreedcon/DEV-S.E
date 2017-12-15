@@ -72,7 +72,7 @@ bool j1Gui::PreUpdate()
 bool j1Gui::PostUpdate()
 {
 	//Debug Mode ------------------------------------------
-	if (type_input == INPUT_TYPE::INPUT_DEBUG && ItemSelected == nullptr)
+	if (type_input == INPUT_TYPE::INPUT_DEBUG)
 	{
 		debug = !debug;
 	}

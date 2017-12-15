@@ -12,9 +12,11 @@
 //Constructors ============================================
 UI_Scroll::UI_Scroll(const SDL_Rect& box, const SDL_Rect& itemsWindow, const Ui_img& ScrollItem, const Ui_img& ScrollBack, bool haveScroll_bar, SCROLL_TYPE Scroll_Type) :Ui_Element(box, SCROLL), itemsWindow(itemsWindow), ScrollItem(ScrollItem), ScrollBack(ScrollBack), haveScroll_bar(haveScroll_bar), Scroll_Type(Scroll_Type) {}
 
+UI_Scroll::UI_Scroll(const SDL_Rect & box) : Ui_Element(box, SCROLL) {}
+
 UI_Scroll::UI_Scroll(const UI_Scroll* copy) : Ui_Element(copy->box, SCROLL), itemsWindow(copy->itemsWindow), ScrollItem(copy->ScrollItem), ScrollBack(copy->ScrollBack), haveScroll_bar(copy->haveScroll_bar), Scroll_Type(copy->Scroll_Type) {}
 
-UI_Scroll::UI_Scroll() : Ui_Element({ 0,0,0,0 }, SCROLL), itemsWindow({ 0,0,0,0 }), ScrollItem(), ScrollBack() {}
+UI_Scroll::UI_Scroll() : Ui_Element({ 0,0,0,0 }, SCROLL) {}
 
 
 //Destructors =============================================
@@ -46,19 +48,19 @@ void UI_Scroll::Draw(bool debug) const
 	//ScrollBack.DrawAt(box.x, box.y);
 
 
-	
+
 	//Draw the items -----------------------
 	SDL_Rect view_port = { itemsWindow.x + box.x, itemsWindow.y + box.y, itemsWindow.w,itemsWindow.h };
 	App->gui->viewport_box = view_port;
-	SDL_RenderSetViewport(App->render->renderer,&view_port);
+	SDL_RenderSetViewport(App->render->renderer, &view_port);
 	p2List_item<Ui_Element*>* item = Items.start;
-	while (item) 
+	while (item)
 	{
 		item->data->Draw(debug);
 		item = item->next;
 	}
-	SDL_RenderSetViewport(App->render->renderer,NULL);
-	
+	SDL_RenderSetViewport(App->render->renderer, NULL);
+
 	//Draw Scroll Childs -------------------
 	DrawChilds(debug);
 }
@@ -77,7 +79,7 @@ bool UI_Scroll::Update()
 }
 
 void UI_Scroll::HandleInput()
-{	
+{
 }
 
 
@@ -85,11 +87,12 @@ void UI_Scroll::HandleInput()
 // Functionality =========================================
 bool UI_Scroll::MoveScroll(int mouse_x_motion, int mouse_y_motion)
 {
+	//EXERCICE[2]
 	//Get mouse left button state
 	j1KeyState mouse_button_1 = App->input->GetMouseButtonDown(1);
 
 	//Select the Scroll Item ----------
-	if (ScrollItem.MouseIsIn(box.x, box.y) && mouse_button_1 == KEY_DOWN && App->gui->upper_element == this->layer)
+	if (ScrollItem.MouseIsIn(box.x, box.y) && mouse_button_1 == KEY_REPEAT && App->gui->upper_element == this->layer)
 	{
 		ScrollSelected = true;
 		App->gui->ItemSelected = this;
@@ -104,63 +107,49 @@ bool UI_Scroll::MoveScroll(int mouse_x_motion, int mouse_y_motion)
 	//Drag the Scroll Item ------------
 	if (ScrollSelected)
 	{
-		if (ScrollItem.RectIsIn(&ScrollBack.box, mouse_x_motion, mouse_y_motion) == false)
+		if (Scroll_Type == SCROLL_TYPE::VERTICAL)
 		{
-			//Put the Scroll Item at the limit 
 			if (mouse_y_motion < 0)
 			{
-				mouse_y_motion = ScrollBack.box.y - ScrollItem.box.y;
-			}
-			else if (mouse_y_motion > 0)
-			{
-				mouse_y_motion = ScrollBack.box.y + ScrollBack.box.h - (ScrollItem.box.h + ScrollItem.box.y);
-			}
-		}
-		if (Scroll_Type == VERTICAL)
-		{
-			if (MouseIsIn(&App->gui->viewport_box));
-			{
-				ScrollItem.MoveBox(0, mouse_y_motion);
-				p2List_item<Ui_Element*>*  item = Items.start;
-
-				while (item)
+				if (ScrollItem.box.y + mouse_y_motion < 0)
 				{
-					item->data->HandleInput();
-					item->data->MoveBox(0, -mouse_y_motion); //Not yet, i think
-					item = item->next;
+					mouse_y_motion = -ScrollItem.box.y;
 				}
 			}
-
-		}
-		else if (Scroll_Type == VERTICAL_INV)
-		{
-			ScrollItem.MoveBox(0, -mouse_y_motion);
+			if (mouse_y_motion > 0)
+			{
+				if (ScrollItem.box.y + mouse_y_motion > ScrollBack.box.h - ScrollItem.box.h)
+				{
+					mouse_y_motion = (ScrollBack.box.h - ScrollItem.box.h) - ScrollItem.box.y;
+				}
+			}
+			ScrollItem.MoveBox(0, mouse_y_motion);
 			p2List_item<Ui_Element*>*  item = Items.start;
-
 			while (item)
 			{
 				item->data->HandleInput();
-				item->data->MoveBox(0, mouse_y_motion); //Not yet, i think
+				item->data->MoveBox(0, -mouse_y_motion); //Not yet, i think
 				item = item->next;
 			}
 		}
-		else if (Scroll_Type == LATERAL)
+		else if (Scroll_Type == SCROLL_TYPE::VERTICAL)
 		{
+			if (mouse_x_motion < 0)
+			{
+				if (ScrollItem.box.x + mouse_x_motion < 0)
+				{
+					mouse_x_motion = -ScrollItem.box.x;
+				}
+			}
+			if (mouse_x_motion > 0)
+			{
+				if (ScrollItem.box.x + mouse_x_motion > ScrollBack.box.w - ScrollItem.box.w)
+				{
+					mouse_x_motion = (ScrollBack.box.w - ScrollItem.box.w) - ScrollItem.box.x;
+				}
+			}
 			ScrollItem.MoveBox(mouse_x_motion, 0);
 			p2List_item<Ui_Element*>*  item = Items.start;
-
-			while (item)
-			{
-				item->data->HandleInput();
-				item->data->MoveBox(mouse_x_motion, 0); //Not yet, i think
-				item = item->next;
-			}
-		}
-		else if (Scroll_Type == LATERAL_INV)
-		{
-			ScrollItem.MoveBox(-mouse_x_motion, 0);
-			p2List_item<Ui_Element*>*  item = Items.start;
-
 			while (item)
 			{
 				item->data->HandleInput();
@@ -168,10 +157,7 @@ bool UI_Scroll::MoveScroll(int mouse_x_motion, int mouse_y_motion)
 				item = item->next;
 			}
 		}
-
-
 	}
-
 	return ScrollSelected;
 }
 
@@ -180,7 +166,7 @@ void UI_Scroll::AddScrollItem(Ui_Element* new_item, uint sumlayer)
 
 	//Calculate the size for the scroll
 	int lenght = 0;
-	if(Scroll_Type == VERTICAL || Scroll_Type == VERTICAL_INV)
+	if (Scroll_Type == VERTICAL || Scroll_Type == VERTICAL_INV)
 	{
 		//Vertical Scroll Case
 		lenght = new_item->box.y - (itemsWindow.h - itemsWindow.y) + new_item->box.h;
@@ -189,7 +175,7 @@ void UI_Scroll::AddScrollItem(Ui_Element* new_item, uint sumlayer)
 			ContentLenght = lenght;
 		}
 	}
-		//Lateral Scroll Case
+	//Lateral Scroll Case
 	else
 	{
 		lenght = new_item->box.x - (itemsWindow.w - itemsWindow.x) + new_item->box.w;
@@ -215,5 +201,27 @@ void UI_Scroll::AddScrollItem(Ui_Element* new_item, uint sumlayer)
 	//Add the new item to the list of items
 	this->Items.add(new_item);
 }
+
+void UI_Scroll::SetContentWidow(SDL_Rect widow)
+{
+	itemsWindow = widow;
+}
+
+void UI_Scroll::SetScroll_item(Ui_img scroll_item)
+{
+	ScrollItem = scroll_item;
+}
+
+void UI_Scroll::SetScroll_back(Ui_img scroll_back)
+{
+	ScrollBack = scroll_back;
+}
+
+void UI_Scroll::SetTypeScroll(SCROLL_TYPE type)
+{
+	Scroll_Type = type;
+}
+
+
 
 

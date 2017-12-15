@@ -73,6 +73,9 @@ private:
 	UI_String*		S_imgLoad = nullptr;
 	UI_Button*		O_imgSave = nullptr;
 	UI_String*		S_imgSave = nullptr;
+
+	UI_Scroll*		scroll = nullptr;
+	Ui_img*			test = nullptr;
 	
 	char buffer[33];
 	j1TimeNormal	playtime;

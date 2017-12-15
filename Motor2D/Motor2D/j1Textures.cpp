@@ -98,7 +98,7 @@ bool j1Textures::UnLoad(SDL_Texture* texture)
 }
 
 // Translate a surface into a texture
-SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
+SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface, SDL_Texture* last)
 {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 
@@ -109,6 +109,11 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 	else
 	{
 		textures.add(texture);
+	}
+	if (last != nullptr)
+	{
+		UnLoad(last);
+		last = nullptr;
 	}
 
 	return texture;
