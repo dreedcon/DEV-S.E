@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "j1TimeNormal.h"
 
 struct SDL_Texture;
 struct UI_Button;
@@ -73,7 +74,8 @@ private:
 	UI_Button*		O_imgSave = nullptr;
 	UI_String*		S_imgSave = nullptr;
 	
-
+	char buffer[33];
+	j1TimeNormal	playtime;
 	Ui_img*			clock = nullptr;
 	UI_String*		clocktime = nullptr;
 

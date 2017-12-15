@@ -41,6 +41,7 @@ bool j1Scene::Start()
 {
 	App->mainmenu->active = false;
 	mainscene->Activate();
+	playtime.Start();
 	App->audio->PlayMusic("audio/music/Music_LVL1.ogg");
 	App->audio->LoadFx("audio/fx/jump.wav"); //Fx---->1
 	App->audio->LoadFx("audio/fx/float.wav"); //Fx----->2
@@ -161,7 +162,6 @@ void j1Scene::LoadUi()
 	clock->AddChild(clocktime, 10);
 
 
-
 	numlifesactive = PlayerLifes;
 	App->gui->PushScreen(mainscene);
 }
@@ -174,6 +174,7 @@ void j1Scene::NewGame()
 		item->data->button_state = UI_Button::BUTTON_STATE::ON;
 		item = item->next;
 	}
+	playtime.Start();
 	numlifesactive = PlayerLifes;
 }
 
@@ -229,6 +230,11 @@ bool j1Scene::PreUpdate()
 	{
 		goOpen = true;
 	}
+
+	// Clock time
+
+	_itoa_s((int)playtime.ReadSec(), buffer, 33);
+	clocktime->SetString(buffer);
 
 	return true;
 }
@@ -335,16 +341,12 @@ bool j1Scene::PostUpdate()
 
 	if (O_imgLoad->button_state == UI_Button::BUTTON_STATE::ON)
 	{
-		O_imgButtonReturn->button_state = UI_Button::BUTTON_STATE::OFF;
 		O_imgLoad->button_state = UI_Button::BUTTON_STATE::OFF;
-		O_imgSave->button_state = UI_Button::BUTTON_STATE::OFF;
 		App->Load();
 	}
 
 	if (O_imgSave->button_state == UI_Button::BUTTON_STATE::ON)
 	{
-		O_imgButtonReturn->button_state = UI_Button::BUTTON_STATE::OFF;
-		O_imgLoad->button_state = UI_Button::BUTTON_STATE::OFF;
 		O_imgSave->button_state = UI_Button::BUTTON_STATE::OFF;
 		App->Save();
 	}
