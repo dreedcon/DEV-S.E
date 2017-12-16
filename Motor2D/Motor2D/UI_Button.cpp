@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "j1Audio.h"
 
 //Constructors
 UI_Button::UI_Button(const SDL_Rect & box, const Ui_img& tex_on, const Ui_img& tex_off, const Ui_img& tex_over) :Ui_Element(box, BUTTON), tex_on(tex_on), tex_off(tex_off), tex_over(tex_over), button_state(OFF), interactive(true) {}
@@ -75,10 +76,12 @@ void UI_Button::HandleInput()
 	else if (mouse_key_1 == KEY_DOWN && App->gui->upper_element == this->layer && MouseIsIn())
 	{
 		this->button_state = ON;
+		App->audio->PlayFx(4);
 		App->gui->ItemSelected = this;
 	}
 	else if (App->gui->ItemSelected == this && mouse_key_1 == KEY_REPEAT  && MouseIsIn())
 	{
+		App->audio->PlayFx(4);
 		button_state = ON;
 	}
 	else

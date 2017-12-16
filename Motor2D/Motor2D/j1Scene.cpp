@@ -43,9 +43,7 @@ bool j1Scene::Start()
 	mainscene->Activate();
 	playtime.Start();
 	App->audio->PlayMusic("audio/music/Music_LVL1.ogg");
-	App->audio->LoadFx("audio/fx/jump.wav"); //Fx---->1
-	App->audio->LoadFx("audio/fx/float.wav"); //Fx----->2
-	App->audio->LoadFx("audio/fx/dead.wav"); //Fx----->3
+
 	App->map->Load("LVL3.tmx");
 
 	//Check Lvl
@@ -157,7 +155,7 @@ void j1Scene::LoadUi()
 	clocktime = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
 	clocktime->Activate();
 	clocktime->setText_Font(App->font->font_Title);
-	clocktime->MoveBox(50, 20);
+	clocktime->MoveBox(75,25);
 	clocktime->SetString("00:00");
 	clock->AddChild(clocktime, 10);
 
@@ -269,7 +267,7 @@ bool j1Scene::Update(float dt)
 	App->input->GetMouseMotion(x_motion, y_motion);
 	App->gui->CalculateUpperElement(mainscene, 0);
 
-	//scroll->MoveScroll(x_motion, y_motion);
+	/*scroll->MoveScroll(x_motion, y_motion);*/
 
 	//test->Drag();
 	//text->Drag();

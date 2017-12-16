@@ -48,6 +48,11 @@ bool j1MainMenu::Start()
 
 	background = App->tex->Load("textures/Background.png");
 	App->audio->PlayMusic("audio/music/Music_LVL1.ogg");
+	App->audio->LoadFx("audio/fx/jump.wav"); //Fx---->1
+	App->audio->LoadFx("audio/fx/float.wav"); //Fx----->2
+	App->audio->LoadFx("audio/fx/dead.wav"); //Fx----->3
+	App->audio->LoadFx("audio/fx/Button_click.wav"); //Fx----->4
+
 
 	mainscene = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
 	mainscene->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
@@ -178,14 +183,14 @@ bool j1MainMenu::Start()
 	elliot_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, web_button_on);
 	elliot_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, web_button_off);
 	elliot_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, web_button_over);
-	elliot_button->box = { 100,125,228,93 };
+	elliot_button->box = {80,110,228,93 };
 	credits_window->AddChild(elliot_button, 20);
 
 	elliot_jimenez = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
 	elliot_jimenez->Activate();
 	elliot_button->AddChild(elliot_jimenez, 10);
 	elliot_jimenez->setText_Font(App->font->font_Title);
-	elliot_jimenez->MoveBox(5, 15);
+	elliot_jimenez->MoveBox(40, 15);
 	elliot_jimenez->SetString("Elliot Jimenez");
 
 	//sergio button Web Button
@@ -193,15 +198,23 @@ bool j1MainMenu::Start()
 	sergio_button->SetTextures_button(UI_Button::BUTTON_STATE::ON, web_button_on);
 	sergio_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, web_button_off);
 	sergio_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, web_button_over);
-	sergio_button->box = { 100,200,228,93 };
+	sergio_button->box = {80,200,228,93 };
 	credits_window->AddChild(sergio_button, 20);
 
 	sergio_saez = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
 	sergio_saez->Activate();
 	sergio_button->AddChild(sergio_saez, 10);
 	sergio_saez->setText_Font(App->font->font_Title);
-	sergio_saez->MoveBox(5, 15);
+	sergio_saez->MoveBox(40, 15);
 	sergio_saez->SetString("Sergio Saez");
+
+	//Credits Word
+	credits = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	credits->Activate();
+	credits->setText_Font(App->font->font_Title);
+	credits->MoveBox(140, 30);
+	credits->SetString("Credits :");
+	credits_window->AddChild(credits,20);
 
 	//Web Button states
 	Ui_img github_button_on({ 0,0 }, { 888,823,68,66});
@@ -215,6 +228,27 @@ bool j1MainMenu::Start()
 	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OFF, github_button_off);
 	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, github_button_over);
 	github_button->box = {925, 690, 68, 66};
+
+	Ui_img scroll_item({ 0,0 }, { 900, 314, 68, 54 });
+	scroll_item.AdjustBox();
+	Ui_img scroll_back({ 0,0 }, { 0, 290, 300, 169 });
+	scroll_back.AdjustBox();
+
+	scroll = (UI_Scroll*)App->gui->GenerateUI_Element(UI_TYPE::SCROLL);
+	scroll->box = { 50, 150, 300, 160 };
+	scroll->Activate();
+	scroll->SetContentWidow({ 0,0,300,160 });
+	scroll->SetScroll_back(scroll_back);
+	scroll->haveScroll_bar = true;
+	scroll->SetScroll_item(scroll_item);
+	scroll->SetTypeScroll(SCROLL_TYPE::VERTICAL);
+	mainscene->AddChild(scroll, 80);
+	test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	test->SetTextureRect({301,233,343,349});
+	test->AdjustBox();
+	test->Activate();
+	test->box = {0,0,343,349};
+	scroll->AddScrollItem(test, 10);
 
 	//AddChilds
 	mainscene->AddChild(button, 30);
@@ -241,6 +275,8 @@ bool j1MainMenu::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	App->input->GetMouseMotion(x_motion, y_motion);
 	App->gui->CalculateUpperElement(mainscene, 0);
+
+	scroll->MoveScroll(x_motion, y_motion);
 
 	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 	{

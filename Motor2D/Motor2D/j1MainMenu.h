@@ -88,6 +88,14 @@ public:
 	UI_Button*     sergio_button = nullptr;
 	UI_String*	   sergio_saez = nullptr;
 
+	//Credits string
+	UI_String*	   credits = nullptr;
+
+	//Scroll Credits
+	UI_Scroll*		scroll = nullptr;
+	Ui_img*			test = nullptr;
+
+
 	//GitHub Button
 	UI_Button*      github_button = nullptr;
 };
