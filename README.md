@@ -1,9 +1,14 @@
 
 # DEV-S.E
 
-## Second Assigment
+## Assignment 3
 
 ## Updates
+* Added UI in Main Menu and Scenes...
+	- Ui_Button
+	- Ui_Img
+	- Ui_Scroll
+	- Ui_Input_text (Also, OnlyRead).
 * Implemented two types enemies:
    - Enemy normal.
    - Enemy Fly.
@@ -23,13 +28,14 @@
 * F2 Start from the beginning of the current level
 * F5 Save the current state
 * F6 Load the previous state
+* F8 Show box collider UI
 * F9 Show Collisions and Logic Pathfinding.
 * F10 GodMode
 * F11 Enable/Disble 30fps - 60fps
 
 
 ## Link to Github
-https://github.com/dreedcon/DEV-S.E
+https://github.com/elliotjb/DEV-S.E
 
 # Autors
 * Sergio Saez
