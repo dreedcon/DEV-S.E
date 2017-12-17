@@ -159,27 +159,9 @@ void j1Scene::LoadUi()
 	clocktime->SetString("00:00");
 	clock->AddChild(clocktime, 10);
 
-	//Ui_img scroll_item({ 0,0 }, { 900, 314, 68, 54 });
-	//scroll_item.AdjustBox();
-	//Ui_img scroll_back({ 0,0 }, { 0, 290, 300, 169 });
-	//scroll_back.AdjustBox();
 
-	//scroll = (UI_Scroll*)App->gui->GenerateUI_Element(UI_TYPE::SCROLL);
-	//scroll->box = { 50, 150, 300, 160 };
-	//scroll->Activate();
-	//scroll->SetContentWidow({ 0,0,300,160 });
-	//scroll->SetScroll_back(scroll_back);
-	//scroll->haveScroll_bar = true;
-	//scroll->SetScroll_item(scroll_item);
-	//scroll->SetTypeScroll(SCROLL_TYPE::VERTICAL);
-	//mainscene->AddChild(scroll, 80);
-	//test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	//test->SetTextureRect({ 3, 196, 226, 88 });
-	//test->AdjustBox();
-	//test->Activate();
-	//test->box = { 0,0,0,0 };
-	//scroll->AddScrollItem(test, 10);
 	
+
 
 	numlifesactive = PlayerLifes;
 	App->gui->PushScreen(mainscene);
@@ -266,22 +248,6 @@ bool j1Scene::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	App->input->GetMouseMotion(x_motion, y_motion);
 	App->gui->CalculateUpperElement(mainscene, 0);
-
-	/*scroll->MoveScroll(x_motion, y_motion);*/
-
-	//test->Drag();
-	//text->Drag();
-	//Input_get(App->gui->type_input);
-
-	//if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	//	App->render->camera.y -= 10;
-
-	//if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	//	App->render->camera.y += 10;
-
-	//if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	//	App->render->camera.x -= 10;
-
 
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)

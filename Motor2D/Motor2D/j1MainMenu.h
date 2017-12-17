@@ -91,11 +91,13 @@ public:
 	//Credits string
 	UI_String*	   credits = nullptr;
 
-	//Scroll Credits
-	UI_Scroll*		scroll = nullptr;
-	Ui_img*			test = nullptr;
+	//License string
+	UI_String*	   Lincense = nullptr;
+	UI_String*	   Lincense2 = nullptr;
+	UI_String*	   Lincense3 = nullptr;
 
 
+	
 	//GitHub Button
 	UI_Button*      github_button = nullptr;
 };

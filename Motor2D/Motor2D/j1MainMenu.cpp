@@ -229,26 +229,29 @@ bool j1MainMenu::Start()
 	github_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, github_button_over);
 	github_button->box = {925, 690, 68, 66};
 
-	Ui_img scroll_item({ 0,0 }, { 900, 314, 68, 54 });
-	scroll_item.AdjustBox();
-	Ui_img scroll_back({ 0,0 }, { 0, 290, 300, 169 });
-	scroll_back.AdjustBox();
+	//License Word
+	Lincense = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	Lincense->Activate();
+	Lincense->setText_Font(App->font->font_Title);
+	Lincense->MoveBox(100,290);
+	Lincense->SetString("Apache License");
+	credits_window->AddChild(Lincense, 20);
 
-	scroll = (UI_Scroll*)App->gui->GenerateUI_Element(UI_TYPE::SCROLL);
-	scroll->box = { 50, 150, 300, 160 };
-	scroll->Activate();
-	scroll->SetContentWidow({ 0,0,300,160 });
-	scroll->SetScroll_back(scroll_back);
-	scroll->haveScroll_bar = true;
-	scroll->SetScroll_item(scroll_item);
-	scroll->SetTypeScroll(SCROLL_TYPE::VERTICAL);
-	mainscene->AddChild(scroll, 80);
-	test = (Ui_img*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	test->SetTextureRect({301,233,343,349});
-	test->AdjustBox();
-	test->Activate();
-	test->box = {0,0,343,349};
-	scroll->AddScrollItem(test, 10);
+	Lincense2 = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	Lincense2->Activate();
+	Lincense2->setText_Font(App->font->font_Title);
+	Lincense2->MoveBox(50, 320);
+	Lincense2->SetString(" Version 2.0, January 2004");
+	credits_window->AddChild(Lincense2, 20);
+
+	Lincense3 = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	Lincense3->Activate();
+	Lincense3->setText_Font(App->font->font_Title);
+	Lincense3->MoveBox(50, 350);
+	Lincense3->SetString("www.apache.org/licenses/");
+	credits_window->AddChild(Lincense3, 20);
+
+
 
 	//AddChilds
 	mainscene->AddChild(button, 30);
@@ -275,17 +278,6 @@ bool j1MainMenu::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	App->input->GetMouseMotion(x_motion, y_motion);
 	App->gui->CalculateUpperElement(mainscene, 0);
-
-	scroll->MoveScroll(x_motion, y_motion);
-
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
-	{
-		//App->scene->active = true;
-		//App->managerC->active = true;
-		//App->scene->Start();
-		//App->managerC->Start();
-		//mainscene->Desactivate();
-	}
 
     //Button Funcionalities --------------------------------------------------------
 	if (button->button_state == UI_Button::BUTTON_STATE::ON)//Play
