@@ -8,6 +8,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "j1Audio.h"
 #include "ManagerCriatures.h"
 
 #include "UI_Element.h"
@@ -164,6 +165,73 @@ bool j1MainMenu::Start()
 	close_settings_button->SetTextures_button(UI_Button::BUTTON_STATE::OVER, close_button_over);
 	close_settings_button->box = { 345,18,33,32 };
 	settings_window->AddChild(close_settings_button, 10);
+
+	//Button Up Volume states
+	Ui_img up_button_on({ 0,0 }, {785,860,33,32 });
+	Ui_img up_button_off({ 0,0 }, { 785,860,33,32 });
+	Ui_img up_button_over({ 0,0 }, { 785,860,33,32 });
+
+	//Button Down Volume states
+	Ui_img down_button_on({ 0,0 }, { 750,822,33,32 });
+	Ui_img down_button_off({ 0,0 }, { 750,822,33,32 });
+	Ui_img down_button_over({ 0,0 }, { 750,822,33,32 });
+
+
+	//Button Master Volume states
+	Ui_img master_button_on({ 0,0 }, { 679,860,33,32 });
+	Ui_img master_button_off({ 0,0 }, { 679,860,33,32 });
+	Ui_img master_button_over({ 0,0 }, { 679,860,33,32 });
+
+	//Up Volume
+	up_volume = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	up_volume->Activate();
+	up_volume->SetTextures_button(UI_Button::BUTTON_STATE::ON, up_button_on);
+	up_volume->SetTextures_button(UI_Button::BUTTON_STATE::OFF, up_button_off);
+	up_volume->SetTextures_button(UI_Button::BUTTON_STATE::OVER, up_button_over);
+	up_volume->box = {200,130,33,32 };
+	settings_window->AddChild(up_volume, 10);
+
+	//Down Volume
+	down_volume = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	down_volume->Activate();
+	down_volume->SetTextures_button(UI_Button::BUTTON_STATE::ON, down_button_on);
+	down_volume->SetTextures_button(UI_Button::BUTTON_STATE::OFF, down_button_off);
+	down_volume->SetTextures_button(UI_Button::BUTTON_STATE::OVER, down_button_over);
+	down_volume->box = {200,180,33,32 };
+	settings_window->AddChild(down_volume, 10);
+
+	//Master Volume
+	master_volume = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	master_volume->Activate();
+	master_volume->SetTextures_button(UI_Button::BUTTON_STATE::ON, master_button_on);
+	master_volume->SetTextures_button(UI_Button::BUTTON_STATE::OFF, master_button_on);
+	master_volume->SetTextures_button(UI_Button::BUTTON_STATE::OVER, master_button_on);
+	master_volume->box = { 200,230,33,32 };
+	settings_window->AddChild(master_volume, 10);
+
+	//Up volume word
+	up_volume_word = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	up_volume_word->Activate();
+	up_volume_word->setText_Font(App->font->font_Title);
+	up_volume_word->MoveBox(60, 125);
+	up_volume_word->SetString("Up Volume ");
+	settings_window->AddChild(up_volume_word, 20);
+
+	//Down volume word
+	down_volume_word = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	down_volume_word->Activate();
+	down_volume_word->setText_Font(App->font->font_Title);
+	down_volume_word->MoveBox(30, 175);
+	down_volume_word->SetString("Down Volume ");
+	settings_window->AddChild(down_volume_word, 20);
+
+	//Master volume word
+	master_volume_word = (UI_String*)App->gui->GenerateUI_Element(UI_TYPE::STRING);
+	master_volume_word->Activate();
+	master_volume_word->setText_Font(App->font->font_Title);
+	master_volume_word->MoveBox(20, 225);
+	master_volume_word->SetString("Master volume ");
+	settings_window->AddChild(master_volume_word, 20);
 
 	//Close Credits Button
 	close_credits_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
@@ -364,6 +432,33 @@ bool j1MainMenu::Update(float dt)
 		github_button->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
 
+	if (up_volume->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		volume += 10;
+		App->audio->Changevolume(volume);
+		up_volume->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
+
+	if (down_volume->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		volume -= 10;
+		App->audio->Changevolume(volume);
+		down_volume->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
+
+	if (master_volume->button_state == UI_Button::BUTTON_STATE::ON)
+	{
+		if (App->audio->active)
+		{
+			App->audio->active = false;
+		}
+		else
+		{
+			App->audio->active = true;
+		}
+			
+		master_volume->button_state = UI_Button::BUTTON_STATE::OFF;
+	}
 
 
 	return true;

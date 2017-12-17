@@ -42,6 +42,7 @@ public:
 private:
 	bool isLoadedUI = false;
 	bool isNewGame = true;
+	int volume = 20;
 public: 
 	SDL_Texture* background = nullptr;
 
@@ -70,7 +71,26 @@ public:
 
 	//Close Settings Button
 	UI_Button*     close_settings_button = nullptr;
-	
+
+	//Up Volume
+	UI_String*     up_volume_word = nullptr;
+
+	//Down Volume
+	UI_String*     down_volume_word = nullptr;
+
+	//Master Volume
+	UI_String*     master_volume_word = nullptr;
+
+
+	//Up Volume
+	UI_Button*     up_volume = nullptr;
+
+	//Down Volume
+	UI_Button*     down_volume = nullptr;
+
+	//Master Volume
+	UI_Button*     master_volume = nullptr;
+
 	//Close Credits Button
 	UI_Button*     close_credits_button = nullptr;
 
