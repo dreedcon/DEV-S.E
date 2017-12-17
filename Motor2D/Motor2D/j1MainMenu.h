@@ -42,7 +42,8 @@ public:
 private:
 	bool isLoadedUI = false;
 	bool isNewGame = true;
-	int volume = 20;
+	int volume = 128;
+	bool audioActive = true;
 public: 
 	SDL_Texture* background = nullptr;
 

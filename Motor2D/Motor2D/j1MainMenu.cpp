@@ -448,15 +448,18 @@ bool j1MainMenu::Update(float dt)
 
 	if (master_volume->button_state == UI_Button::BUTTON_STATE::ON)
 	{
-		if (App->audio->active)
+		if (audioActive)
 		{
-			App->audio->active = false;
+			audioActive = false;
+			volume = 0;
+			App->audio->Changevolume(volume);
 		}
 		else
 		{
-			App->audio->active = true;
+			audioActive = true;
+			volume = 128;
+			App->audio->Changevolume(volume);
 		}
-			
 		master_volume->button_state = UI_Button::BUTTON_STATE::OFF;
 	}
 

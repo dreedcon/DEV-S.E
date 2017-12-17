@@ -66,6 +66,10 @@ bool j1Audio::Update(float dt)
 bool j1Audio::Changevolume(int volume)
 {
 	Mix_VolumeMusic(volume);
+
+	p2List_item<Mix_Chunk*>* item;
+	for (item = fx.start; item != NULL; item = item->next)
+		Mix_VolumeChunk(item->data, volume);
 	return true;
 }
 
